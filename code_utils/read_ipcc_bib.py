@@ -1,5 +1,6 @@
 import bibtexparser
 import pandas as pd
+from glutton import get_doi_glutton  
 
 def read_bib_file(path, verbose=False):
     if verbose:
@@ -10,15 +11,16 @@ def read_bib_file(path, verbose=False):
     bib_database = bibtexparser.loads(contenu_bib, parser=parser)
     return bib_database
 
-def read_bib_wgi(verbose=False):
-    wgi=[]
-    dataframes_i={}
-    for i in ['01','02','03','04','05','06','07','08','09','10','11','12']:
-        df=pd.DataFrame(read_bib_file(f"../IPCC_bibliography/AR6/WG1/IPCC_AR6_WGI_References_Chapter{i}.bib", verbose).entries)
-        df['wg']='wg1'
-        df['chap']=f"wg1_chap_{i}"
-        wgi.append(len(df.doi.dropna())/len(df))
-        df_name = f'df_i_{i}'
-        dataframes_i[df_name] = df
-    df_wgi = pd.concat(list(dataframes_i.values()), ignore_index=True)
-    return df_wgi
+def read_bib_wg(wgs,k,verbose=False):
+    for i in wgs[k][f'listdir{k}']:
+        df=pd.DataFrame(read_bib_file(f"../IPCC_bibliography/AR6/WG{k}/{i}", verbose).entries)
+        df['wg']='wg{k}'
+        df['chap']=f"wg1_chap_{wgs[k][f'listdir{k}'][-9:].replace('.bib','').replace('ter','')}"
+        wgs[k][f'wg{k}'].append(len(df.doi.dropna())/len(df))
+        if k in ['2','2_CROSS']:
+            df.loc[pd.isna(df.doi),'doi']=df.loc[pd.isna(df.doi),:].progress_apply(get_doi_glutton, axis=1)
+        df_name = f"df_{i[-9:].replace('.bib','').replace('ter','')}"
+        wgs[k][f'dataframes_{k}'][df_name] = df
+    df_wg = pd.concat(list(wgs[i][f'dataframes_{i}'].values()), ignore_index=True)
+    return df_wg
+
