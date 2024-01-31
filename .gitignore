@@ -13,3 +13,4 @@ ENV/
 env.bak/
 venv.bak/
 .idea/
+./IPCC_bibliography/AR6/structured_data/*.json
