@@ -15,7 +15,6 @@ def read_bib_file(path, verbose=False):
 
 def read_bib_wg(wgs,k,verbose=False):
     for i in wgs[k][f'listdir{k}']:
-        print(i)
         df=pd.DataFrame(read_bib_file(f"../IPCC_bibliography/AR6/WG{k}/{i}", verbose).entries)
         df['wg']='wg{k}'
         df['chap']=f"wg1_chap_{i[-9:].replace('.bib','').replace('ter','')}"
