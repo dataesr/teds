@@ -43,14 +43,12 @@ def get_publi_not_in_ipcc(dois,dict_year,year_counts,year_counts_not_ipcc):
     response = requests.get(url)
     data = response.json()
     year = data.get('publication_year')
-    if ((year<=2021)&(data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&(data.get('sustainable_development_goals')!=[])&(data.get('concepts')!=[])&(year in list(year_counts.keys()))):
+    if ((year<=2021)&(data.get('doi') not in dois)&(pd.isna(data.get('doi'))==False)&(pd.isna(data.get('title'))==False)&(data.get('sustainable_development_goals')!=[])&(data.get('concepts')!=[])&(year in list(year_counts.keys()))):
         if year in list(dict_year.keys()):
-            year_counts_not_ipcc[year]+=1
+            if year_counts[year]>year_counts_not_ipcc[year]:
+                year_counts_not_ipcc[year]+=1
+                dict_year[year].append({"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')})
         else:
             year_counts_not_ipcc[year]=1
-        if (year_counts_not_ipcc[year]<year_counts[year]):
-            if year in list(dict_year.keys()):
-                dict_year[year].append({"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')})
-            else:
-                dict_year[year]=[{"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')}]
-    
+            dict_year[year]=[{"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')}]
+
