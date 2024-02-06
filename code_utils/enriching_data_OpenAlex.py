@@ -39,16 +39,19 @@ def get_countries_concepts_sdg(df,row):
     return countries,concepts_names,sdgs_ids_names
 
 def get_publi_not_in_ipcc(dois,dict_year,year_counts,year_counts_not_ipcc):
+    climat_concepts=['climate change','environmental science','climatology','meteorology','global warming','ecology','climate model','greenhouse gas','effects of global warming on oceans','greenhouse effect', 'abrupt climate change']
     url=f"https://api.openalex.org/works/random"
     response = requests.get(url)
     data = response.json()
     year = data.get('publication_year')
     if ((year<=2021)&(data.get('doi') not in dois)&(pd.isna(data.get('doi'))==False)&(pd.isna(data.get('title'))==False)&(data.get('sustainable_development_goals')!=[])&(data.get('concepts')!=[])&(year in list(year_counts.keys()))):
-        if year in list(dict_year.keys()):
-            if year_counts[year]>year_counts_not_ipcc[year]:
-                year_counts_not_ipcc[year]+=1
-                dict_year[year].append({"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')})
-        else:
-            year_counts_not_ipcc[year]=1
-            dict_year[year]=[{"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')}]
+        concepts_name=[str(x.get('display_name')).lower() for x in data.get('concepts')]
+        if (~concepts_name.isin(climat_concepts).any()):
+            if year in list(dict_year.keys()):
+                if year_counts[year]>year_counts_not_ipcc[year]:
+                    year_counts_not_ipcc[year]+=1
+                    dict_year[year].append({"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')})
+            else:
+                year_counts_not_ipcc[year]=1
+                dict_year[year]=[{"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')}]
 
