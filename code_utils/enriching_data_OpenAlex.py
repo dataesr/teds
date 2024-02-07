@@ -2,19 +2,22 @@ import requests
 import pandas as pd
 from code_utils.utils import aplatir
 
-def get_open_alex_data(doi):
-    global cached_openalex_data
+def get_open_alex_data(cached_openalex_data,doi):
     if pd.isna(doi)==False:
         if doi in cached_openalex_data:
             return cached_openalex_data[doi]
         else:
             url=f"https://api.openalex.org/works?filter=doi:{doi}"
             response = requests.get(url)
-            data = response.json()
-            if 'results' in data.keys():
-                cached_openalex_data[doi] = data.get('results')
-            else:
-                cached_openalex_data[doi] = []
+            try:
+                data = response.json()
+
+                if 'results' in data.keys():
+                    cached_openalex_data[doi] = data.get('results')
+                else:
+                    cached_openalex_data[doi] = []
+            except:
+                pass          
 
 def get_countries_concepts_sdg(df,row):
     doi=row.doi
