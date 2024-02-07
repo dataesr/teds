@@ -15,6 +15,8 @@ def get_doi_cleaned(x):
         return None
     elif low_x.find('10.')>=0:
         split1=f"10.{low_x.split('10.',1)[1]}"
-        return split1.split(' ')[0]
+        split2=split1.split(' ')[0]
+        split3=split2.split('\n')[0]
+        return split3.rstrip('.')
     else:
         return None
