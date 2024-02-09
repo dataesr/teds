@@ -19,24 +19,23 @@ def get_open_alex_data(cached_openalex_data,doi):
             except:
                 pass          
 
-def get_countries_concepts_sdg(df,row):
+def get_countries_concepts_sdg(cached_openalex_data,row):
     doi=row.doi
-    data=df[df.doi==doi]
-    i=df[df.doi==doi].index[0]
-    if data['results'][i]!=[]:
-        authors=data['results'][i][0].get('authorships')
+    data=cached_openalex_data[doi]
+    if data['results']!=[]:
+        authors=data['results'][0].get('authorships')
         if authors!=[]:
             countries=list(set(aplatir([author.get('countries') for author in authors]))) 
         else:
             countries=[None]
 
-        concepts=data['results'][i][0].get('concepts')
+        concepts=data['results'][0].get('concepts')
         if concepts!=[]:
             concepts_names=[{'name': concept.get('display_name')} for concept in concepts]
         else:
             concepts_names=None
 
-        sdgs=data['results'][i][0].get('sustainable_development_goals')
+        sdgs=data['results'][0].get('sustainable_development_goals')
         if sdgs!=[]:
             sdgs_ids_names=[{'id': str(sdg.get('id'))[-2:].replace("/",""), 'name': sdg.get('display_name')} for sdg in sdgs]
         else:
