@@ -22,27 +22,27 @@ def get_open_alex_data(cached_openalex_data,doi):
 def get_countries_concepts_sdg(cached_openalex_data,row):
     doi=row.doi
     data=cached_openalex_data[doi]
-    if data['results']!=[]:
-        authors=data['results'][0].get('authorships')
+    if data!=[]:
+        authors=data[0].get('authorships')
         if authors!=[]:
             countries=list(set(aplatir([author.get('countries') for author in authors]))) 
         else:
             countries=[None]
 
-        concepts=data['results'][0].get('concepts')
+        concepts=data[0].get('concepts')
         if concepts!=[]:
             concepts_names=[{'name': concept.get('display_name')} for concept in concepts]
         else:
             concepts_names=None
 
-        sdgs=data['results'][0].get('sustainable_development_goals')
+        sdgs=data[0].get('sustainable_development_goals')
         if sdgs!=[]:
             sdgs_ids_names=[{'id': str(sdg.get('id'))[-2:].replace("/",""), 'name': sdg.get('display_name')} for sdg in sdgs]
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None
-    return countries,concepts_names,sdgs_ids_names
+        return [None],None,None,None
+    return countries,concepts_names,sdgs_ids_names,data[0].get('publication_year')
 
 def get_publi_not_in_ipcc(dois,dict_year,year_counts,year_counts_not_ipcc):
     climat_concepts=['climate change','environmental science','climatology','meteorology','global warming','ecology','climate model','greenhouse gas','effects of global warming on oceans','greenhouse effect', 'abrupt climate change']
@@ -52,7 +52,7 @@ def get_publi_not_in_ipcc(dois,dict_year,year_counts,year_counts_not_ipcc):
     year = data.get('publication_year')
     if ((year<=2021)&(data.get('doi') not in dois)&(pd.isna(data.get('doi'))==False)&(pd.isna(data.get('title'))==False)&(data.get('sustainable_development_goals')!=[])&(data.get('concepts')!=[])&(year in list(year_counts.keys()))):
         concepts_name=[str(x.get('display_name')).lower() for x in data.get('concepts')]
-        if (concepts_name not in climat_concepts.any()):
+        if any(concept in climat_concepts for concept in concepts_name):
             if year in list(dict_year.keys()):
                 if year_counts[year]>year_counts_not_ipcc[year]:
                     year_counts_not_ipcc[year]+=1
