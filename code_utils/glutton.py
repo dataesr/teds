@@ -1,5 +1,7 @@
 import requests
+from retrying import retry
 
+@retry(wait_fixed=600000, stop_max_attempt_number=10000)
 def get_doi_glutton(row):
     title=row.title
     if 'author' in list(row.index):
