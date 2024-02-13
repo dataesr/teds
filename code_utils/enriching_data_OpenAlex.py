@@ -44,7 +44,7 @@ def get_countries_concepts_sdg(cached_openalex_data,row):
         return [None],None,None,None
     return countries,concepts_names,sdgs_ids_names,data[0].get('publication_year')
 
-def get_publi_not_in_ipcc(dois,dict_year,year_counts,year_counts_not_ipcc):
+def get_publi_not_in_references(dois,dict_year,year_counts,year_counts_not_ipcc):
     climat_concepts=['climate change','environmental science','climatology','meteorology','global warming','ecology','climate model','greenhouse gas','effects of global warming on oceans','greenhouse effect', 'abrupt climate change']
     url=f"https://api.openalex.org/works/random"
     response = requests.get(url)

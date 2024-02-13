@@ -1,4 +1,12 @@
+import os
+import sys
 import pandas as pd
+import concurrent.futures
+module_path = os.path.abspath(os.path.join('..'))
+if module_path not in sys.path:
+    sys.path.append(module_path)
+from code_utils.enriching_data_OpenAlex import get_publi_not_in_references
+
 
 def aplatir(conteneurs):
     return [conteneurs[i][j] for i in range(len(conteneurs)) for j in range(len(conteneurs[i]))]
@@ -20,3 +28,9 @@ def get_doi_cleaned(x):
         return split3.rstrip('.')
     else:
         return None
+    
+def parallel_execution(dois, dict_year, year_counts, year_counts_not_ipcc, n_iterations):
+    while sum(list(year_counts_not_ipcc.values())) < n_iterations:
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = [executor.submit(get_publi_not_in_ipcc, dois, dict_year, year_counts, year_counts_not_ipcc) for _ in range(n_iterations - sum(list(year_counts_not_ipcc.values())))]
+            concurrent.futures.wait(futures)
