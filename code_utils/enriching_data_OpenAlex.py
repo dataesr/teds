@@ -45,25 +45,17 @@ def get_countries_concepts_sdg(cached_openalex_data,row):
         return [None],None,None,None
     return countries,concepts_names,sdgs_ids_names,data[0].get('publication_year')
 
-def get_publi_not_in_references(dois,dict_year,year_counts,year_counts_not_ipcc,year_max):
+def get_publi_not_in_references(dois,dict_year,year_counts,year_counts_not_ipcc,year):
     climat_concepts=['climate change','environmental science','climatology','meteorology','global warming','ecology','climate model','greenhouse gas','effects of global warming on oceans','greenhouse effect', 'abrupt climate change']
-    url=f"https://api.openalex.org/works/random"
+    url=f"https://api.openalex.org/works?filter=has_doi:true,concepts_count:>0,publication_year:{year}&sample=200&per-page=200"
     response = requests.get(url)
-    data = response.json()
-    year = data.get('publication_year')
-    if ((year<=year_max)&(data.get('doi') not in dois)&(pd.isna(data.get('doi'))==False)&(pd.isna(data.get('title'))==False)&(data.get('sustainable_development_goals')!=[])&(data.get('concepts')!=[])&(year in list(year_counts.keys()))):
+    data0 = response.json().get('results')
+    print(f"plus que {year_counts[year] - year_counts_not_ipcc[year]} publications pour completer l'année {year}")
+    for i in range(len(data0)):
+        data=data0[i]
         concepts_name=[str(x.get('display_name')).lower() for x in data.get('concepts')]
-        if any(concept in climat_concepts for concept in concepts_name):
-            if year in list(dict_year.keys()):
-                if year_counts[year]>year_counts_not_ipcc[year]:
-                    year_counts_not_ipcc[year]+=1
-                    dict_year[year].append({"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')})
-            else:
-                year_counts_not_ipcc[year]=1
-                dict_year[year]=[{"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts')}]
+        if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&(data.get('sustainable_development_goals')!=[])&((any(concept in climat_concepts for concept in concepts_name))==False)):
+            year_counts_not_ipcc[year]+=1
+            dict_year[year].append({"doi": data.get('doi'), "year": year, "title": data.get('title'), "sdg": data.get('sustainable_development_goals'), "concepts": data.get('concepts'), "topics": data.get('topics')})
+            dois.append(data.get('doi'))
 
-def parallel_execution(dois, dict_year, year_counts, year_counts_not_ipcc, n_iterations, year_max):
-    while sum(list(year_counts_not_ipcc.values())) < n_iterations:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = [executor.submit(get_publi_not_in_references, dois, dict_year, year_counts, year_counts_not_ipcc, year_max) for _ in range(n_iterations - sum(list(year_counts_not_ipcc.values())))]
-            concurrent.futures.wait(futures)
