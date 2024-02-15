@@ -2,6 +2,7 @@ import pickle
 import logging
 import sys
 import os
+import pandas as pd 
 
 module_path = os.path.abspath(os.path.join('..'))
 if module_path not in sys.path:
