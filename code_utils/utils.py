@@ -5,8 +5,11 @@ def aplatir(conteneurs):
 
 def wg_chap_to_dict(row):
     list_chap=[]
-    for i in range(len(row['wg'])):
-        list_chap.append({'name': row['chap'][i], 'wg': row['wg'][i].replace('wg',''), 'chap': int(row['chap'][i][-2:].replace('_','')), 'freq_ipcc': row['freq']})
+    if isinstance(row['wg'],list):
+        for i in range(len(row['wg'])):
+            list_chap.append({'name': row['chap'][i], 'wg': row['wg'][i].replace('wg',''), 'chap': int(row['chap'][i][-2:].replace('_','')), 'freq_ipcc': row['freq']})
+    else:
+        list_chap.append({'name': row['chap'], 'wg': row['wg'].replace('wg',''), 'chap': int(row['chap'][-2:].replace('_','')), 'freq_ipcc': row['freq']})
     return list_chap
 
 def get_doi_cleaned(x):
@@ -21,3 +24,60 @@ def get_doi_cleaned(x):
     else:
         return None
     
+def get_wg(wg_chap,wg1=False,wg2=False,wg2_cross=False,wg3=False):
+    wgs=[x.get("wg") for x in wg_chap]
+    if wg1 & wg2 & wg2_cross & wg3 :
+        if [x for x in ['1','2','2_cross','3'] if x in wgs]==['1','2','2_cross','3']:
+            return True
+        else:
+            return False
+    if wg1 & wg2 & wg2_cross:
+        if [x for x in ['1','2','2_cross'] if x in wgs]==['1','2','2_cross']:
+            return True
+        else:
+            return False
+    if wg1 & wg2:
+        if [x for x in ['1','2'] if x in wgs]==['1','2']:
+            return True
+        else:
+            return False
+    if wg1 & wg3:
+        if [x for x in ['1','3'] if x in wgs]==['1','3']:
+            return True
+        else:
+            return False
+    if wg3 & wg2 & wg2_cross:
+        if [x for x in ['3','2','2_cross'] if x in wgs]==['3','2','2_cross']:
+            return True
+        else:
+            return False
+    if wg2 & wg3:
+        if [x for x in ['2','3'] if x in wgs]==['2','3']:
+            return True
+        else:
+            return False
+    if wg1:
+        if [x for x in ['1'] if x in wgs]==['1']:
+            return True
+        else:
+            return False
+    if wg2 & wg2_cross:
+        if [x for x in ['2','2_cross'] if x in wgs]==['2','2_cross']:
+            return True
+        else:
+            return False
+    if wg2 :
+        if [x for x in ['2'] if x in wgs]==['2']:
+            return True
+        else:
+            return False
+    if wg2_cross:
+        if [x for x in ['2_cross'] if x in wgs]==['2_cross']:
+            return True
+        else:
+            return False
+    if wg3:
+        if [x for x in ['3'] if x in wgs]==['3']:
+            return True
+        else:
+            return False
