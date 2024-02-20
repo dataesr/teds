@@ -29,19 +29,20 @@ def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year
     for i in range(len(data0)):
         data=data0[i]
         concepts_name=[str(x.get('display_name')).lower() for x in data.get('concepts')]
-        if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&(data.get('sustainable_development_goals')!=[])&((any(concept in climat_concepts for concept in concepts_name))==False)):
+        if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&(data.get('topics')!=[])&((any(concept in climat_concepts for concept in concepts_name))==False)):
             year_counts_not_ipcc[year]+=1
             cached_openalex_data_not_ipcc[year].append(data)
             dois.append(data.get('doi'))
 
 
 def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
+    global data 
     if ipcc:
         doi=row.doi
         if (len(cached_openalex_data[doi])>1)&('topics' not in list(cached_openalex_data[doi][0].keys())):
             topics=cached_openalex_data[doi][1].get('topics')
             data=cached_openalex_data[doi][1]
-        if (len(cached_openalex_data[doi])==0)&('topics' in list(cached_openalex_data[doi][0].keys())):
+        if (len(cached_openalex_data[doi])==1)&('topics' in list(cached_openalex_data[doi][0].keys())):
             topics=cached_openalex_data[doi][0].get('topics')
             data=cached_openalex_data[doi][0]
         else:

@@ -1,4 +1,7 @@
 import pandas as pd
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def aplatir(conteneurs):
     return [conteneurs[i][j] for i in range(len(conteneurs)) for j in range(len(conteneurs[i]))]
@@ -23,6 +26,22 @@ def get_doi_cleaned(x):
         return split3.rstrip('.')
     else:
         return None
+
+def remove_too_long(d):
+    assert(isinstance(d, dict))
+    current_fields = list(d.keys())
+    for f in current_fields:
+        if isinstance(d[f], str):
+            if len(d[f]) > 1000:
+                logger.debug(f"shortening str field {f} as too long !")
+                d[f] = d[f][0:1000]+'...'
+        elif isinstance(d[f], list):
+            if len(d[f]) > 50:
+                logger.debug(f"shortening list field {f}  as too long !")
+                d[f] = d[f][0:50]
+        elif isinstance(d[f], dict):
+            d[f]=remove_too_long(d[f].copy())
+    return d
     
 def get_wg(wg_chap,wg1=False,wg2=False,wg2_cross=False,wg3=False):
     wgs=[x.get("wg") for x in wg_chap]
