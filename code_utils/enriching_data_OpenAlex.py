@@ -36,17 +36,20 @@ def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year
 
 
 def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
-    global data 
     if ipcc:
         doi=row.doi
-        if (len(cached_openalex_data[doi])>1)&('topics' not in list(cached_openalex_data[doi][0].keys())):
+        if len(cached_openalex_data[doi])==0:
+            topics=[]
+            data=[]
+        elif (len(cached_openalex_data[doi])>1)&('topics' not in list(cached_openalex_data[doi][0].keys())):
             topics=cached_openalex_data[doi][1].get('topics')
             data=cached_openalex_data[doi][1]
-        if (len(cached_openalex_data[doi])==1)&('topics' in list(cached_openalex_data[doi][0].keys())):
+        elif (len(cached_openalex_data[doi])==1)&('topics' in list(cached_openalex_data[doi][0].keys())):
             topics=cached_openalex_data[doi][0].get('topics')
             data=cached_openalex_data[doi][0]
         else:
             topics=[]
+            data=cached_openalex_data[doi][0]
     else:
         if isinstance(cached_openalex_data[i],list):
             if (len(cached_openalex_data[i])>1)&('topics' not in list(cached_openalex_data[i][0].keys())):
@@ -86,6 +89,5 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None,None,None,None
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi
-
+        return [None],None,None,None,None,None,False
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True

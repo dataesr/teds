@@ -42,6 +42,12 @@ def remove_too_long(d):
         elif isinstance(d[f], dict):
             d[f]=remove_too_long(d[f].copy())
     return d
+
+def type_score(x):
+    openalex_concepts_list = x
+    for concept in openalex_concepts_list:
+        current_score = float(concept.get('score', 0.0))
+        concept['score'] = current_score
     
 def get_wg(wg_chap,wg1=False,wg2=False,wg2_cross=False,wg3=False):
     wgs=[x.get("wg") for x in wg_chap]
