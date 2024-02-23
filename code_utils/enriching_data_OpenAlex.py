@@ -18,18 +18,25 @@ def get_open_alex_data(cached_openalex_data,doi):
                 else:
                     cached_openalex_data[doi] = []
             except:
-                pass     
+                pass 
+
+def bool_topics(climat_topics,topics_name):
+    for x in climat_topics:
+        for y in topics_name: 
+            if y.find(x)>0:
+                return False
+    return True
 
 def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year_counts,year_counts_not_ipcc,year):
-    climat_concepts=['climate change','environmental science','climatology','meteorology','global warming','ecology','climate model','greenhouse gas','effects of global warming on oceans','greenhouse effect', 'abrupt climate change']
+    climat_topics=['climate change','ecological','global methane emissions and impacts','impact of ocean acidification on marine ecosystems','arctic sea ice variability and decline','environmental impact','climate ethics','climate and hydrological cycle','global energy transition','environmental behavior','influence of climate','urban heat islands and mitigation strategies','impact on climate','environmental policies','carbon dioxide capture and storage technologies','soil carbon dynamics and nutrient cycling in ecosystems','sustainable development','environmental governance']
     url=f"https://api.openalex.org/works?filter=has_doi:true,concepts_count:>0,publication_year:{year}&sample=200&per-page=200"
     response = requests.get(url)
     data0 = response.json().get('results')
     print(f"plus que {year_counts[year] - year_counts_not_ipcc[year]} publications pour completer l'année {year}")
     for i in range(len(data0)):
         data=data0[i]
-        concepts_name=[str(x.get('display_name')).lower() for x in data.get('concepts')]
-        if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&(data.get('topics')!=[])&((any(concept in climat_concepts for concept in concepts_name))==False)):
+        topics_name=[str(x.get('display_name')).lower() for x in data.get('topics')]
+        if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&(data.get('topics')!=[])&((bool_topics(climat_topics,topics_name))==True)):
             year_counts_not_ipcc[year]+=1
             cached_openalex_data_not_ipcc[year].append(data)
             dois.append(data.get('doi'))
@@ -89,5 +96,5 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None,None,None,None,False
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True
+        return [None],None,None,None,None,None,False,None
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('authorships')
