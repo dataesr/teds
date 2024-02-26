@@ -35,11 +35,13 @@ def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year
     print(f"plus que {year_counts[year] - year_counts_not_ipcc[year]} publications pour completer l'année {year}")
     for i in range(len(data0)):
         data=data0[i]
-        topics_name=[str(x.get('display_name')).lower() for x in data.get('topics')]
-        if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&(data.get('topics')!=[])&((bool_topics(climat_topics,topics_name))==True)):
-            year_counts_not_ipcc[year]+=1
-            cached_openalex_data_not_ipcc[year].append(data)
-            dois.append(data.get('doi'))
+        if 'topics' in list(data.keys()):
+            if data.get('topics')!=[]:
+                topics_name=[str(x.get('display_name')).lower() for x in data.get('topics')]
+                if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&((bool_topics(climat_topics,topics_name))==True)):
+                    year_counts_not_ipcc[year]+=1
+                    cached_openalex_data_not_ipcc[year].append(data)
+                    dois.append(data.get('doi'))
 
 
 def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
@@ -97,4 +99,4 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
             sdgs_ids_names=None
     else:
         return [None],None,None,None,None,None,False,None
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('authorships')
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title')
