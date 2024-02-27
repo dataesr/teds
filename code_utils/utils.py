@@ -2,6 +2,7 @@ import pandas as pd
 import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+import re
 
 def aplatir(conteneurs):
     return [conteneurs[i][j] for i in range(len(conteneurs)) for j in range(len(conteneurs[i]))]
@@ -48,6 +49,11 @@ def type_score(x):
     for concept in openalex_concepts_list:
         current_score = float(concept.get('score', 0.0))
         concept['score'] = current_score
+
+def preprocess(text):
+    text = re.sub(r'[^\w\s\']',' ', text)
+    text = re.sub(' +', ' ', text)
+    return text.strip().lower() 
     
 def get_wg(wg_chap,wg1=False,wg2=False,wg2_cross=False,wg3=False):
     wgs=[x.get("wg") for x in wg_chap]
