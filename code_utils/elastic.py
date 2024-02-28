@@ -21,9 +21,7 @@ def get_data_from_elastic(my_filters):
     body = {
             'size': 0,
             'query': {
-                'bool': {
-                    'must': my_filters,
-                    }
+                'bool': my_filters,
                 },
                 'aggs': {
                     'by_countries': {
@@ -57,24 +55,16 @@ def plot_graph(data,list_wg):
 
 
 def interfaces_evaluation(list_wg,country):
-    data_and = get_data_from_elastic([
-        {
-            'bool': {
+    data_and = get_data_from_elastic({
                 'must': [{'match': {'ipcc.wg.keyword': x}} for x in list_wg]+[{'match':{'countries.keyword': country}}]
-            }
-        }
-    ])
-    data_or = get_data_from_elastic([
-        {
-            'bool': {
+            })
+    data_or = get_data_from_elastic({
                 'should': [{'term': {'ipcc.wg.keyword': x}} for x in list_wg],
                 'must': [
                     {'match':{'countries.keyword': country}},
                 ],
                 'minimum_should_match': 1
-            }
-        }
-    ])
+            })
     nb_publi_total = data_or['hits']['total']['value']
     nb_publi_fr = [k['doc_count'] for k in data_and['aggregations']['by_countries']['buckets'] if k['key']=='FR'][0]
     print(f"Pour la recherches aux interfaces, pour les working group {', '.join(list_wg)}, \n{int(10000 * nb_publi_fr/nb_publi_total)/100} % des publications citées dans l'un des groupes le sont aussi dans le.s autre.s")
