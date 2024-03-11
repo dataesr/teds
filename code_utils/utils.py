@@ -3,6 +3,11 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 import re
+from tokenizers import normalizers
+from tokenizers.normalizers import BertNormalizer, Sequence, Strip
+from tokenizers import pre_tokenizers
+from tokenizers.pre_tokenizers import Whitespace
+import string
 
 def aplatir(conteneurs):
     return [conteneurs[i][j] for i in range(len(conteneurs)) for j in range(len(conteneurs[i]))]
@@ -54,61 +59,61 @@ def preprocess(text):
     text = re.sub(r'[^\w\s\']',' ', text)
     text = re.sub(' +', ' ', text)
     return text.strip().lower() 
+
+def get_countries(row):
+    if (isinstance(row.countries_x,list)==False)&(isinstance(row.countries_y,list)==False):
+        return None
+    elif (isinstance(row.countries_x,list))&(isinstance(row.countries_y,list)==False):
+        return row.countries_x
+    elif (isinstance(row.countries_x,list)==False)&(isinstance(row.countries_y,list)):
+        return row.countries_y
+    else:
+        return row.countries_x
+
+def get_year(date_str):
+    if (re.match("^\d{4}-\d{2}-\d{2}$", date_str)):
+        return date_str[:4]
+    elif (re.match("^\d{4}-\d{2}-\d{1}$", date_str)):
+        return date_str[:4]
+    elif (re.match("^\d{4}-\d{1}-\d{2}$", date_str)):
+        return date_str[:4]
+    elif (re.match("^\d{4}-\d{1}-\d{1}$", date_str)):
+        return date_str[:4]
+    elif (re.match("^\d{4}\s[a-zA-Z]+$", date_str)):
+        return date_str[:4] 
+    elif (re.match("^\d{4}/\d{2}/\d{2}$", date_str)):
+        return date_str[:4] 
+    elif (re.match("^\d{4}/\d{1}/\d{2}$", date_str)):
+        return date_str[:4] 
+    elif (re.match("^\d{4}/\d{2}/\d{1}$", date_str)):
+        return date_str[:4] 
+    elif (re.match("^\d{4}/\d{1}/\d{1}$", date_str)):
+        return date_str[:4] 
+    elif (re.match("^\d{4}\s(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s\d{1,2}$", date_str)):
+        return date_str[:4]
+    elif (re.match("^\d{4}/(?:0?[1-9]|1[0-2])$", date_str)):
+        return date_str[:4] 
+    elif (re.match("^\d{4}-(?:0?[1-9]|1[0-2])$", date_str)):
+        return date_str[:4] 
+    else:
+        return date_str[-4:]
     
-def get_wg(wg_chap,wg1=False,wg2=False,wg2_cross=False,wg3=False):
-    wgs=[x.get("wg") for x in wg_chap]
-    if wg1 & wg2 & wg2_cross & wg3 :
-        if [x for x in ['1','2','2_cross','3'] if x in wgs]==['1','2','2_cross','3']:
-            return True
-        else:
-            return False
-    if wg1 & wg2 & wg2_cross:
-        if [x for x in ['1','2','2_cross'] if x in wgs]==['1','2','2_cross']:
-            return True
-        else:
-            return False
-    if wg1 & wg2:
-        if [x for x in ['1','2'] if x in wgs]==['1','2']:
-            return True
-        else:
-            return False
-    if wg1 & wg3:
-        if [x for x in ['1','3'] if x in wgs]==['1','3']:
-            return True
-        else:
-            return False
-    if wg3 & wg2 & wg2_cross:
-        if [x for x in ['3','2','2_cross'] if x in wgs]==['3','2','2_cross']:
-            return True
-        else:
-            return False
-    if wg2 & wg3:
-        if [x for x in ['2','3'] if x in wgs]==['2','3']:
-            return True
-        else:
-            return False
-    if wg1:
-        if [x for x in ['1'] if x in wgs]==['1']:
-            return True
-        else:
-            return False
-    if wg2 & wg2_cross:
-        if [x for x in ['2','2_cross'] if x in wgs]==['2','2_cross']:
-            return True
-        else:
-            return False
-    if wg2 :
-        if [x for x in ['2'] if x in wgs]==['2']:
-            return True
-        else:
-            return False
-    if wg2_cross:
-        if [x for x in ['2_cross'] if x in wgs]==['2_cross']:
-            return True
-        else:
-            return False
-    if wg3:
-        if [x for x in ['3'] if x in wgs]==['3']:
-            return True
-        else:
-            return False
+def remove_punction(s: str) -> str:
+    for p in string.punctuation:
+        s = s.replace(p, ' ').replace('  ', ' ')
+    return s.strip()
+
+normalizer = Sequence([BertNormalizer(clean_text=True,
+        handle_chinese_chars=True,
+        strip_accents=True,
+        lowercase=True), Strip()])
+pre_tokenizer = pre_tokenizers.Sequence([Whitespace()])
+
+def normalize(x, min_length = 0):
+    normalized = normalizer.normalize_str(x)
+    for c in ['\n', '<', '>', '$']:
+        normalized = normalized.replace(c, ' ')
+    normalized = remove_punction(normalized)
+    normalized = re.sub(' +', ' ', normalized)
+    # keep if digit alone
+    return " ".join([e[0] for e in pre_tokenizer.pre_tokenize_str(normalized) if (len(e[0]) > min_length) or (e[0] in string.digits)])
