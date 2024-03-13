@@ -39,7 +39,7 @@ def plot_graph(data,list_wg,type='Part',ip=['IPCC','Working Group.s']):
     data_counts={}
     for x in data.get('aggregations').get('by_countries').get('buckets'):
         if type=='Part':
-            data_counts[x.get('key')]=round(x.get('doc_count')*100/data.get('hits').get('total').get('value'),2)
+            data_counts[x.get('key')]=round(x.get('doc_count')*100/data.get('hits').get('total').get('value'),1)
         if type=='Number':
             data_counts[x.get('key')]=x.get('doc_count')
     data_counts=pd.Series(data_counts)
@@ -47,13 +47,20 @@ def plot_graph(data,list_wg,type='Part',ip=['IPCC','Working Group.s']):
     plt.figure(figsize=(24, 10))
     ax = data_counts[:20].plot(kind='bar', color=[color_dict.get(u, 'grey') for u in data_counts[:20].index], width=0.8)
 
+    if type=='Part':
+        pourc='%'
+    else:
+        pourc=''
+
     for i, v in enumerate(data_counts[:20]):
-        ax.text(i, v + 0.1, f'{v}', ha='center', va='bottom', color='black', size=20)
+        ax.text(i, v + 0.1, f'{v}{pourc}', ha='center', va='bottom', color='black', size=20)
         
     plt.suptitle(f"{type} of {ip[0]} references by country - {ip[1]} {', '.join([x.replace('_',' ') for x in list_wg])}", size=25)
     plt.title('Source : OpenAlex\nTraitement : Science et Ingénierie des Données, SIES', size=10, loc='right')
 
     ax.set_xticklabels(data_counts.index[:20], rotation='vertical', fontsize=15)
+    if type=='Part':
+        ax.set_yticklabels([f'{tick:.0f}%' for tick in ax.get_yticks()], fontsize=15)
     ax.set_ylabel(f'{type} of IPCC references', fontsize=15)
     plt.show()
 
