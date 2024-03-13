@@ -17,7 +17,7 @@ url = os.getenv('ES_URL')+'teds-bibliography/_search'
 def get_from_es(body):
     return requests.post(url, json=body, headers={f'Authorization': f'Basic {token}'}).json()
 
-def get_data_from_elastic(my_filters):
+def get_data_from_elastic(my_filters, size=20):
     body = {
             'size': 0,
             'query': {
@@ -26,7 +26,7 @@ def get_data_from_elastic(my_filters):
                 'aggs': {
                     'by_countries': {
                         'terms': {
-                            'field': 'countries.keyword', 'size': 20
+                            'field': 'countries.keyword', 'size': size
                         },
                     }
                 },
@@ -35,10 +35,13 @@ def get_data_from_elastic(my_filters):
     res = get_from_es(body)
     return res
 
-def plot_graph(data,list_wg):
+def plot_graph(data,list_wg,type='Part',ip=['IPCC','Working Group.s']):
     data_counts={}
     for x in data.get('aggregations').get('by_countries').get('buckets'):
-        data_counts[x.get('key')]=round(x.get('doc_count')*100/data.get('hits').get('total').get('value'),2)
+        if type=='Part':
+            data_counts[x.get('key')]=round(x.get('doc_count')*100/data.get('hits').get('total').get('value'),2)
+        if type=='Number':
+            data_counts[x.get('key')]=x.get('doc_count')
     data_counts=pd.Series(data_counts)
     color_dict = {'FR': '#BE2125'}
     plt.figure(figsize=(24, 10))
@@ -47,10 +50,11 @@ def plot_graph(data,list_wg):
     for i, v in enumerate(data_counts[:20]):
         ax.text(i, v + 0.1, f'{v}', ha='center', va='bottom', color='black', size=20)
         
-    plt.suptitle(f"Percentage of IPCC references in which France participated - Working Group {', '.join(list_wg)}", size=25)
+    plt.suptitle(f"{type} of {ip[0]} references by country - {ip[1]} {', '.join([x.replace('_',' ') for x in list_wg])}", size=25)
     plt.title('Source : OpenAlex\nTraitement : Science et Ingénierie des Données, SIES', size=10, loc='right')
 
     ax.set_xticklabels(data_counts.index[:20], rotation='vertical', fontsize=15)
+    ax.set_ylabel(f'{type} of IPCC references', fontsize=15)
     plt.show()
 
 
@@ -67,4 +71,4 @@ def interfaces_evaluation(list_wg,country):
             })
     nb_publi_total = data_or['hits']['total']['value']
     nb_publi_fr = [k['doc_count'] for k in data_and['aggregations']['by_countries']['buckets'] if k['key']=='FR'][0]
-    print(f"Pour la recherches aux interfaces, pour les working group {', '.join(list_wg)}, \n{int(10000 * nb_publi_fr/nb_publi_total)/100} % des publications citées dans l'un des groupes le sont aussi dans le.s autre.s")
+    print(f"Pour la recherches aux interfaces, pour les working groups {', '.join(list_wg)}, \n{int(10000 * nb_publi_fr/nb_publi_total)/100} % des publications citées dans l'un des groupes le sont aussi dans le.s autre.s")

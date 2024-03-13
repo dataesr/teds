@@ -16,9 +16,9 @@ def wg_chap_to_dict(row):
     list_chap=[]
     if isinstance(row['wg'],list):
         for i in range(len(row['wg'])):
-            list_chap.append({'name': row['chap'][i], 'wg': row['wg'][i].replace('wg',''), 'chap': int(row['chap'][i][-2:].replace('_','')), 'freq_ipcc': row['freq']})
+            list_chap.append({'name': row['chap'][i], 'wg': row['wg'][i].replace('wg',''), 'chap': int(row['chap'][i][-2:].replace('_',''))})
     else:
-        list_chap.append({'name': row['chap'], 'wg': row['wg'].replace('wg',''), 'chap': int(row['chap'][-2:].replace('_','')), 'freq_ipcc': row['freq']})
+        list_chap.append({'name': row['chap'], 'wg': row['wg'].replace('wg',''), 'chap': int(row['chap'][-2:].replace('_',''))})
     return list_chap
 
 def get_doi_cleaned(x):
@@ -70,7 +70,7 @@ def get_countries(row):
     else:
         return row.countries_x
 
-def get_year(date_str):
+def get_year_ipbes(date_str):
     if (re.match("^\d{4}-\d{2}-\d{2}$", date_str)):
         return date_str[:4]
     elif (re.match("^\d{4}-\d{2}-\d{1}$", date_str)):
@@ -97,6 +97,18 @@ def get_year(date_str):
         return date_str[:4] 
     else:
         return date_str[-4:]
+
+def get_year_ipcc(date_str):
+    if (re.match("^(?:April|September)\s\d{4}$", str(date_str))):
+        return date_str[-4:]
+    elif (re.match("^\d{4}(?:a|b|c|d|b:|.|submitted)$", str(date_str))):
+        return date_str[:4] 
+    elif (re.match("^\((\d{4})\).$", str(date_str))):
+        return date_str[:4] 
+    elif str(date_str).lower() in ['accepted','submitted','in press','n.d.','in review','forthcoming','accepted/in press','in preparation','under review']:
+        return None
+    else:
+        return date_str
     
 def remove_punction(s: str) -> str:
     for p in string.punctuation:
@@ -111,9 +123,22 @@ pre_tokenizer = pre_tokenizers.Sequence([Whitespace()])
 
 def normalize(x, min_length = 0):
     normalized = normalizer.normalize_str(x)
-    for c in ['\n', '<', '>', '$']:
+    for c in ['\n', '<', '>', '$',"'","’"]:
         normalized = normalized.replace(c, ' ')
     normalized = remove_punction(normalized)
     normalized = re.sub(' +', ' ', normalized)
     # keep if digit alone
     return " ".join([e[0] for e in pre_tokenizer.pre_tokenize_str(normalized) if (len(e[0]) > min_length) or (e[0] in string.digits)])
+
+def check_doi_glutton(row):
+    if (pd.isna(row.title)==False)&(pd.isna(row.title_OA)==False)&(pd.isna(row.year)==False)&(pd.isna(row.year_OA)==False):
+        if normalize(row.title) == normalize(row.title_OA):
+            if int(row.year) in [int(row.year_OA)-1,int(row.year_OA),int(row.year_OA)+1]:
+                return True
+            else:
+                return False
+    return False
+
+
+
+

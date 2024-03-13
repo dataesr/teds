@@ -26,6 +26,4 @@ def get_doi_glutton(row):
         else:
                 pass
         
-def check_doi_glutton(row):
-    return False
     
