@@ -78,8 +78,16 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         authors=data.get('authorships')
         if authors!=[]:
             countries=list(set(aplatir([author.get('countries') for author in authors]))) 
+            name=list(set(aplatir([author.get('author').get('display_name') for author in authors]))) 
+            institutions=[author.get('institutions') for author in authors]
+            rors=[x.get('ror') for x in institutions]
+            institutions_names=[x.get('display_name') for x in institutions]
         else:
-            countries=[None]
+            countries=None
+            name=None
+            rors=None
+            institutions_names=None
+        
 
         concepts=data.get('concepts')
         if concepts!=[]:
