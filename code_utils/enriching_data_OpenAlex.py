@@ -78,15 +78,19 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         authors=data.get('authorships')
         if authors!=[]:
             countries=list(set(aplatir([author.get('countries') for author in authors]))) 
-            name=list(set(aplatir([author.get('author').get('display_name') for author in authors]))) 
+            name=[{author.get('author').get('display_name'):author.get('countries')} for author in authors]
             institutions=[author.get('institutions') for author in authors]
-            rors=[x.get('ror') for x in institutions]
-            institutions_names=[x.get('display_name') for x in institutions]
+            if len(institutions)>0:
+                rors=[[{y.get('ror'):y.get('country_code')} for y in x ]for x in institutions]
+                institutions_names=[[{y.get('display_name'):y.get('country_code')} for y in x ]for x in institutions]
+            else:
+                rors=[None]
+                institutions_names=[None]
         else:
-            countries=None
-            name=None
-            rors=None
-            institutions_names=None
+            countries=[None]
+            name=[None]
+            rors=[None]
+            institutions_names=[None]
         
 
         concepts=data.get('concepts')
@@ -106,5 +110,5 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None,None,None,None,False,None
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title')
+        return [None],None,None,None,None,None,False,None,None,None,None
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names
