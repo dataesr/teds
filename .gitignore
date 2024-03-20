@@ -14,3 +14,5 @@ env.bak/
 venv.bak/
 .idea/
 ./IPCC_bibliography/AR6/structured_data/*.json
+./IPCC_bibliography/AR6/structured_data/*.xlsx
+./IPCC_bibliography/AR6/structured_data/*.csv
