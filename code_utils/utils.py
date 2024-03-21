@@ -103,10 +103,18 @@ def get_year_ipcc(date_str):
         return date_str[-4:]
     elif (re.match("^\d{4}(?:a|b|c|d|b:|.|submitted)$", str(date_str))):
         return date_str[:4] 
-    elif (re.match("^\((\d{4})\).$", str(date_str))):
-        return date_str[:4] 
+    elif (re.match("^\((\d{4})\).\xa0$", str(date_str))):
+        return date_str[1:5] 
     elif str(date_str).lower() in ['accepted','submitted','in press','n.d.','in review','forthcoming','accepted/in press','in preparation','under review']:
         return None
+    elif re.match("^\d{4}a. $", str(date_str)):
+        return str(date_str)[:4]
+    elif re.match("^\d{4} submitted$", str(date_str)):
+        return date_str[:4] 
+    elif re.match("^\xa0\d{4}.\xa0$", str(date_str)):
+        return date_str[1:5] 
+    elif re.match("^\d{4}. $", str(date_str)):
+        return date_str[:4] 
     else:
         return date_str
     
