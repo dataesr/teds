@@ -99,6 +99,12 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             concepts_names=None
 
+        locations=data.get('locations')
+        if (locations!=[]):
+            locations_names=[location.get('source').get('display_name') for location in locations if pd.isna(location.get('source'))==False]
+        else:
+            locations_names=None
+
         if topics!=[]:
             topics_names=[{'name': topic.get('display_name')} for topic in topics]
         else:
@@ -110,5 +116,5 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None,None,None,None,False,None,None,None,None
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names
+        return [None],None,None,None,None,None,False,None,None,None,None,None
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names,locations_names
