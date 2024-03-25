@@ -144,7 +144,10 @@ def check_doi_glutton(row):
             return True
         else:
             return False
-    return False
+    elif (row.year=='XXXX') | (row.year=='') | (row.year_OA=='') |(pd.isna(row.year)) | (pd.isna(row.year_OA)):
+        return True
+    else:
+        return False
 
 
 
