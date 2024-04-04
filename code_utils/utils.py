@@ -60,16 +60,22 @@ def preprocess(text):
     text = re.sub(' +', ' ', text)
     return text.strip().lower() 
 
-def get_countries(row):
-    if (isinstance(row.countries_x,list)==False)&(isinstance(row.countries_y,list)==False):
-        return None
-    elif (isinstance(row.countries_x,list))&(isinstance(row.countries_y,list)==False):
-        return row.countries_x
-    elif (isinstance(row.countries_x,list)==False)&(isinstance(row.countries_y,list)):
-        return row.countries_y
+def get_xy(column,row):
+    column_x=f"{column}_x"
+    column_y=f"{column}_y"
+    if (isinstance(row[column_y],str))&(isinstance(row[column_x],list)==False):
+        return row[column_y]
+    elif (isinstance(row[column_x],str))&(isinstance(row[column_y],list)==False):
+        return row[column_x]
+    elif (isinstance(row[column_x],float))&(isinstance(row[column_y],list)==False):
+        return row[column_x]
+    elif (isinstance(row[column_x],list))&(isinstance(row[column_y],list)==False):
+        return row[column_x]
+    elif (isinstance(row[column_x],list)==False)&(isinstance(row[column_y],list)):
+        return row[column_y]
     else:
-        return row.countries_x
-
+        return row[column_y]
+    
 def get_year_ipbes(date_str):
     if (re.match("^\d{4}-\d{2}-\d{2}$", date_str)):
         return date_str[:4]
