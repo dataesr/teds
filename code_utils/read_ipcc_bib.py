@@ -16,12 +16,12 @@ def read_bib_file(path, verbose=False):
 def read_bib_wg(wgs,k,verbose=False):
     for i in wgs[k][f'listdir{k}']:
         df=pd.DataFrame(read_bib_file(f"../IPCC_bibliography/AR6/WG{k}/{i}", verbose).entries)
-        df['wg']='wg{k}'
+        df['wg']=f'wg{k}'
         df['chap']=f"wg1_chap_{i[-9:].replace('.bib','').replace('ter','')}"
         wgs[k][f'wg{k}'].append(len(df.doi.dropna())/len(df))
         if k in ['2','2_CROSS']:
             print(f"Fill in missing doi from working group {k} chapter {i[-9:].replace('.bib','').replace('ter','')}")
-            df.loc[pd.isna(df.doi),'doi']=df.loc[pd.isna(df.doi),:].progress_apply(get_doi_glutton, axis=1)
+            #df.loc[pd.isna(df.doi),'doi']=df.loc[pd.isna(df.doi),:].progress_apply(get_doi_glutton, axis=1)
             wgs[k][f'wg{k}_update'].append(len(df.doi.dropna())/len(df))
         df_name = f"df_{i[-9:].replace('.bib','').replace('ter','')}"
         wgs[k][f'dataframes_{k}'][df_name] = df
