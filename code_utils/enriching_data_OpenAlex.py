@@ -78,11 +78,11 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         authors=data.get('authorships')
         if authors!=[]:
             countries=list(set(aplatir([author.get('countries') for author in authors]))) 
-            name=[{author.get('author').get('display_name'):author.get('countries')} for author in authors]
+            name=[(author.get('author').get('display_name'),author.get('countries')) for author in authors]
             institutions=[author.get('institutions') for author in authors]
             if len(institutions)>0:
-                rors=[[{y.get('ror'):y.get('country_code')} for y in x ]for x in institutions]
-                institutions_names=[[{y.get('display_name'):y.get('country_code')} for y in x ]for x in institutions]
+                rors=[(y.get('ror'),y.get('country_code')) for x in institutions for y in x ]
+                institutions_names=[(y.get('display_name'),y.get('country_code')) for x in institutions for y in x ]
             else:
                 rors=[None]
                 institutions_names=[None]
@@ -95,7 +95,7 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
 
         concepts=data.get('concepts')
         if concepts!=[]:
-            concepts_names=[{'name': concept.get('display_name')} for concept in concepts]
+            concepts_names=[concept.get('display_name') for concept in concepts]
         else:
             concepts_names=None
 
@@ -106,7 +106,7 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
             locations_names=None
 
         if topics!=[]:
-            topics_names=[{'name': topic.get('display_name')} for topic in topics]
+            topics_names=[topic.get('display_name') for topic in topics]
         else:
             topics_names=None
 
