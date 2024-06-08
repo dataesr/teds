@@ -105,7 +105,7 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
             for i in range(len(locations)):
                 if locations[i].get('type')=='journal':
                     s+=1
-                    locations_names=locations[i].get('ost_organization_lineage_names')
+                    locations_names=locations[i].get('host_organization_lineage_names')
             if s==0:
                 locations_names=None
         else:
