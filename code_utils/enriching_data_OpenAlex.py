@@ -107,11 +107,14 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
                     if locations[k].get('source').get('type')=='journal':
                         s+=1
                         locations_names=locations[k].get('source').get('host_organization_name')
+                        locations_id=locations[k].get('source').get('issn_l') 
                         break
             if s==0:
                 locations_names=None
+                locations_id=None
         else:
             locations_names=None
+            locations_id=None
 
         if topics!=[]:
             topics_names=[topic.get('display_name') for topic in topics]
@@ -124,5 +127,5 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None,None,None,None,False,None,None,None,None,None
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names,locations_names
+        return [None],None,None,None,None,None,False,None,None,None,None,None,None
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names,locations_names,locations_id
