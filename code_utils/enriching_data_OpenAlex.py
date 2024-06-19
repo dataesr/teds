@@ -38,10 +38,17 @@ def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year
         if 'topics' in list(data.keys()):
             if data.get('topics')!=[]:
                 topics_name=[str(x.get('display_name')).lower() for x in data.get('topics')]
-                if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&((bool_topics(climat_topics,topics_name))==True)):
-                    year_counts_not_ipcc[year]+=1
-                    cached_openalex_data_not_ipcc[year].append(data)
-                    dois.append(data.get('doi'))
+                if ((data.get('doi') not in dois)&(pd.isna(data.get('title'))==False)&((data.get('topics'))!=[])&((data.get('locations'))!=[])&((bool_topics(climat_topics,topics_name))==True)):
+                    for x in data.get('locations'):
+                        if isinstance(x,dict):
+                            if 'source' in list(x.keys()):
+                                if isinstance(x.get('source'),dict):
+                                    if (('display_name' in list(x.get('source')))&('issn_l' in list(x.get('source')))&('type' in list(x.get('source')))):
+                                        if ((pd.isna(x.get('source').get('display_name'))==False)&(x.get('source').get('type')=='journal')&(pd.isna(x.get('source').get('issn_l'))==False)):
+                                            year_counts_not_ipcc[year]+=1
+                                            cached_openalex_data_not_ipcc[year].append(data)
+                                            dois.append(data.get('doi'))
+                                            break
 
 
 def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
@@ -106,7 +113,7 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
                 if pd.isna(locations[k].get('source'))==False:
                     if locations[k].get('source').get('type')=='journal':
                         s+=1
-                        locations_names=locations[k].get('source').get('host_organization_name')
+                        locations_names=locations[k].get('source').get('display_name')
                         locations_id=locations[k].get('source').get('issn_l') 
                         break
             if s==0:
