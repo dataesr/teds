@@ -8,16 +8,22 @@ from urllib import parse
 import pandas as pd
 import matplotlib.pyplot as plt
 
-passw = f"{os.getenv('ES_LOGIN_TEDS_BACK')}:{os.getenv('ES_PASSWORD_TEDS_BACK')}"
-base64_bytes = passw.encode('ascii')
-message_bytes = base64.b64encode(base64_bytes)
-token = message_bytes.decode('ascii')
-url = os.getenv('ES_URL')+'teds-bibliography/_search'
-
-def get_from_es(body):
+def get_from_es(body, nature='teds-bibliography'):
+    if nature=='teds-bibliography':
+        passw = f"{os.getenv('ES_LOGIN_TEDS_BACK')}:{os.getenv('ES_PASSWORD_TEDS_BACK')}"
+        base64_bytes = passw.encode('ascii')
+        message_bytes = base64.b64encode(base64_bytes)
+        token = message_bytes.decode('ascii')
+        url = os.getenv('ES_URL')+'teds-bibliography/_search'
+    else:
+        passw = f"{os.getenv('ES_LOGIN_scanR')}:{os.getenv('ES_PASSWORD_scanR')}"
+        base64_bytes = passw.encode('ascii')
+        message_bytes = base64.b64encode(base64_bytes)
+        token = message_bytes.decode('ascii')
+        url = os.getenv('ES_URL')+'scanr-publications-20241112/_search'
     return requests.post(url, json=body, headers={f'Authorization': f'Basic {token}'}).json()
 
-def get_data_from_elastic(my_filters, size=20):
+def get_data_from_elastic(my_filters,nature, size=20):
     body = {
             'size': 0,
             'query': {
@@ -32,7 +38,7 @@ def get_data_from_elastic(my_filters, size=20):
                 },
                 'track_total_hits': True
             }
-    res = get_from_es(body)
+    res = get_from_es(body,nature)
     return res
 
 def plot_graph(data,list_wg,type='Part',ip=['IPCC','Working Group.s']):
