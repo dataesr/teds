@@ -20,7 +20,7 @@ def get_from_es(body, nature='teds-bibliography'):
         base64_bytes = passw.encode('ascii')
         message_bytes = base64.b64encode(base64_bytes)
         token = message_bytes.decode('ascii')
-        url = os.getenv('ES_URL')+'scanr-publications-20241114/_search'
+        url = os.getenv('ES_URL')+'scanr-publications-20241128/_search'  #14
     return requests.post(url, json=body, headers={f'Authorization': f'Basic {token}'}).json()
 
 def get_data_from_elastic(my_filters,nature, size=20):
