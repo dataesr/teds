@@ -23,7 +23,7 @@ def get_open_alex_data(cached_openalex_data,doi):
 def bool_topics(climat_topics,topics_name):
     for x in climat_topics:
         for y in topics_name: 
-            if y.find(x)>0:
+            if str(y).lower().find(str(x).lower())>0:
                 return False
     return True
 
