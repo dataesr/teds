@@ -25,22 +25,28 @@ geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 
 # 1. Motivation
 
-Analysing and mapping scientific communities provides an insight into the structure and evolution of academic disciplines. This involves providing an analytical and visual representation of the relationships between entities (e.g. researchers, research laboratories, research themes), with the aim, in particular, of understanding the networks and dynamics of scientific collaboration, and identifying collaborative groups and their influences. From the point of view of decision-makers, this type of tool is useful for strategic decision-making with a view to public policy and funding.
+## 1.1 Presentation of IPCC and IPBES: Working Groups and dates
 
-These maps are generally deduced from data in bibliographic databases (open or proprietary), based on co-publication or citation information. In the case of co-publications, two entities (authors, for example) will be linked if they have collaborated (co-published) on a piece of research. These links are then symmetrical. In the case of citation links, two authors will be linked if one cites the research work of another, in the list of references. This is a directed link, as one author may cite another without this being reciprocal. A lot of recent work uses this second approach, for example by trying to calculate composite indicators of novelty (or innovation) based on citation links.
+**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. It has three working groups sees as three main themes :
 
-The quality and completeness of the bibliographic metadata used are, of course, essential if we are to produce a relevant map. Today, the quality of open citation data still needs to be improved, cf [@alperin2024analysissuitabilityopenalexbibliometric].
-On the other hand, it is possible to obtain quality metadata on publications (and therefore links to co-publications). For example, the French Open Science Monitor (BSO) has compiled a corpus of French publications with good coverage cf [@10.1162/qss_a_00179]. This corpus is exposed in the French research portal scanR [@jeangirard:hal-04813230]. This is a corpus containing about 4 millions publications in all disciplines. These publications have been enriched with disambuation persistent identifier (PID) on authors, affiliations and topics. For authors and affiliations, French-specific PID have been used (idref for authors and RNSR for laboratories) because they have the best coverage, even if not perfect. For topics, wikidata identifiers has been used cf [@foppiano2020entity]. Other enrichments, like software detection are also present, and thus usable as entities to map.
+- Working Group I (WGI) focuses on the **physical science** of climate change.
+- Working Group II (WGII) examines climate change impacts, **adaptation**, and vulnerabilities.
+- Working Group III (WGIII) addresses climate change **mitigation** strategies.
+  The Sixth Assessment Report (AR6) was released in stages between 2021 and 2022.
 
-## 1.1 Previous limits of the scanR application
+**The IPBES (Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services)**, established in 2012, assesses biodiversity and ecosystem services. It produces thematic and regional assessments, with the **Global Assessment Report (2019)** highlighting biodiversity loss and the need for urgent action.
+Both platforms provide crucial scientific assessments that inform global climate and biodiversity policies.
 
-Launched in 2016, the scanR portal used to be a search engine. Its scope first focused on research entities (institutions, laboratories and private companies) and was extended in 2020 to cover fundings, publications, patents and authors. Two main use cases were covered. Firstly, the ability to generate a list of search results corresponding to a user query. A list of laboratories, authors, funding or publications could be generated. Secondly, for each institution (or laboratory), a unified view of all the data concerning it was grouped together on a dedicated page in scanR (administrative information, list of publications, list of funding, main partners, etc.).
+## 1.2 Limits of the French Court of Auditors study
 
-However, these functions only gave a flat view of the different dimensions, without providing any insights into the interactions between laboratories or authors. For a user interested in a research theme, for example, the list of the main contributors (those who have co-authored the most publications) does not give a clear idea of which research communities are at work and how they interact with each other. A network analysis tool to describe these interactions and attempt to detect research communities could therefore enable us to go further in creating tools to help explore fields of research and innovation.
+In 2023, the French Court of Auditors conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the sixth IPCC report. The study found that French publications are most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
 
-## 1.2 Network analysis limits
+However, this evaluation has important limitations. The IPCC bibliography, while rigorously selected, is based on high-impact publications often from top journals, making it inherently selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as prominent but still highly relevant and in the same themes as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity and breadth of French scientific contributions to ecological transition.
 
-Network analysis tools for bibliographic studies are used to study the relationships between entities in a corpus. In general, the size of this corpus is limited because the calculations to determine the nodes, links and their positions for very large networks require too many resources, in addition to being very difficult to interpret. As a result, tools such as VOSViewer offer options for limiting the size of networks. The first option is to filter publications with too many authors. This is particularly true of publications in particle physics, which can list several thousand authors. As well as generating very large networks, this hyperauthorship can also be seen as reducing the relevance of the information conveyed by the co-authorship links. The second option offered by VOSViewer is to set thresholds to limit the number of nodes directly (minimum number of publications or minimum number of citations for a node). However, this approach of retaining only the largest nodes in the network can be an obstacle to scaling up to very large corpora of several million documents. Indeed, if we wish to concentrate on a few hundred nodes, the threshold will be very high and the resulting network risks being just a constellation of single nodes with no links between them, the other nodes with which they are linked being in fact made insignificant by the threshold set in terms of the number of publications (or citations) per node. In addition, the processing time for a very large corpus of publications can be very long, making such a tool unusable in a web application where the user expects rapid interaction with the application.
+To address this gap, we propose using a larger dataset, such as scanR. ScanR has a significantly higher coverage of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications.[@10.1162/qss_a_00179]
+Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, offering a broader view of research. This will allow us to capture a more diverse range of topics related to climate change adaptation and mitigation, as well as uncover valuable contributions that may be overlooked in narrower studies.
+
+Initially, we will replicate the Court of Auditors' analysis of the IPCC bibliography to identify the main themes and their proportion of French contributions. Then, we will expand our study to include all French publications in the field, focusing on the institutions, labs, regions, and researchers most involved, and also highlighting contributions that provide solutions to the challenges of environemental solutions. At the same time, we will conduct a similar analysis for the IPBES bibliography, following the same approach to identify the main themes and French contributions, and exploring less visible but valuable research related to biodiversity and ecosystem services.
 
 # 2. Network analysis at scale
 
@@ -101,9 +107,9 @@ We use the open source VOSviewer online tool for network visualization [https://
 
 # 3. Making insightful maps
 
-## 3.1 Citation / hot topics
+## 3.1 why scanR ?
 
-We use citations data from OpenAlex, which is as of today one of the best open source datasource. However, citations metadata from OpenAlex remains incomplete and must therefore be interpreted with caution [@alperin2024analysissuitabilityopenalexbibliometric].
+ScanR has a significantly higher coverage compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications.[@10.1162/qss_a_00179]
 
 ## 3.2 Custom perimeter
 
