@@ -32,21 +32,24 @@ geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 - Working Group I (WGI) focuses on the **physical science** of climate change.
 - Working Group II (WGII) examines climate change impacts, **adaptation**, and vulnerabilities.
 - Working Group III (WGIII) addresses climate change **mitigation** strategies.
-  The Sixth Assessment Report (AR6) was released in stages between 2021 and 2022.
+
+The Sixth Assessment Report (AR6) was released in stages between 2021 and 2022.
 
 **The IPBES (Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services)**, established in 2012, assesses biodiversity and ecosystem services. It produces thematic and regional assessments, with the **Global Assessment Report (2019)** highlighting biodiversity loss and the need for urgent action.
+
 Both platforms provide crucial scientific assessments that inform global climate and biodiversity policies.
 
 ## 1.2 Limits of the French Court of Auditors study
 
-In 2023, the French Court of Auditors conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the sixth IPCC report. The study found that French publications are most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
+In 2023, the French Court of Auditors conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the sixth IPCC report. The study found that French publications are the most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
 
-However, this evaluation has important limitations. The IPCC bibliography, while rigorously selected, is based on high-impact publications often from top journals, making it inherently selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as prominent but still highly relevant and in the same themes as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity and breadth of French scientific contributions to ecological transition.
+However, this evaluation has important limitations. The IPCC bibliography is based on high-impact publications often from top journals, making it quite selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as visible but still in the same themes as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity of French scientific contributions to ecological transition.
 
-To address this gap, we propose using a larger dataset, such as scanR. ScanR has a significantly higher coverage of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications.[@10.1162/qss_a_00179]
-Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, offering a broader view of research. This will allow us to capture a more diverse range of topics related to climate change adaptation and mitigation, as well as uncover valuable contributions that may be overlooked in narrower studies.
+To fill this gap, we propose using a larger dataset, such as scanR. ScanR has a significantly higher coverage of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications.[@10.1162/qss_a_00179]
+Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, showing a larger view of research. This could allow us to capture a more diverse range of topics related to climate change physical science, adaptation and mitigation.
 
-Initially, we will replicate the Court of Auditors' analysis of the IPCC bibliography to identify the main themes and their proportion of French contributions. Then, we will expand our study to include all French publications in the field, focusing on the institutions, labs, regions, and researchers most involved, and also highlighting contributions that provide solutions to the challenges of environemental solutions. At the same time, we will conduct a similar analysis for the IPBES bibliography, following the same approach to identify the main themes and French contributions, and exploring less visible but valuable research related to biodiversity and ecosystem services.
+Initially, we will replicate the Court of Auditors analysis of the IPCC bibliography to identify the main themes and their proportion of French contributions. Then, we will expand our study to know the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
+At the same time, we will conduct a similar analysis for the IPBES bibliography, following the same approach to identify the French contributions, and exploring less visible but valuable research related to biodiversity and ecosystem services.
 
 # 2. Network analysis at scale
 
