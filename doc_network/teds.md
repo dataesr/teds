@@ -39,86 +39,207 @@ The Sixth Assessment Report (AR6) was released in stages between 2021 and 2022.
 
 Both platforms provide crucial scientific assessments that inform global climate and biodiversity policies.
 
-## 1.2 Limits of the French Court of Auditors study
+## 1.2 Limits of the French Court of Audit study
 
-In 2023, the French Court of Auditors conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the sixth IPCC report. The study found that French publications are the most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
+In 2023, the French Court of Audit conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the sixth IPCC report. The study found that French publications are the most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
 
 However, this evaluation has important limitations. The IPCC bibliography is based on high-impact publications often from top journals, making it quite selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as visible but still in the same themes as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity of French scientific contributions to ecological transition.
 
-## 1.3 How can we explore and recognize french publications related to the same topics as IPCC report
+## 1.3 How can we explore and recognize french publications related to the same topics as IPCC report from a global point of view ?
 
-To fill this gap, we propose using a larger dataset, such as scanR. ScanR has a significantly higher coverage of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications.[@10.1162/qss_a_00179]
+To fill this gap, we propose using a larger dataset, such as scanR. **ScanR has a significantly higher coverage** of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications [@10.1162/qss_a_00179].
 Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, showing a larger view of research. This could allow us to capture a more diverse range of topics related to climate change physical science, adaptation and mitigation.
 
-Initially, we will replicate the Court of Auditors analysis of the IPCC bibliography to identify the main themes and their proportion of French contributions. Then, we will expand our study to know the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
+Initially, we will replicate the Court of Audit analysis of the IPCC bibliography to identify the main themes and their proportion of French contributions. Then, we will expand our study to know the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
 At the same time, we will conduct a similar analysis for the IPBES bibliography, following the same approach to identify the French contributions, and exploring less visible but valuable research related to biodiversity and ecosystem services.
 
-# 2. Network analysis at scale
+# 2. IPCC and IPBES Bibliography Analysis and Model
 
-We propose a method for overcoming the limitations set out above. We also use a filtering technique to reduce the size of the network, but with a dual approach: instead of filtering the nodes, we filter the links.
+We propose a method to analyze the bibliographies of IPCC and IPBES reports.
 
-## 2.1 Focusing on strongest interactions
+## 2.1 Data Collection and Cleaning
 
-One of the added values of mapping with a network view is to show the interactions between entities, i.e. the links between the nodes in the graph. These links provide crucial information that can be used to structure communities. If the size of the network needs to be reduced (for reasons of computation, speed, legibility and interpretability), it is vital to preserve the links that carry the most information, i.e. the strongest interactions. With this reasoning, it seems logical to reduce the size of the network by only affecting the strongest links.
+For each report, we collect the references:
 
-Thus, from a given corpus, however large, we seek to extract the pairs of entities with the strongest interactions, for example the most co-signatures per pair of authors. From this list of pairs, we can naturally find the nodes of the graph and deduce a new graph. If the graph has several independent components, i.e. several unconnected sub-graphs, we can decide to keep only the main component(s).
+- For IPCC report, we collect citations in .bib format for each chapter of each working group [@ipccbibliography].
+- For IPBES report, we gather all citations via Zotero [@ipbesbibliography].
 
-## 2.2 Elasticsearch implementation
+Once the data is collected, we clean the DOI (Digital Object Identifier) of each publication. The DOI should follow a specific format starting with '10.'. Any publication without a valid DOI is not considered.
 
-To identify the strongest links, it would be too costly to go through the entire corpus. We have pre-calculated the links at the level of each publication. So, if a publication is linked to 3 themes, T1, T2 and T3, a pre-calculated field, at publication level, contains all T1-T2, T1-T3 and T2-T3 pairs. This co_topics field represents the co-appearance links within the publication. We then use elasticsearch's aggregation functionality to list the most present links, very efficiently.
+## 2.2 Data Enrichment
 
-In practice, a PID is also stored (the wikidata for topics, for example) to disambiguate entities. In practice, for a given query, elasticsearch returns a response containing the strongest links, for example:
+After cleaning, the data contains features such as DOI, title, and main author. However, we still lack information such as institutions, researchers, countries, and topics associated with each publication.
+To fill in the gap, we enrich the data by importing additional features from OpenAlex for each publication with a valid DOI. These features include: countries, year, topics, title, author names, institutions, RORs (Research Organization Registry) and journals.
+
+OpenAlex is an international open-access database that provides metadata on research papers, authors, journals, and institutions. It aims to make academic information more accessible and supports data analysis and knowledge discovery in various fields. OpenAlex is a valuable tool for researchers and educators. We use the Api to import the features.
+
+Next, we use the Biblioglutton Python library to fill in missing DOIs based on the title and main author. We also verify that the year retrieved from OpenAlex matches the year in the original dataset.
+
+## 2.3 Data storage and visualization
+
+Once the data is enriched with openAlex features, we edit the data and push them on a cluster elastic-search. As the exemple, for one publication:
 
 ```json
-                {
-                    "key": "Q15305550###carbon sequestration---Q7942###climate change",
-                    "doc_count": 17,
-                },
-                {
-                    "key": "Q15305550###carbon sequestration---Q623###carbon",
-                    "doc_count": 14,
-                },
-                {
-                    "key": "Q15305550###Carbon sequestration---Q7942###Climate change",
-                    "doc_count": 13,
-                },
-                {
-                    "key": "Q15305550###Carbon sequestration---Q898653###Climate change mitigation",
-                    "doc_count": 10,
-                },
-                {
-                    "key": "Q397350###agroforestry---Q8486###coffee",
-                    "doc_count": 10,
-                },
-                {
-                    "key": "Q15305550###Carbon sequestration---Q1997###CO2",
-                    "doc_count": 9,
-                },
-                {
-                    "key": "Q623###carbon---Q627###nitrogen",
-                    "doc_count": 9,
-                },
-                {
-                    "key": "Q15305550###Carbon sequestration---Q623###carbon",
-                    "doc_count": 7,
-                },
+{
+  "doi": "10.1126/science.aaw6974",
+  "year": "2018",
+  "title": "Impacts of 1.5 °C global warming on natural and human systems",
+  "rors": [
+    ["https://ror.org/00rqy9422", "AU"],
+    ["https://ror.org/03ztgj037", "DE"],
+    ["https://ror.org/03fkc8c64", "JM"],
+    ["https://ror.org/03ztgj037", "DE"],
+    ["https://ror.org/04jr1s763", "IT"],
+    ["https://ror.org/01ryk1543", "GB"],
+    ["https://ror.org/05wwcw481", "GB"],
+    ["https://ror.org/05k07f122", "AR"],
+    ["https://ror.org/03cqe8w59", "AR"],
+    ["https://ror.org/0081fs513", "AR"],
+    ["https://ror.org/05sbt2524", "FR"],
+    ["https://ror.org/02feahw73", "FR"],
+    ["https://ror.org/02rx3b187", "FR"],
+    ["https://ror.org/01wwcfa26", "FR"],
+    ["https://ror.org/05q3vnk25", "FR"],
+    ["https://ror.org/03vmsb260", "JP"],
+    ["https://ror.org/02j4mf075", "ID"],
+    ["https://ror.org/00cvxb145", "US"],
+    ["https://ror.org/03rp50x72", "ZA"],
+    ["https://ror.org/04ex24z53", "FR"],
+    ["https://ror.org/035xkbk20", "FR"],
+    ["https://ror.org/01pa4h393", "FR"],
+    ["https://ror.org/05q3vnk25", "FR"],
+    ["https://ror.org/02feahw73", "FR"],
+    ["https://ror.org/02hw5fp67", "JP"],
+    ["https://ror.org/00ae7jd04", "US"],
+    ["https://ror.org/013meh722", "GB"],
+    ["https://ror.org/0524sp257", "GB"],
+    ["https://ror.org/032e6b942", "DE"],
+    ["https://ror.org/05a28rw58", "CH"],
+    ["https://ror.org/02yr08r26", "DE"],
+    ["https://ror.org/01c8qhb70", "BS"],
+    ["https://ror.org/040tfy969", "GB"],
+    ["https://ror.org/026k5mg93", "GB"],
+    ["https://ror.org/034b53w38", "CN"]
+  ],
+  "ipcc": [
+    { "name": "wg1_chap_01", "wg": "1", "chap": 1 },
+    { "name": "wg2_chap_01", "wg": "2", "chap": 1 },
+    { "name": "wg2_chap_02", "wg": "2", "chap": 2 },
+    { "name": "wg2_chap_04", "wg": "2", "chap": 4 },
+    { "name": "wg2_chap_07", "wg": "2", "chap": 7 },
+    { "name": "wg2_chap_08", "wg": "2", "chap": 8 },
+    { "name": "wg2_chap_12", "wg": "2", "chap": 12 },
+    { "name": "wg2_chap_13", "wg": "2", "chap": 13 },
+    { "name": "wg2_chap_14", "wg": "2", "chap": 14 },
+    { "name": "wg2_chap_15", "wg": "2", "chap": 15 },
+    { "name": "wg2_chap_16", "wg": "2", "chap": 16 },
+    { "name": "wg2_cross_chap_1", "wg": "2_cross", "chap": 1 },
+    { "name": "wg2_cross_chap_4", "wg": "2_cross", "chap": 4 },
+    { "name": "wg3_chap_01", "wg": "3", "chap": 1 },
+    { "name": "wg3_chap_04", "wg": "3", "chap": 4 }
+  ],
+  "authors_name": [
+    ["Ove Hoegh‐Guldberg", ["AU"]],
+    ["Daniela Jacob", ["DE"]],
+    ["Michael A. Taylor", ["JM"]],
+    ["Tania Guillén Bolaños", ["DE"]],
+    ["Marco Bindi", ["IT"]],
+    ["Sally Brown", ["GB"]],
+    ["Inés Angela Camilloni", ["AR"]],
+    ["Arona Diedhiou", ["FR"]],
+    ["Riyanti Djalante", ["ID", "JP"]],
+    ["Kristie L. Ebi", ["US"]],
+    ["François Engelbrecht", ["ZA"]],
+    ["Joël Guiot", ["FR"]],
+    ["Yasuaki Hijioka", ["JP"]],
+    ["Shagun Mehrotra", ["US"]],
+    ["Chris Hope", ["GB"]],
+    ["Antony J. Payne", ["GB"]],
+    ["Hans‐Otto Pörtner", ["DE"]],
+    ["Sonia I. Seneviratne", ["CH"]],
+    ["Adelle Thomas", ["BS", "DE"]],
+    ["Rachel Warren", ["GB"]],
+    ["Guangsheng Zhou", ["CN"]]
+  ],
+  "institutions_names": [
+    ["University of Queensland", "AU"],
+    ["German Climate Computing Centre", "DE"],
+    ["University of the West Indies", "JM"],
+    ["German Climate Computing Centre", "DE"],
+    ["University of Florence", "IT"],
+    ["University of Southampton", "GB"],
+    ["Bournemouth University", "GB"],
+    ["Instituto Franco-Argentino sobre Estudios de Clima y sus Impactos", "AR"],
+    ["Consejo Nacional de Investigaciones Científicas y Técnicas", "AR"],
+    ["University of Buenos Aires", "AR"],
+    ["Grenoble Institute of Technology", "FR"],
+    ["French National Centre for Scientific Research", "FR"],
+    ["Université Grenoble Alpes", "FR"],
+    ["Institute of Environmental Geosciences", "FR"],
+    ["Institut de Recherche pour le Développement", "FR"],
+    [
+      "United Nations University Institute for the Advanced Study of Sustainability",
+      "JP"
+    ],
+    ["Haluoleo University", "ID"],
+    ["University of Washington", "US"],
+    ["University of the Witwatersrand", "ZA"],
+    ["Collège de France", "FR"],
+    ["Aix-Marseille University", "FR"],
+    ["Centre for Research and Teaching in Environmental Geoscience", "FR"],
+    ["Institut de Recherche pour le Développement", "FR"],
+    ["French National Centre for Scientific Research", "FR"],
+    ["National Institute for Environmental Studies", "JP"],
+    ["World Bank", "US"],
+    ["University of Cambridge", "GB"],
+    ["University of Bristol", "GB"],
+    [
+      "Alfred-Wegener-Institut Helmholtz-Zentrum für Polar- und Meeresforschung",
+      "DE"
+    ],
+    ["ETH Zurich", "CH"],
+    ["Climate Analytics", "DE"],
+    ["College of The Bahamas", "BS"],
+    ["Tyndall Centre", "GB"],
+    ["University of East Anglia", "GB"],
+    ["Chinese Academy of Meteorological Sciences", "CN"]
+  ],
+  "countries": [
+    "CHN",
+    "GBR",
+    "FRA",
+    "ITA",
+    "AUS",
+    "JAM",
+    "DEU",
+    "JPN",
+    "ZAF",
+    "USA",
+    "BHS",
+    "CHE",
+    "IDN",
+    "ARG"
+  ],
+  "ipbes": [{ "chapter": "4" }],
+  "topics": [
+    "Impact of Climate Change on Human Migration",
+    "Geoengineering and Climate Ethics",
+    "Economic Implications of Climate Change Policies"
+  ]
+}
 ```
 
-## 2.3 VOSviewer implementation
+After that we used Highcharts, a graphic tool to visualize the graph.
 
-We use the open source VOSviewer online tool for network visualization [https://github.com/neesjanvaneck/VOSviewer-Online](https://github.com/neesjanvaneck/VOSviewer-Online). It is based on the VOSviewer tool which is very popular for network analysis in bibliometric studies [@DBLP:journals/corr/abs-1006-1032].
+## 2.4 Create a database
 
-## 2.4 LLM trick
+## 2.5 Train the model
 
-# 3. Making insightful maps
+# 3. Results
 
-## 3.1 why scanR ?
-
-ScanR has a significantly higher coverage compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications.[@10.1162/qss_a_00179]
+## 3.1
 
 ## 3.2 Custom perimeter
-
-scanR offers this mapping tool for the entire indexed corpus, but it is also possible to adapt the tool to a restricted perimeter, at the user's discretion. For example, an institution or laboratory can define its own corpus (based on a list of publications) and a mapping tool dedicated to this perimeter is automatically created. Technically, elasticsearch queries are the same, with just an additional filter to query only the publications within the perimeter. The tool can be embedded in any website using an iframe. It's the same principle as the local barometer. This approach eliminates the need for automatic alignment of affiliations, which remains a highly complex task. Automation is possible to a certain extent [@lhote_using_2021], but human curation remains necessary in the majority of cases [@jeangirard:hal-04598201]. In this way, users retain control over the definition of their perimeter, and can, if they wish, have several distinct perimeters.
 
 # 4. Code availibility
 
