@@ -18,3 +18,4 @@ venv.bak/
 ./IPCC_bibliography/AR6/structured_data/*.csv
 node_modules/*
 *.docx
+IPCC_bibliography/*

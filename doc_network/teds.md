@@ -19,7 +19,7 @@ keywords:
 geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 ---
 
-**Keywords**: open access, open science, open data, open source
+**Keywords**: french publications, machine learning, open data, open source
 
 # Abstract
 
@@ -229,15 +229,27 @@ Once the data is enriched with openAlex features, we edit the data and push them
 }
 ```
 
-After that we used Highcharts, a graphic tool to visualize the graph.
+After that we used Highcharts, a graphic tool to visualize the graphs. At the same time, we plot the graphs also with python by making elastic-search requests.
 
 ## 2.4 Create a database
+
+After the analysis phase, we were wondering how to make a database with data from IPCC or IPBES bibliography and data from other subjects than IPCC or IPBES topics.
+
+Initially, we explore the data from the reports and analize:
+
+- Their temporal distribution
+- The main topics
+- The main journals were the publications are released
+
+We conclued that the publications from the reports are recents, less than 10 years old for 90% of them.
+
+![Temporal distribution of French IPCC publications ](https://raw.githubusercontent.com/dataesr/teds/doc_network/images/time_distribution_IPCC_model.png)
 
 ## 2.5 Train the model
 
 # 3. Results
 
-## 3.1
+## 3.1 Graphs of IPCC bibliography analysis
 
 ## 3.2 Custom perimeter
 
