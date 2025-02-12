@@ -245,6 +245,20 @@ We conclued that the publications from the reports are recents, less than 10 yea
 
 ![Temporal distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/time_distribution_IPCC_model.png)
 
+Some keywords seems to appear frequently, like "Climate Change".
+
+![Topics distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/topics_distribution_IPCC_model_fr.png)
+
+Many scientific journals release IPCC publications.
+
+![Journals distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/locations_distribution_IPCC_model_fr.png)
+
+Using the OpenAlex API, we can retrieve publications that meet the following criteria:
+
+1. Publications that are **not cited by the IPCC**.
+2. Publications that **do not contain specific terms** such as "climate change" or "environmental impact" in their themes, ensuring that our model remains unbiased.
+3. Publications that have a **global temporal distribution equivalent** to the IPCC's cited publications. For example, in 2018, there were 6,755 publications cited by the IPCC, so we retrieve 6,755 publications from OpenAlex that exclude certain themes. This process is repeated for each year in the temporal distribution of IPCC publications.
+
 ## 2.5 Train the model
 
 # 3. Results
