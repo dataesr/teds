@@ -27,7 +27,7 @@ geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 
 ## 1.1 Presentation of IPCC and IPBES: Working Groups and dates
 
-**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. It has three working groups sees as three main themes :
+**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. It has three working groups sees as three main topics :
 
 - Working Group I (WGI) focuses on the **physical science** of climate change.
 - Working Group II (WGII) examines climate change impacts, **adaptation**, and vulnerabilities.
@@ -43,14 +43,14 @@ Both platforms provide crucial scientific assessments that inform global climate
 
 In 2023, the French Court of Audit conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the sixth IPCC report. The study found that French publications are the most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
 
-However, this evaluation has important limitations. The IPCC bibliography is based on high-impact publications often from top journals, making it quite selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as visible but still in the same themes as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity of French scientific contributions to ecological transition.
+However, this evaluation has important limitations. The IPCC bibliography is based on high-impact publications often from top journals, making it quite selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as visible but still in the same topics as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity of French scientific contributions to ecological transition.
 
 ## 1.3 How can we explore and recognize french publications related to the same topics as IPCC report from a global point of view ?
 
 To fill this gap, we propose using a larger dataset, such as scanR. **ScanR has a significantly higher coverage** of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications [@10.1162/qss_a_00179].
 Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, showing a larger view of research. This could allow us to capture a more diverse range of topics related to climate change physical science, adaptation and mitigation.
 
-Initially, we will replicate the Court of Audit analysis of the IPCC bibliography to identify the main themes and their proportion of French contributions. Then, we will expand our study to know the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
+Initially, we will replicate the Court of Audit analysis of the IPCC bibliography to identify the main topics and their proportion of French contributions. Then, we will expand our study to know the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
 At the same time, we will conduct a similar analysis for the IPBES bibliography, following the same approach to identify the French contributions, and exploring less visible but valuable research related to biodiversity and ecosystem services.
 
 # 2. IPCC and IPBES Bibliography Analysis and Model
@@ -77,7 +77,8 @@ Next, we use the Biblioglutton Python library to fill in missing DOIs based on t
 
 ## 2.3 Data storage and visualization
 
-Once the data is enriched with openAlex features, we edit the data and push them on a cluster elastic-search. As the exemple, for one publication:
+Once the data is enriched with openAlex features, we edit the data and push them on a cluster elastic-search. As an exemple, for one publication (for a better visibility the data is troncated).
+Some publications are used by both reports, with the following keys:
 
 ```json
 {
@@ -87,39 +88,8 @@ Once the data is enriched with openAlex features, we edit the data and push them
   "rors": [
     ["https://ror.org/00rqy9422", "AU"],
     ["https://ror.org/03ztgj037", "DE"],
-    ["https://ror.org/03fkc8c64", "JM"],
-    ["https://ror.org/03ztgj037", "DE"],
-    ["https://ror.org/04jr1s763", "IT"],
-    ["https://ror.org/01ryk1543", "GB"],
-    ["https://ror.org/05wwcw481", "GB"],
-    ["https://ror.org/05k07f122", "AR"],
-    ["https://ror.org/03cqe8w59", "AR"],
-    ["https://ror.org/0081fs513", "AR"],
     ["https://ror.org/05sbt2524", "FR"],
-    ["https://ror.org/02feahw73", "FR"],
-    ["https://ror.org/02rx3b187", "FR"],
-    ["https://ror.org/01wwcfa26", "FR"],
-    ["https://ror.org/05q3vnk25", "FR"],
-    ["https://ror.org/03vmsb260", "JP"],
-    ["https://ror.org/02j4mf075", "ID"],
-    ["https://ror.org/00cvxb145", "US"],
-    ["https://ror.org/03rp50x72", "ZA"],
-    ["https://ror.org/04ex24z53", "FR"],
-    ["https://ror.org/035xkbk20", "FR"],
-    ["https://ror.org/01pa4h393", "FR"],
-    ["https://ror.org/05q3vnk25", "FR"],
-    ["https://ror.org/02feahw73", "FR"],
-    ["https://ror.org/02hw5fp67", "JP"],
-    ["https://ror.org/00ae7jd04", "US"],
-    ["https://ror.org/013meh722", "GB"],
-    ["https://ror.org/0524sp257", "GB"],
-    ["https://ror.org/032e6b942", "DE"],
-    ["https://ror.org/05a28rw58", "CH"],
-    ["https://ror.org/02yr08r26", "DE"],
-    ["https://ror.org/01c8qhb70", "BS"],
-    ["https://ror.org/040tfy969", "GB"],
-    ["https://ror.org/026k5mg93", "GB"],
-    ["https://ror.org/034b53w38", "CN"]
+    ["..."]
   ],
   "ipcc": [
     { "name": "wg1_chap_01", "wg": "1", "chap": 1 },
@@ -142,84 +112,15 @@ Once the data is enriched with openAlex features, we edit the data and push them
     ["Ove Hoegh‐Guldberg", ["AU"]],
     ["Daniela Jacob", ["DE"]],
     ["Michael A. Taylor", ["JM"]],
-    ["Tania Guillén Bolaños", ["DE"]],
-    ["Marco Bindi", ["IT"]],
-    ["Sally Brown", ["GB"]],
-    ["Inés Angela Camilloni", ["AR"]],
-    ["Arona Diedhiou", ["FR"]],
-    ["Riyanti Djalante", ["ID", "JP"]],
-    ["Kristie L. Ebi", ["US"]],
-    ["François Engelbrecht", ["ZA"]],
-    ["Joël Guiot", ["FR"]],
-    ["Yasuaki Hijioka", ["JP"]],
-    ["Shagun Mehrotra", ["US"]],
-    ["Chris Hope", ["GB"]],
-    ["Antony J. Payne", ["GB"]],
-    ["Hans‐Otto Pörtner", ["DE"]],
-    ["Sonia I. Seneviratne", ["CH"]],
-    ["Adelle Thomas", ["BS", "DE"]],
-    ["Rachel Warren", ["GB"]],
-    ["Guangsheng Zhou", ["CN"]]
+    ["..."]
   ],
   "institutions_names": [
     ["University of Queensland", "AU"],
     ["German Climate Computing Centre", "DE"],
     ["University of the West Indies", "JM"],
-    ["German Climate Computing Centre", "DE"],
-    ["University of Florence", "IT"],
-    ["University of Southampton", "GB"],
-    ["Bournemouth University", "GB"],
-    ["Instituto Franco-Argentino sobre Estudios de Clima y sus Impactos", "AR"],
-    ["Consejo Nacional de Investigaciones Científicas y Técnicas", "AR"],
-    ["University of Buenos Aires", "AR"],
-    ["Grenoble Institute of Technology", "FR"],
-    ["French National Centre for Scientific Research", "FR"],
-    ["Université Grenoble Alpes", "FR"],
-    ["Institute of Environmental Geosciences", "FR"],
-    ["Institut de Recherche pour le Développement", "FR"],
-    [
-      "United Nations University Institute for the Advanced Study of Sustainability",
-      "JP"
-    ],
-    ["Haluoleo University", "ID"],
-    ["University of Washington", "US"],
-    ["University of the Witwatersrand", "ZA"],
-    ["Collège de France", "FR"],
-    ["Aix-Marseille University", "FR"],
-    ["Centre for Research and Teaching in Environmental Geoscience", "FR"],
-    ["Institut de Recherche pour le Développement", "FR"],
-    ["French National Centre for Scientific Research", "FR"],
-    ["National Institute for Environmental Studies", "JP"],
-    ["World Bank", "US"],
-    ["University of Cambridge", "GB"],
-    ["University of Bristol", "GB"],
-    [
-      "Alfred-Wegener-Institut Helmholtz-Zentrum für Polar- und Meeresforschung",
-      "DE"
-    ],
-    ["ETH Zurich", "CH"],
-    ["Climate Analytics", "DE"],
-    ["College of The Bahamas", "BS"],
-    ["Tyndall Centre", "GB"],
-    ["University of East Anglia", "GB"],
-    ["Chinese Academy of Meteorological Sciences", "CN"]
+    ["..."]
   ],
-  "countries": [
-    "CHN",
-    "GBR",
-    "FRA",
-    "ITA",
-    "AUS",
-    "JAM",
-    "DEU",
-    "JPN",
-    "ZAF",
-    "USA",
-    "BHS",
-    "CHE",
-    "IDN",
-    "ARG"
-  ],
+  "countries": ["CHN", "GBR", "FRA", "..."],
   "ipbes": [{ "chapter": "4" }],
   "topics": [
     "Impact of Climate Change on Human Migration",
@@ -233,7 +134,19 @@ After that we used Highcharts, a graphic tool to visualize the graphs. At the sa
 
 ## 2.4 Create a database
 
-After the analysis phase, we were wondering how to make a database with data from IPCC or IPBES bibliography and data from other subjects than IPCC or IPBES topics.
+In the enriched database derived from the IPCC and IPBES publications, each publication is associated with the following attributes:
+
+- A unique identifier (**DOI**)
+- The publication **year**
+- A **title** that best summarizes the publication
+- The **main topics** covered by the publication
+- The names of the **journals** in which the publication was published
+
+Out of the 53,258 IPCC publications available on OpenAlex, only 48,219 have non-empty titles, topics, and journal names.
+
+The goal is to identify these 48,219 publications that are not cited by the IPCC to form our training dataset.
+
+After the analysis phase, we were wondering how to make a database with data from IPCC bibliography and data from other subjects than IPCC topics.
 
 Initially, we explore the data from the reports and analize:
 
@@ -241,25 +154,30 @@ Initially, we explore the data from the reports and analize:
 - The main topics
 - The main journals were the publications are released
 
-We conclued that the publications from the reports are recents, less than 10 years old for 90% of them.
+![Temporal distribution of French IPCC publications ](./images/time_distribution_IPCC_model.png)
+![Topics distribution of French IPCC publications ](./images/topics_distribution_IPCC_model_fr.png)
+![Journals distribution of French IPCC publications ](./images/locations_distribution_IPCC_model.png)
 
-![Temporal distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/time_distribution_IPCC_model.png)
+We conclued that the publications from the reports are recents, less than 10 years old for 90% of them. Some keywords seems to appear frequently, like "Climate Change" and many scientific journals release IPCC publications.
 
-Some keywords seems to appear frequently, like "Climate Change".
-
-![Topics distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/topics_distribution_IPCC_model_fr.png)
-
-Many scientific journals release IPCC publications.
-
-![Journals distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/locations_distribution_IPCC_model.png)
-
-Using the OpenAlex API, we can retrieve publications that meet the following criteria:
+Using the OpenAlex API, we found 48,219 publications that meet the following criteria:
 
 1. Publications that are **not cited by the IPCC**.
-2. Publications that **do not contain specific terms** such as "climate change" or "environmental impact" in their themes, ensuring that our model remains unbiased.
-3. Publications that have a **global temporal distribution equivalent** to the IPCC's cited publications. For example, in 2018, there were 6,755 publications cited by the IPCC, so we retrieve 6,755 publications from OpenAlex that exclude certain themes. This process is repeated for each year in the temporal distribution of IPCC publications.
+2. Publications that **do not contain specific terms** according to the top topics, such as "climate change" or "environmental impact" in their topics, ensuring that our model remains unbiased.
+3. Publications that have a **global temporal distribution equivalent** to the IPCC's cited publications. For example, in 2018, there were 6,755 publications cited by the IPCC, so we retrieve 6,755 publications from OpenAlex that exclude certain topics. This process is repeated for each year in the temporal distribution of IPCC publications.
+
+We conduct the exact same method for the IPBES report.
 
 ## 2.5 Train the model
+
+Once the dataset is complete, we split it in two:
+
+- 80% of data will be used to train the model
+- 20% will be used as a test base
+
+To train the model, we use fasttext. FastText is a library developed by Facebook AI Research for learning word representations and text classification. Unlike Word2Vec, FastText breaks words into subwords, improving its ability to handle rare or out-of-vocabulary words. It's fast, efficient, and supports multilingual models, making it ideal for various natural language processing tasks like sentiment analysis and text classification.
+
+Fasttext enable to vectorize and apply a linear regression on the data
 
 # 3. Results
 
@@ -269,6 +187,6 @@ Using the OpenAlex API, we can retrieve publications that meet the following cri
 
 # 4. Code availibility
 
-The code developed for the scanR web application is open source and available online on GitHub [https://github.com/dataesr/scanr-ui](https://github.com/dataesr/scanr-ui)
+The code developed is open source and available online on GitHub [https://github.com/dataesr/teds](https://github.com/dataesr/teds)
 
 # References

@@ -81,6 +81,19 @@ learning, scanR, OpenAlex, Biblioglutton, Elasticsearch},
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -147,7 +160,8 @@ France}
 \begin{document}
 \maketitle
 
-\textbf{Keywords}: open access, open science, open data, open source
+\textbf{Keywords}: french publications, machine learning, open data,
+open source
 
 \hypertarget{motivation}{%
 \section{1. Motivation}\label{motivation}}
@@ -236,14 +250,14 @@ identify the French contributions, and exploring less visible but
 valuable research related to biodiversity and ecosystem services.
 
 \hypertarget{ipcc-and-ipbes-bibliography-analysis-and-model}{%
-\subsubsection{2. IPCC and IPBES Bibliography Analysis and
+\section{2. IPCC and IPBES Bibliography Analysis and
 Model}\label{ipcc-and-ipbes-bibliography-analysis-and-model}}
 
 We propose a method to analyze the bibliographies of IPCC and IPBES
 reports.
 
 \hypertarget{data-collection-and-cleaning}{%
-\paragraph{2.1 Data Collection and
+\subsection{2.1 Data Collection and
 Cleaning}\label{data-collection-and-cleaning}}
 
 For each report, we collect the references:
@@ -262,7 +276,7 @@ of each publication. The DOI should follow a specific format starting
 with `10.'. Any publication without a valid DOI is not considered.
 
 \hypertarget{data-enrichment}{%
-\paragraph{2.2 Data Enrichment}\label{data-enrichment}}
+\subsection{2.2 Data Enrichment}\label{data-enrichment}}
 
 After cleaning, the data contains features such as DOI, title, and main
 author. However, we still lack information such as institutions,
@@ -287,8 +301,9 @@ retrieved from OpenAlex matches the year in the original dataset.
 visualization}\label{data-storage-and-visualization}}
 
 Once the data is enriched with openAlex features, we edit the data and
-push them on a cluster elastic-search. As the exemple, for one
-publication:
+push them on a cluster elastic-search. As an exemple, for one
+publication (for a better visibility the data is troncated). Some
+publications are used by both reports, with the following keys:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -299,44 +314,12 @@ publication:
   \DataTypeTok{"rors"}\FunctionTok{:} \OtherTok{[}
     \OtherTok{[}\StringTok{"https://ror.org/00rqy9422"}\OtherTok{,} \StringTok{"AU"}\OtherTok{],}
     \OtherTok{[}\StringTok{"https://ror.org/03ztgj037"}\OtherTok{,} \StringTok{"DE"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/03fkc8c64"}\OtherTok{,} \StringTok{"JM"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/03ztgj037"}\OtherTok{,} \StringTok{"DE"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/04jr1s763"}\OtherTok{,} \StringTok{"IT"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/01ryk1543"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/05wwcw481"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/05k07f122"}\OtherTok{,} \StringTok{"AR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/03cqe8w59"}\OtherTok{,} \StringTok{"AR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/0081fs513"}\OtherTok{,} \StringTok{"AR"}\OtherTok{],}
     \OtherTok{[}\StringTok{"https://ror.org/05sbt2524"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/02feahw73"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/02rx3b187"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/01wwcfa26"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/05q3vnk25"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/03vmsb260"}\OtherTok{,} \StringTok{"JP"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/02j4mf075"}\OtherTok{,} \StringTok{"ID"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/00cvxb145"}\OtherTok{,} \StringTok{"US"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/03rp50x72"}\OtherTok{,} \StringTok{"ZA"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/04ex24z53"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/035xkbk20"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/01pa4h393"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/05q3vnk25"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/02feahw73"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/02hw5fp67"}\OtherTok{,} \StringTok{"JP"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/00ae7jd04"}\OtherTok{,} \StringTok{"US"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/013meh722"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/0524sp257"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/032e6b942"}\OtherTok{,} \StringTok{"DE"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/05a28rw58"}\OtherTok{,} \StringTok{"CH"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/02yr08r26"}\OtherTok{,} \StringTok{"DE"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/01c8qhb70"}\OtherTok{,} \StringTok{"BS"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/040tfy969"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/026k5mg93"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"https://ror.org/034b53w38"}\OtherTok{,} \StringTok{"CN"}\OtherTok{]}
+    \OtherTok{[}\StringTok{"..."}\OtherTok{]}
   \OtherTok{]}\FunctionTok{,}
   \DataTypeTok{"ipcc"}\FunctionTok{:} \OtherTok{[}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg1\_chap\_01"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"1"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{1} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_01"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{1} \FunctionTok{\}}\OtherTok{,}
-    \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_02"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{2} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_02"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{2} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_04"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{4} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_07"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{7} \FunctionTok{\}}\OtherTok{,}
@@ -345,10 +328,8 @@ publication:
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_13"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{13} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_14"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{14} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_15"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{15} \FunctionTok{\}}\OtherTok{,}
-    \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_15"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{15} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_chap\_16"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{16} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_cross\_chap\_1"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2\_cross"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{1} \FunctionTok{\}}\OtherTok{,}
-    \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_cross\_chap\_4"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2\_cross"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{4} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg2\_cross\_chap\_4"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"2\_cross"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{4} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg3\_chap\_01"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"3"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{1} \FunctionTok{\}}\OtherTok{,}
     \FunctionTok{\{} \DataTypeTok{"name"}\FunctionTok{:} \StringTok{"wg3\_chap\_04"}\FunctionTok{,} \DataTypeTok{"wg"}\FunctionTok{:} \StringTok{"3"}\FunctionTok{,} \DataTypeTok{"chap"}\FunctionTok{:} \DecValTok{4} \FunctionTok{\}}
@@ -357,84 +338,15 @@ publication:
     \OtherTok{[}\StringTok{"Ove Hoegh‐Guldberg"}\OtherTok{,} \OtherTok{[}\StringTok{"AU"}\OtherTok{]],}
     \OtherTok{[}\StringTok{"Daniela Jacob"}\OtherTok{,} \OtherTok{[}\StringTok{"DE"}\OtherTok{]],}
     \OtherTok{[}\StringTok{"Michael A. Taylor"}\OtherTok{,} \OtherTok{[}\StringTok{"JM"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Tania Guillén Bolaños"}\OtherTok{,} \OtherTok{[}\StringTok{"DE"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Marco Bindi"}\OtherTok{,} \OtherTok{[}\StringTok{"IT"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Sally Brown"}\OtherTok{,} \OtherTok{[}\StringTok{"GB"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Inés Angela Camilloni"}\OtherTok{,} \OtherTok{[}\StringTok{"AR"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Arona Diedhiou"}\OtherTok{,} \OtherTok{[}\StringTok{"FR"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Riyanti Djalante"}\OtherTok{,} \OtherTok{[}\StringTok{"ID"}\OtherTok{,} \StringTok{"JP"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Kristie L. Ebi"}\OtherTok{,} \OtherTok{[}\StringTok{"US"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"François Engelbrecht"}\OtherTok{,} \OtherTok{[}\StringTok{"ZA"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Joël Guiot"}\OtherTok{,} \OtherTok{[}\StringTok{"FR"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Yasuaki Hijioka"}\OtherTok{,} \OtherTok{[}\StringTok{"JP"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Shagun Mehrotra"}\OtherTok{,} \OtherTok{[}\StringTok{"US"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Chris Hope"}\OtherTok{,} \OtherTok{[}\StringTok{"GB"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Antony J. Payne"}\OtherTok{,} \OtherTok{[}\StringTok{"GB"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Hans‐Otto Pörtner"}\OtherTok{,} \OtherTok{[}\StringTok{"DE"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Sonia I. Seneviratne"}\OtherTok{,} \OtherTok{[}\StringTok{"CH"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Adelle Thomas"}\OtherTok{,} \OtherTok{[}\StringTok{"BS"}\OtherTok{,} \StringTok{"DE"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Rachel Warren"}\OtherTok{,} \OtherTok{[}\StringTok{"GB"}\OtherTok{]],}
-    \OtherTok{[}\StringTok{"Guangsheng Zhou"}\OtherTok{,} \OtherTok{[}\StringTok{"CN"}\OtherTok{]]}
+    \OtherTok{[}\StringTok{"..."}\OtherTok{]}
   \OtherTok{]}\FunctionTok{,}
   \DataTypeTok{"institutions\_names"}\FunctionTok{:} \OtherTok{[}
     \OtherTok{[}\StringTok{"University of Queensland"}\OtherTok{,} \StringTok{"AU"}\OtherTok{],}
     \OtherTok{[}\StringTok{"German Climate Computing Centre"}\OtherTok{,} \StringTok{"DE"}\OtherTok{],}
     \OtherTok{[}\StringTok{"University of the West Indies"}\OtherTok{,} \StringTok{"JM"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"German Climate Computing Centre"}\OtherTok{,} \StringTok{"DE"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of Florence"}\OtherTok{,} \StringTok{"IT"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of Southampton"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Bournemouth University"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Instituto Franco{-}Argentino sobre Estudios de Clima y sus Impactos"}\OtherTok{,} \StringTok{"AR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Consejo Nacional de Investigaciones Científicas y Técnicas"}\OtherTok{,} \StringTok{"AR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of Buenos Aires"}\OtherTok{,} \StringTok{"AR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Grenoble Institute of Technology"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"French National Centre for Scientific Research"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Université Grenoble Alpes"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Institute of Environmental Geosciences"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Institut de Recherche pour le Développement"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}
-      \StringTok{"United Nations University Institute for the Advanced Study of Sustainability"}\OtherTok{,}
-      \StringTok{"JP"}
-    \OtherTok{],}
-    \OtherTok{[}\StringTok{"Haluoleo University"}\OtherTok{,} \StringTok{"ID"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of Washington"}\OtherTok{,} \StringTok{"US"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of the Witwatersrand"}\OtherTok{,} \StringTok{"ZA"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Collège de France"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Aix{-}Marseille University"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Centre for Research and Teaching in Environmental Geoscience"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Institut de Recherche pour le Développement"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"French National Centre for Scientific Research"}\OtherTok{,} \StringTok{"FR"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"National Institute for Environmental Studies"}\OtherTok{,} \StringTok{"JP"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"World Bank"}\OtherTok{,} \StringTok{"US"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of Cambridge"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of Bristol"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}
-      \StringTok{"Alfred{-}Wegener{-}Institut Helmholtz{-}Zentrum für Polar{-} und Meeresforschung"}\OtherTok{,}
-      \StringTok{"DE"}
-    \OtherTok{],}
-    \OtherTok{[}\StringTok{"ETH Zurich"}\OtherTok{,} \StringTok{"CH"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Climate Analytics"}\OtherTok{,} \StringTok{"DE"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"College of The Bahamas"}\OtherTok{,} \StringTok{"BS"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Tyndall Centre"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"University of East Anglia"}\OtherTok{,} \StringTok{"GB"}\OtherTok{],}
-    \OtherTok{[}\StringTok{"Chinese Academy of Meteorological Sciences"}\OtherTok{,} \StringTok{"CN"}\OtherTok{]}
+    \OtherTok{[}\StringTok{"..."}\OtherTok{]}
   \OtherTok{]}\FunctionTok{,}
-  \DataTypeTok{"countries"}\FunctionTok{:} \OtherTok{[}
-    \StringTok{"CHN"}\OtherTok{,}
-    \StringTok{"GBR"}\OtherTok{,}
-    \StringTok{"FRA"}\OtherTok{,}
-    \StringTok{"ITA"}\OtherTok{,}
-    \StringTok{"AUS"}\OtherTok{,}
-    \StringTok{"JAM"}\OtherTok{,}
-    \StringTok{"DEU"}\OtherTok{,}
-    \StringTok{"JPN"}\OtherTok{,}
-    \StringTok{"ZAF"}\OtherTok{,}
-    \StringTok{"USA"}\OtherTok{,}
-    \StringTok{"BHS"}\OtherTok{,}
-    \StringTok{"CHE"}\OtherTok{,}
-    \StringTok{"IDN"}\OtherTok{,}
-    \StringTok{"ARG"}
-  \OtherTok{]}\FunctionTok{,}
+  \DataTypeTok{"countries"}\FunctionTok{:} \OtherTok{[}\StringTok{"CHN"}\OtherTok{,} \StringTok{"GBR"}\OtherTok{,} \StringTok{"FRA"}\OtherTok{,} \StringTok{"..."}\OtherTok{]}\FunctionTok{,}
   \DataTypeTok{"ipbes"}\FunctionTok{:} \OtherTok{[}\FunctionTok{\{} \DataTypeTok{"chapter"}\FunctionTok{:} \StringTok{"4"} \FunctionTok{\}}\OtherTok{]}\FunctionTok{,}
   \DataTypeTok{"topics"}\FunctionTok{:} \OtherTok{[}
     \StringTok{"Impact of Climate Change on Human Migration"}\OtherTok{,}
@@ -445,44 +357,122 @@ publication:
 \end{Highlighting}
 \end{Shaded}
 
-After that we used Highcharts, a graphic tool to visualize the graph.
+After that we used Highcharts, a graphic tool to visualize the graphs.
+At the same time, we plot the graphs also with python by making
+elastic-search requests.
 
 \hypertarget{create-a-database}{%
 \subsection{2.4 Create a database}\label{create-a-database}}
 
+In the enriched database derived from the IPCC and IPBES publications,
+each publication is associated with the following attributes:
+
+\begin{itemize}
+\tightlist
+\item
+  A unique identifier (\textbf{DOI})
+\item
+  The publication \textbf{year}
+\item
+  A \textbf{title} that best summarizes the publication
+\item
+  The \textbf{main themes} covered by the publication
+\item
+  The names of the \textbf{journals} in which the publication was
+  published
+\end{itemize}
+
+Out of the 53,258 IPCC publications available on OpenAlex, only 48,219
+have non-empty titles, themes, and journal names.
+
+The goal is to identify these 48,219 publications that are not cited by
+the IPCC to form our training dataset.
+
+After the analysis phase, we were wondering how to make a database with
+data from IPCC bibliography and data from other subjects than IPCC
+topics.
+
+Initially, we explore the data from the reports and analize:
+
+\begin{itemize}
+\tightlist
+\item
+  Their temporal distribution
+\item
+  The main topics
+\item
+  The main journals were the publications are released
+\end{itemize}
+
+\includegraphics{./images/time_distribution_IPCC_model.png}
+\includegraphics{./images/topics_distribution_IPCC_model_fr.png}
+\includegraphics{./images/locations_distribution_IPCC_model.png} We
+conclued that the publications from the reports are recents, less than
+10 years old for 90\% of them. Some keywords seems to appear frequently,
+like ``Climate Change'' and many scientific journals release IPCC
+publications.
+
+Using the OpenAlex API, we found 48,219 publications that meet the
+following criteria:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Publications that are \textbf{not cited by the IPCC}.
+\item
+  Publications that \textbf{do not contain specific terms} according to
+  the top topics, such as ``climate change'' or ``environmental impact''
+  in their topics, ensuring that our model remains unbiased.
+\item
+  Publications that have a \textbf{global temporal distribution
+  equivalent} to the IPCC's cited publications. For example, in 2018,
+  there were 6,755 publications cited by the IPCC, so we retrieve 6,755
+  publications from OpenAlex that exclude certain themes. This process
+  is repeated for each year in the temporal distribution of IPCC
+  publications.
+\end{enumerate}
+
+We conduct the exact same method for the IPBES report.
+
 \hypertarget{train-the-model}{%
 \subsection{2.5 Train the model}\label{train-the-model}}
+
+Once the dataset is complete, we split it in two:
+
+\begin{itemize}
+\tightlist
+\item
+  80\% of data will be used to train the model
+\item
+  20\% will be used as a test base
+\end{itemize}
+
+To train the model, we use fasttext. FastText is a library developed by
+Facebook AI Research for learning word representations and text
+classification. Unlike Word2Vec, FastText breaks words into subwords,
+improving its ability to handle rare or out-of-vocabulary words. It's
+fast, efficient, and supports multilingual models, making it ideal for
+various natural language processing tasks like sentiment analysis and
+text classification.
+
+Fasttext enable to vectorize and apply a linear regression on the data
 
 \hypertarget{results}{%
 \section{3. Results}\label{results}}
 
-\hypertarget{section}{%
-\subsection{3.1}\label{section}}
+\hypertarget{graphs-of-ipcc-bibliography-analysis}{%
+\subsection{3.1 Graphs of IPCC bibliography
+analysis}\label{graphs-of-ipcc-bibliography-analysis}}
 
 \hypertarget{custom-perimeter}{%
 \subsection{3.2 Custom perimeter}\label{custom-perimeter}}
 
-scanR offers this mapping tool for the entire indexed corpus, but it is
-also possible to adapt the tool to a restricted perimeter, at the user's
-discretion. For example, an institution or laboratory can define its own
-corpus (based on a list of publications) and a mapping tool dedicated to
-this perimeter is automatically created. Technically, elasticsearch
-queries are the same, with just an additional filter to query only the
-publications within the perimeter. The tool can be embedded in any
-website using an iframe. It's the same principle as the local barometer.
-This approach eliminates the need for automatic alignment of
-affiliations, which remains a highly complex task. Automation is
-possible to a certain extent ({\textbf{???}}), but human curation
-remains necessary in the majority of cases (Jeangirard, Bracco, and
-L'Hôte 2024). In this way, users retain control over the definition of
-their perimeter, and can, if they wish, have several distinct
-perimeters.
-
 \hypertarget{code-availibility}{%
 \section{4. Code availibility}\label{code-availibility}}
 
-The code developed for the scanR web application is open source and
-available online on GitHub \url{https://github.com/dataesr/scanr-ui}
+The code developed is open source and available online on GitHub
+\url{https://github.com/dataesr/teds}
 
 \hypertarget{references}{%
 \section*{References}\label{references}}
@@ -495,11 +485,6 @@ Chaignon, Lauranne, and Daniel Egret. 2022. ``Identifying Scientific
 Publications Countrywide and Measuring Their Open Access: The Case of
 the French Open Science Barometer (Bso).'' \emph{Quantitative Science
 Studies} 3 (1): 18--36. \url{https://doi.org/10.1162/qss_a_00179}.
-
-\leavevmode\hypertarget{ref-jeangirard:hal-04598201}{}%
-Jeangirard, Eric, Laetitia Bracco, and Anne L'Hôte. 2024. ``Works-magnet
-: aucune de perdue, 10 000 de retrouvées.'' Abes; Journées Abes 2024.
-\url{https://doi.org/10.5281/zenodo.11471247}.
 
 \leavevmode\hypertarget{ref-ipccbibliography}{}%
 n.d.a. \url{https://www.ipcc.ch/report/ar6}.
