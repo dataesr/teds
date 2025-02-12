@@ -251,7 +251,7 @@ Some keywords seems to appear frequently, like "Climate Change".
 
 Many scientific journals release IPCC publications.
 
-![Journals distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/locations_distribution_IPCC_model_fr.png)
+![Journals distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/locations_distribution_IPCC_model.png)
 
 Using the OpenAlex API, we can retrieve publications that meet the following criteria:
 
