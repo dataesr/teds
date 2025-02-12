@@ -243,7 +243,7 @@ Initially, we explore the data from the reports and analize:
 
 We conclued that the publications from the reports are recents, less than 10 years old for 90% of them.
 
-![Temporal distribution of French IPCC publications ](https://raw.githubusercontent.com/dataesr/teds/doc_network/images/time_distribution_IPCC_model.png)
+![Temporal distribution of French IPCC publications ](https://github.com/dataesr/teds/blob/main/doc_network/images/time_distribution_IPCC_model.png)
 
 ## 2.5 Train the model
 
