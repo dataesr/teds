@@ -172,7 +172,7 @@ dates}\label{presentation-of-ipcc-and-ipbes-working-groups-and-dates}}
 
 \textbf{The IPCC (Intergovernmental Panel on Climate Change)} assesses
 scientific information on climate change, providing reports to guide
-policymakers. It has three working groups sees as three main themes :
+policymakers. It has three working groups sees as three main topics :
 
 \begin{itemize}
 \tightlist
@@ -215,7 +215,7 @@ However, this evaluation has important limitations. The IPCC
 bibliography is based on high-impact publications often from top
 journals, making it quite selective. This selection prioritizes more
 visible and well-known works, leaving out other important research that
-may not be as visible but still in the same themes as IPCC report. While
+may not be as visible but still in the same topics as IPCC report. While
 this reflects France's scientific excellence, it does not fully
 represent the diversity of French scientific contributions to ecological
 transition.
@@ -238,7 +238,7 @@ range of topics related to climate change physical science, adaptation
 and mitigation.
 
 Initially, we will replicate the Court of Audit analysis of the IPCC
-bibliography to identify the main themes and their proportion of French
+bibliography to identify the main topics and their proportion of French
 contributions. Then, we will expand our study to know the top
 institutions, labs, regions, and researchers that provide solutions to
 the challenges of environemental transition in France, based on IPCC
@@ -376,14 +376,14 @@ each publication is associated with the following attributes:
 \item
   A \textbf{title} that best summarizes the publication
 \item
-  The \textbf{main themes} covered by the publication
+  The \textbf{main topics} covered by the publication
 \item
   The names of the \textbf{journals} in which the publication was
   published
 \end{itemize}
 
 Out of the 53,258 IPCC publications available on OpenAlex, only 48,219
-have non-empty titles, themes, and journal names.
+have non-empty titles, topics, and journal names.
 
 The goal is to identify these 48,219 publications that are not cited by
 the IPCC to form our training dataset.
@@ -405,12 +405,13 @@ Initially, we explore the data from the reports and analize:
 \end{itemize}
 
 \includegraphics{./images/time_distribution_IPCC_model.png}
-\includegraphics{./images/topics_distribution_IPCC_model_fr.png}
-\includegraphics{./images/locations_distribution_IPCC_model.png} We
-conclued that the publications from the reports are recents, less than
-10 years old for 90\% of them. Some keywords seems to appear frequently,
-like ``Climate Change'' and many scientific journals release IPCC
-publications.
+\includegraphics{./images/topics_distribution_IPCC_model.png}
+\includegraphics{./images/locations_distribution_IPCC_model.png}
+
+We conclued that the publications from the reports are recents, less
+than 10 years old for 90\% of them. Some keywords seems to appear
+frequently, like ``Climate Change'' and many scientific journals release
+IPCC publications.
 
 Using the OpenAlex API, we found 48,219 publications that meet the
 following criteria:
@@ -428,7 +429,7 @@ following criteria:
   Publications that have a \textbf{global temporal distribution
   equivalent} to the IPCC's cited publications. For example, in 2018,
   there were 6,755 publications cited by the IPCC, so we retrieve 6,755
-  publications from OpenAlex that exclude certain themes. This process
+  publications from OpenAlex that exclude certain topics. This process
   is repeated for each year in the temporal distribution of IPCC
   publications.
 \end{enumerate}

@@ -155,10 +155,10 @@ Initially, we explore the data from the reports and analize:
 - The main journals were the publications are released
 
 ![Temporal distribution of French IPCC publications ](./images/time_distribution_IPCC_model.png)
-![Topics distribution of French IPCC publications ](./images/topics_distribution_IPCC_model_fr.png)
+![Topics distribution of French IPCC publications ](./images/topics_distribution_IPCC_model.png)
 ![Journals distribution of French IPCC publications ](./images/locations_distribution_IPCC_model.png)
 
-We conclued that the publications from the reports are recents, less than 10 years old for 90% of them. Some keywords seems to appear frequently, like "Climate Change" and many scientific journals release IPCC publications.
+We conclued that the publications from the reports are recents, less than 10 years old for 90% of them. Some keywords seems to appear frequently, like "Climate Change" and IPCC publications are mainly released by scientific journals.
 
 Using the OpenAlex API, we found 48,219 publications that meet the following criteria:
 
@@ -177,11 +177,20 @@ Once the dataset is complete, we split it in two:
 
 To train the model, we use fasttext. FastText is a library developed by Facebook AI Research for learning word representations and text classification. Unlike Word2Vec, FastText breaks words into subwords, improving its ability to handle rare or out-of-vocabulary words. It's fast, efficient, and supports multilingual models, making it ideal for various natural language processing tasks like sentiment analysis and text classification.
 
-Fasttext enable to vectorize and apply a linear regression on the data
+Fasttext enable to vectorize and apply a linear regression on the data. We try 2 kind of model:
+
+- a model that determine if a publication is align with the same themes as the IPCC or IPBES report.
 
 # 3. Results
 
 ## 3.1 Graphs of IPCC bibliography analysis
+
+une image classement mondial (ipcc et ipbes)
+![Temporal distribution of French IPCC publications ](./images/time_distribution_IPCC_model.png)
+un image avec les 3wg
+une image avec les 5 pays et les pourcentages relatifs (pcq 1 publication peut etre citée plusieurs fois)
+
+institutions, labo et top chercheurs
 
 ## 3.2 Custom perimeter
 
