@@ -192,7 +192,11 @@ une image avec les 5 pays et les pourcentages relatifs (pcq 1 publication peut e
 
 institutions, labo et top chercheurs
 
-## 3.2 Custom perimeter
+## 3.2 Models performances
+
+## 3.3 The models on ScanR publications
+
+## 3.4 On OpenAlex
 
 # 4. Code availibility
 
