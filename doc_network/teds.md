@@ -19,7 +19,7 @@ keywords:
 geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 ---
 
-**Keywords**: french publications, machine learning, open data, open source
+**Keywords**: french publications, machine learning, open data, open source, scanR, OpenAlex
 
 # Abstract
 
@@ -181,16 +181,37 @@ Fasttext enable to vectorize and apply a linear regression on the data. We try 2
 
 - a model that determine if a publication is align with the same themes as the IPCC or IPBES report.
 
+## 2.6 Comparative analysis of country contributions to IPCC Reports
+
+In the first part of our analysis, we examined the publications from IPCC reports and compared the contributions of different countries. Now, we want to evaluate these contributions from a global perspective.
+
+To simplify the process, we apply filters, as using the initial model (IPCC-like vs. non-IPCC) proves to be too resource-intensive. Instead, we focus on a easier approach.
+
+We begin by analyzing French publications tagged as "IPCC" in ScanR, using the model to identify key themes and frequently appearing words in the titles and abstracts of publications related to the IPCC reports. Based on this analysis, we establish filters to apply to a sample that is 42 times larger than ScanR: OpenAlex.
+
 # 3. Results
 
-## 3.1 Graphs of IPCC bibliography analysis
+## 3.1 France in the publications cited by the IPCC Reports
 
-une image classement mondial (ipcc et ipbes)
-![Temporal distribution of French IPCC publications ](./images/time_distribution_IPCC_model.png)
-un image avec les 3wg
-une image avec les 5 pays et les pourcentages relatifs (pcq 1 publication peut etre citée plusieurs fois)
+### French publications cited by the IPCC
 
-institutions, labo et top chercheurs
+A total of 3,925 French publications are cited in the IPCC reports out of a total of 53,258 publications. This represents 7.4% of the total publications cited. France holds the 7th position in the ranking, just behind Canada and China, within the top 20 countries.
+
+![Part of IPCC publications for all working groups ](./images/teds_ipcc_country_wg122cross3_part.png)
+
+### France's position in specific research areas
+
+France leads in publications related to physical sciences but is less frequently cited in areas concerning adaptation and mitigation.
+
+![ Part of IPCC publications for each working groups](./images/teds_ipcc_wg_ens_part.png)
+
+French publications are more concentrated than those from other countries on theoretical sciences, as well as on documenting the impacts and risks related to ecosystems such as coral reefs, forests, and deserts.
+
+![Part of IPCC publications for five countries ](./images/teds_ipcc_5countries_interfaces.png)
+
+These findings align with the results from the French Court of Audit, which also highlights a strong focus on physical sciences, with less emphasis on adaptation and mitigation strategies.
+
+## Top institutions, laboratories and researchers in France
 
 ## 3.2 Models performances
 
