@@ -27,8 +27,11 @@ def bool_topics(climat_topics,topics_name):
                 return False
     return True
 
-def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year_counts,year_counts_not_ipcc,year):
-    climat_topics=['climate change','ecological','global methane emissions and impacts','impact of ocean acidification on marine ecosystems','arctic sea ice variability and decline','environmental impact','climate ethics','climate and hydrological cycle','global energy transition','environmental behavior','influence of climate','urban heat islands and mitigation strategies','impact on climate','environmental policies','carbon dioxide capture and storage technologies','soil carbon dynamics and nutrient cycling in ecosystems','sustainable development','environmental governance']
+def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year_counts,year_counts_not_ipcc,year,ipcc="ipcc"):
+    if ipcc=="ipcc":
+        climat_topics=['climate change','ecological','global methane emissions and impacts','impact of ocean acidification on marine ecosystems','arctic sea ice variability and decline','environmental impact','climate ethics','climate and hydrological cycle','global energy transition','environmental behavior','influence of climate','urban heat islands and mitigation strategies','impact on climate','environmental policies','carbon dioxide capture and storage technologies','soil carbon dynamics and nutrient cycling in ecosystems','sustainable development','environmental governance']
+    else:
+        climat_topics=['biodiversity','environmental','marine ecosystems','plant and animal studies','species distribution and climate change','marine biology','ocean acidification effects and responses','marine and fisheries research','indigenous studies and ecology','sustainability','ecosystem services','land use']
     url=f"https://api.openalex.org/works?filter=has_doi:true,concepts_count:>0,publication_year:{year}&sample=200&per-page=200"
     response = requests.get(url)
     data0 = response.json().get('results')

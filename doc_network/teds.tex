@@ -37,8 +37,8 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   pdftitle={Mapping scientific communities at scale},
-  pdfkeywords={French publications, Machine
-learning, scanR, OpenAlex, Biblioglutton, Elasticsearch},
+  pdfkeywords={French publications, IPCC, IPBES, Machine
+learning, NLP, open data, open source, scanR, OpenAlex},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -160,8 +160,8 @@ France}
 \begin{document}
 \maketitle
 
-\textbf{Keywords}: french publications, machine learning, open data,
-open source
+\textbf{Keywords}: French publications, IPCC, IPBES, Machine learning,
+NLP, open data, open source, scanR, OpenAlex
 
 \hypertarget{motivation}{%
 \section{1. Motivation}\label{motivation}}
@@ -220,10 +220,11 @@ this reflects France's scientific excellence, it does not fully
 represent the diversity of French scientific contributions to ecological
 transition.
 
-\hypertarget{how-can-we-explore-and-recognize-french-publications-related-to-the-same-topics-as-ipcc-report-from-a-global-point-of-view}{%
+\hypertarget{how-can-we-explore-and-recognize-french-publications-related-to-the-same-topics-as-ipcc-and-ipbes-report-from-a-global-point-of-view}{%
 \subsection{1.3 How can we explore and recognize french publications
-related to the same topics as IPCC report from a global point of view
-?}\label{how-can-we-explore-and-recognize-french-publications-related-to-the-same-topics-as-ipcc-report-from-a-global-point-of-view}}
+related to the same topics as IPCC and IPBES report from a global point
+of view
+?}\label{how-can-we-explore-and-recognize-french-publications-related-to-the-same-topics-as-ipcc-and-ipbes-report-from-a-global-point-of-view}}
 
 To fill this gap, we propose using a larger dataset, such as scanR.
 \textbf{ScanR has a significantly higher coverage} of publications with
@@ -376,7 +377,10 @@ each publication is associated with the following attributes:
 \item
   A \textbf{title} that best summarizes the publication
 \item
-  The \textbf{main topics} covered by the publication
+  The main \textbf{topics} covered by the publication: publications in
+  OpenAlex are tagged with Topics using an automated system that takes
+  into account the available information about the work, including
+  title, abstract, source (journal) name, and citations
 \item
   The names of the \textbf{journals} in which the publication was
   published
@@ -386,11 +390,9 @@ Out of the 53,258 IPCC publications available on OpenAlex, only 48,219
 have non-empty titles, topics, and journal names.
 
 The goal is to identify these 48,219 publications that are not cited by
-the IPCC to form our training dataset.
-
-After the analysis phase, we were wondering how to make a database with
-data from IPCC bibliography and data from other subjects than IPCC
-topics.
+the IPCC to form our training dataset. After the analysis phase, we were
+wondering how to make a database with data from IPCC bibliography and
+data from other subjects than IPCC topics.
 
 Initially, we explore the data from the reports and analize:
 
@@ -405,13 +407,18 @@ Initially, we explore the data from the reports and analize:
 \end{itemize}
 
 \includegraphics{./images/time_distribution_IPCC_model.png}
+\emph{Temporal distribution of French IPCC publications.}
+
 \includegraphics{./images/topics_distribution_IPCC_model.png}
+\emph{Topics distribution of French IPCC publications.}
+
 \includegraphics{./images/locations_distribution_IPCC_model.png}
+\emph{Journals distribution of French IPCC publications.}
 
 We conclued that the publications from the reports are recents, less
 than 10 years old for 90\% of them. Some keywords seems to appear
-frequently, like ``Climate Change'' and many scientific journals release
-IPCC publications.
+frequently, like ``Climate Change'' and IPCC publications are mainly
+released by scientific journals.
 
 Using the OpenAlex API, we found 48,219 publications that meet the
 following criteria:
@@ -457,17 +464,179 @@ fast, efficient, and supports multilingual models, making it ideal for
 various natural language processing tasks like sentiment analysis and
 text classification.
 
-Fasttext enable to vectorize and apply a linear regression on the data
+Fasttext enable to vectorize and apply a linear regression on the data.
+We try 2 kind of model:
+
+\begin{itemize}
+\tightlist
+\item
+  a model that determine if a publication is align with the same topics
+  as the IPCC or IPBES report.
+\item
+  a model to be applied only to ``IPCC-like'' publications, to determine
+  the most relevant working group and identify whether the publication
+  focuses on physical science, adaptation, or mitigation.
+\end{itemize}
+
+\hypertarget{comparative-analysis-of-country-contributions-to-ipcc-reports}{%
+\subsection{2.6 Comparative analysis of country contributions to IPCC
+Reports}\label{comparative-analysis-of-country-contributions-to-ipcc-reports}}
+
+In the first part of our analysis, we examined the publications from
+IPCC reports and compared the contributions of different countries. Now,
+we want to evaluate these contributions from a global perspective.
+
+To simplify the process, we apply filters, as using the initial model
+(IPCC-like vs.~non-IPCC) proves to be too resource-intensive. Instead,
+we focus on a easier approach.
+
+We begin by analyzing French publications tagged as ``IPCC-like'' in
+ScanR by using the model. We identify the topics and frequently
+appearing words in the titles and abstracts of publications related to
+the IPCC reports. Based on this analysis, we establish filters to apply
+to a sample that is 42 times larger than ScanR: OpenAlex.
 
 \hypertarget{results}{%
 \section{3. Results}\label{results}}
 
-\hypertarget{graphs-of-ipcc-bibliography-analysis}{%
-\subsection{3.1 Graphs of IPCC bibliography
-analysis}\label{graphs-of-ipcc-bibliography-analysis}}
+\hypertarget{france-in-the-publications-cited-by-the-ipcc-reports}{%
+\subsection{3.1 France in the publications cited by the IPCC
+Reports}\label{france-in-the-publications-cited-by-the-ipcc-reports}}
 
-\hypertarget{custom-perimeter}{%
-\subsection{3.2 Custom perimeter}\label{custom-perimeter}}
+\hypertarget{french-publications-cited-by-the-ipcc-and-ipbes}{%
+\subsubsection{French publications cited by the IPCC and
+IPBES}\label{french-publications-cited-by-the-ipcc-and-ipbes}}
+
+A total of 3,925 French publications are cited in the IPCC reports out
+of a total of 53,258 publications. This represents 7.4\% of the total
+publications cited. France holds the 7th position in the ranking, just
+behind Canada and China.
+
+\includegraphics{./images/teds_ipcc_country_wg122cross3_part.png}
+\emph{Part of IPCC publications by country for all working groups.}
+
+In the IPBES reports, 458 French publications are cited out of a total
+of 6106. This represents 7.5\% of the total publications cited. France
+holds the 7th position as well in the ranking, just behind Germany and
+Netherlands.
+
+\includegraphics{./images/teds_ipbes_country_wg122cross3_part.png}
+\emph{Part of IPBES publications by country.}
+
+\hypertarget{frances-position-in-specific-research-areas}{%
+\subsubsection{France's position in specific research
+areas}\label{frances-position-in-specific-research-areas}}
+
+France leads in publications related to physical sciences but is less
+frequently cited in areas concerning adaptation and mitigation.
+
+\includegraphics{./images/teds_ipcc_wg_ens_part.png} \emph{Part of IPCC
+publications for each working groups.}
+
+French publications are more concentrated than those from other
+countries on theoretical sciences (a), as well as on documenting the
+impacts and risks related to ecosystems such as coral reefs, forests,
+and deserts (cross chapters from the second working group, the (c) image
+in \emph{Part of IPCC publications for each working groups}).
+
+\includegraphics{./images/teds_ipcc_5countries_interfaces.png}
+\emph{Part of IPCC publications for five countries.}
+
+These findings align with the results from the French Court of Audit,
+which also highlights a strong focus on physical sciences, with less
+emphasis on adaptation and mitigation strategies.
+
+\hypertarget{top-institutions-laboratories-and-researchers-in-france}{%
+\subsubsection{Top Institutions, Laboratories, and Researchers in
+France}\label{top-institutions-laboratories-and-researchers-in-france}}
+
+In France, the \textbf{CNRS (National Centre for Scientific Research)}
+is a leader in IPCC and IPBES publications, with IRD (Research Institute
+for Development) also making significant contributions.
+
+\includegraphics{./images/teds_ipcc_institutions.png} \emph{French
+institutions contributing to IPCC publications.}
+\includegraphics{./images/teds_ipbes_institutions.png} \emph{French
+institutions contributing to IPBES publications.}
+
+We can see that a certain number of national organizations are present
+in both report, we can detect a certain territorial disparity already at
+the institutional level. The institutions most active in the
+publications cited by the IPCC are located mainly in Île-de-France,
+Toulouse and Grenoble. And those of the IPBES are located in
+Île-de-France, Grenoble, Chambery and Montpellier.
+
+The \textbf{Climate Science Laboratory} is another key player in climate
+research, leading the way in IPCC and IPBES publications.
+
+\includegraphics{./images/teds_ipcc_lab.png} \emph{French laboratories
+contributing to IPCC publications.}
+\includegraphics{./images/teds_ipbes_labs.png} \emph{French laboratories
+contributing to IPBES publications.}
+
+The laboratories most active in the publications cited by the IPCC are
+located mainly in Île-de-France, Toulouse, Grenoble, Bretagne and
+Bordeaux. And those of the IPBES are located in Île-de-France,
+Montpellier, Grenoble, Toulouse, Chizé, Dijon and Marseille.
+
+French researchers are also highly involved, with some contributing to
+both IPCC and IPBES reports.
+
+\includegraphics{./images/teds_ipcc_authors.png} \emph{French authors
+contributing to IPCC publications.}
+\includegraphics{./images/teds_ipbes_authors.png} \emph{French authors
+contributing to IPBES publications.}
+
+\hypertarget{models-performances}{%
+\subsection{3.2 Models performances}\label{models-performances}}
+
+Out of the 19,288 publications in the \textbf{IPCC} test set, 18,788
+publications are correctly predicted, representing \textbf{97\%} of the
+total publications.
+
+\includegraphics{./images/teds_ipcc_model.png} \emph{Confusion matrix
+showing the performance of the first IPCC model.}
+
+When a publication is identified as ``IPCC-like,'' a second model is
+applied to classify it into the appropriate working group. The second
+model predicts which working group the publication is most likely
+associated with.
+
+\includegraphics{./images/teds_ipcc_model_wg.png} \emph{Confusion matrix
+illustrating the performance of the second IPCC model, which categorizes
+publications by working group.}
+
+For each working group, there are 9,644 publications in the test set.
+The model performance for each group is as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  For \textbf{Physical Science}, 8,875 publications are correctly
+  predicted, representing \textbf{92\%} of the publications in this
+  category.
+\item
+  For \textbf{Adaptation}, 8,137 publications are correctly predicted,
+  representing \textbf{84\%} of the publications in this category.
+\item
+  For \textbf{Mitigation}, 8,768 publications are correctly predicted,
+  representing \textbf{91\%} of the publications in this category.
+\end{itemize}
+
+However, for the \textbf{Adaptation} and \textbf{Mitigation} categories,
+the model shows a significant number of false positives. This suggests
+that the model tends to overestimate the number of publications
+categorized as belonging to these groups. This overestimation indicates
+that the model might be more likely to label publications as
+``Adaptation'' or ``Mitigation'' than is strictly accurate, leading to a
+higher rate of false positives in these categories.
+
+\hypertarget{the-models-on-scanr-publications}{%
+\subsection{3.3 The models on ScanR
+publications}\label{the-models-on-scanr-publications}}
+
+\hypertarget{on-openalex}{%
+\subsection{3.4 On OpenAlex}\label{on-openalex}}
 
 \hypertarget{code-availibility}{%
 \section{4. Code availibility}\label{code-availibility}}

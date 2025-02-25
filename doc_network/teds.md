@@ -11,15 +11,18 @@ bibliography: teds.bib
 date: February 2025
 keywords:
   - French publications
+  - IPCC
+  - IPBES
   - Machine learning
+  - NLP
+  - open data
+  - open source
   - scanR
   - OpenAlex
-  - Biblioglutton
-  - Elasticsearch
 geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 ---
 
-**Keywords**: french publications, machine learning, open data, open source, scanR, OpenAlex
+**Keywords**: French publications, IPCC, IPBES, Machine learning, NLP, open data, open source, scanR, OpenAlex
 
 # Abstract
 
@@ -45,7 +48,7 @@ In 2023, the French Court of Audit conducted a study on France's scientific outp
 
 However, this evaluation has important limitations. The IPCC bibliography is based on high-impact publications often from top journals, making it quite selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as visible but still in the same topics as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity of French scientific contributions to ecological transition.
 
-## 1.3 How can we explore and recognize french publications related to the same topics as IPCC report from a global point of view ?
+## 1.3 How can we explore and recognize french publications related to the same topics as IPCC and IPBES report from a larger point of view ?
 
 To fill this gap, we propose using a larger dataset, such as scanR. **ScanR has a significantly higher coverage** of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications [@10.1162/qss_a_00179].
 Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, showing a larger view of research. This could allow us to capture a more diverse range of topics related to climate change physical science, adaptation and mitigation.
@@ -139,13 +142,12 @@ In the enriched database derived from the IPCC and IPBES publications, each publ
 - A unique identifier (**DOI**)
 - The publication **year**
 - A **title** that best summarizes the publication
-- The **main topics** covered by the publication
+- The main **topics** covered by the publication: publications in OpenAlex are tagged with Topics using an automated system that takes into account the available information about the work, including title, abstract, source (journal) name, and citations
 - The names of the **journals** in which the publication was published
 
 Out of the 53,258 IPCC publications available on OpenAlex, only 48,219 have non-empty titles, topics, and journal names.
 
 The goal is to identify these 48,219 publications that are not cited by the IPCC to form our training dataset.
-
 After the analysis phase, we were wondering how to make a database with data from IPCC bibliography and data from other subjects than IPCC topics.
 
 Initially, we explore the data from the reports and analize:
@@ -154,9 +156,14 @@ Initially, we explore the data from the reports and analize:
 - The main topics
 - The main journals were the publications are released
 
-![Temporal distribution of French IPCC publications ](./images/time_distribution_IPCC_model.png)
-![Topics distribution of French IPCC publications ](./images/topics_distribution_IPCC_model.png)
-![Journals distribution of French IPCC publications ](./images/locations_distribution_IPCC_model.png)
+![Temporal distribution of French IPCC publications](./images/time_distribution_IPCC_model.png)
+_Temporal distribution of French IPCC publications._
+
+![Topics distribution of French IPCC publications](./images/topics_distribution_IPCC_model.png)
+_Topics distribution of French IPCC publications._
+
+![Journals distribution of French IPCC publications](./images/locations_distribution_IPCC_model.png)
+_Journals distribution of French IPCC publications._
 
 We conclued that the publications from the reports are recents, less than 10 years old for 90% of them. Some keywords seems to appear frequently, like "Climate Change" and IPCC publications are mainly released by scientific journals.
 
@@ -179,7 +186,8 @@ To train the model, we use fasttext. FastText is a library developed by Facebook
 
 Fasttext enable to vectorize and apply a linear regression on the data. We try 2 kind of model:
 
-- a model that determine if a publication is align with the same themes as the IPCC or IPBES report.
+- a model that determine if a publication is align with the same topics as the IPCC or IPBES report.
+- a model to be applied only to "IPCC-like" publications, to determine the most relevant working group and identify whether the publication focuses on physical science, adaptation, or mitigation.
 
 ## 2.6 Comparative analysis of country contributions to IPCC Reports
 
@@ -187,33 +195,84 @@ In the first part of our analysis, we examined the publications from IPCC report
 
 To simplify the process, we apply filters, as using the initial model (IPCC-like vs. non-IPCC) proves to be too resource-intensive. Instead, we focus on a easier approach.
 
-We begin by analyzing French publications tagged as "IPCC" in ScanR, using the model to identify key themes and frequently appearing words in the titles and abstracts of publications related to the IPCC reports. Based on this analysis, we establish filters to apply to a sample that is 42 times larger than ScanR: OpenAlex.
+We begin by analyzing French publications tagged as "IPCC-like" in ScanR by using the model. We identify the topics and frequently appearing words in the titles and abstracts of publications related to the IPCC reports. Based on this analysis, we establish filters to apply to a sample that is 42 times larger than ScanR: OpenAlex.
 
 # 3. Results
 
 ## 3.1 France in the publications cited by the IPCC Reports
 
-### French publications cited by the IPCC
+### French publications cited by the IPCC and IPBES
 
-A total of 3,925 French publications are cited in the IPCC reports out of a total of 53,258 publications. This represents 7.4% of the total publications cited. France holds the 7th position in the ranking, just behind Canada and China, within the top 20 countries.
+A total of 3,925 French publications are cited in the IPCC reports out of a total of 53,258 publications. This represents 7.4% of the total publications cited. France holds the 7th position in the ranking, just behind Canada and China.
 
-![Part of IPCC publications for all working groups ](./images/teds_ipcc_country_wg122cross3_part.png)
+![Part of IPCC publications for all working groups](./images/teds_ipcc_country_wg122cross3_part.png)
+_Part of IPCC publications by country for all working groups._
+
+In the IPBES reports, 458 French publications are cited out of a total of 6106. This represents 7.5% of the total publications cited. France holds the 7th position as well in the ranking, just behind Germany and Netherlands.
+
+![Part of IPBES publications for all working groups](./images/teds_ipbes_country_wg122cross3_part.png)
+_Part of IPBES publications by country._
 
 ### France's position in specific research areas
 
 France leads in publications related to physical sciences but is less frequently cited in areas concerning adaptation and mitigation.
 
 ![ Part of IPCC publications for each working groups](./images/teds_ipcc_wg_ens_part.png)
+_Part of IPCC publications for each working groups._
 
-French publications are more concentrated than those from other countries on theoretical sciences, as well as on documenting the impacts and risks related to ecosystems such as coral reefs, forests, and deserts.
+French publications are more concentrated than those from other countries on theoretical sciences (a), as well as on documenting the impacts and risks related to ecosystems such as coral reefs, forests, and deserts (cross chapters from the second working group, the (c) image in _Part of IPCC publications for each working groups_).
 
-![Part of IPCC publications for five countries ](./images/teds_ipcc_5countries_interfaces.png)
+![Part of IPCC publications for five countries](./images/teds_ipcc_5countries_interfaces.png)
+_Part of IPCC publications for five countries._
 
 These findings align with the results from the French Court of Audit, which also highlights a strong focus on physical sciences, with less emphasis on adaptation and mitigation strategies.
 
-## Top institutions, laboratories and researchers in France
+### Top Institutions, Laboratories, and Researchers in France
+
+In France, the **CNRS (National Centre for Scientific Research)** is a leader in IPCC and IPBES publications, with IRD (Research Institute for Development) also making significant contributions.
+
+![French institutions in IPCC publications](./images/teds_ipcc_institutions.png)
+_French institutions contributing to IPCC publications._
+![French institutions in IPBES publications](./images/teds_ipbes_institutions.png)
+_French institutions contributing to IPBES publications._
+
+We can see that a certain number of national organizations are present in both report, we can detect a certain territorial disparity already at the institutional level. The institutions most active in the publications cited by the IPCC are located mainly in Île-de-France, Toulouse and Grenoble. And those of the IPBES are located in Île-de-France, Grenoble, Chambery and Montpellier.
+
+The **Climate Science Laboratory** is another key player in climate research, leading the way in IPCC and IPBES publications.
+
+![French laboratories in IPCC publications](./images/teds_ipcc_lab.png)
+_French laboratories contributing to IPCC publications._
+![French laboratories in IPBES publications](./images/teds_ipbes_labs.png)
+_French laboratories contributing to IPBES publications._
+
+The laboratories most active in the publications cited by the IPCC are located mainly in Île-de-France, Toulouse, Grenoble, Bretagne and Bordeaux. And those of the IPBES are located in Île-de-France, Montpellier, Grenoble, Toulouse, Chizé, Dijon and Marseille.
+
+French researchers are also highly involved, with some contributing to both IPCC and IPBES reports.
+
+![French authors in IPCC publications](./images/teds_ipcc_authors.png)
+_French authors contributing to IPCC publications._
+![French authors in IPBES publications](./images/teds_ipbes_authors.png)
+_French authors contributing to IPBES publications._
 
 ## 3.2 Models performances
+
+Out of the 19,288 publications in the **IPCC** test set, 18,788 publications are correctly predicted, representing **97%** of the total publications.
+
+![IPCC first model results - Confusion Matrix](./images/teds_ipcc_model.png)
+_Confusion matrix showing the performance of the first IPCC model._
+
+When a publication is identified as "IPCC-like," a second model is applied to classify it into the appropriate working group. The second model predicts which working group the publication is most likely associated with.
+
+![IPCC second model results - Confusion Matrix](./images/teds_ipcc_model_wg.png)
+_Confusion matrix illustrating the performance of the second IPCC model, which categorizes publications by working group._
+
+For each working group, there are 9,644 publications in the test set. The model performance for each group is as follows:
+
+- For **Physical Science**, 8,875 publications are correctly predicted, representing **92%** of the publications in this category.
+- For **Adaptation**, 8,137 publications are correctly predicted, representing **84%** of the publications in this category.
+- For **Mitigation**, 8,768 publications are correctly predicted, representing **91%** of the publications in this category.
+
+However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized as belonging to these groups. This overestimation indicates that the model might be more likely to label publications as "Adaptation" or "Mitigation" than is strictly accurate, leading to a higher rate of false positives in these categories.
 
 ## 3.3 The models on ScanR publications
 
