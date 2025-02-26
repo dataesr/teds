@@ -32,9 +32,10 @@ geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 
 **The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. It has three working groups sees as three main topics :
 
-- Working Group I (WGI) focuses on the **physical science** of climate change.
-- Working Group II (WGII) examines climate change impacts, **adaptation**, and vulnerabilities.
-- Working Group III (WGIII) addresses climate change **mitigation** strategies.
+- Working Group 1 (WG1) focuses on the **physical science** of climate change.
+- Working Group 2 (WG2) examines climate change impacts, **adaptation**, and vulnerabilities.
+- Working Group 2 - cross chapters (WG2 cross) addresses the interactions between physical science and impacts, adaptation, and vulnerabilities.
+- Working Group 3 (WG3) addresses climate change **mitigation** strategies.
 
 The Sixth Assessment Report (AR6) was released in stages between 2021 and 2022.
 
@@ -137,7 +138,7 @@ After that we used Highcharts, a graphic tool to visualize the graphs. At the sa
 
 ## 2.4 Create a database
 
-In the enriched database derived from the IPCC and IPBES publications, each publication is associated with the following attributes:
+In the enriched database from the IPCC and IPBES publications, each publication is associated with the following attributes:
 
 - A unique identifier (**DOI**)
 - The publication **year**
@@ -220,12 +221,12 @@ France leads in publications related to physical sciences but is less frequently
 ![ Part of IPCC publications for each working groups](./images/teds_ipcc_wg_ens_part.png)
 _Part of IPCC publications for each working groups._
 
-French publications are more concentrated than those from other countries on theoretical sciences (a), as well as on documenting the impacts and risks related to ecosystems such as coral reefs, forests, and deserts (cross chapters from the second working group, the (c) image in _Part of IPCC publications for each working groups_).
+French publications are more concentrated than those from other countries on theoretical sciences (a): nearly 13% of the publications in WG1 have a French contribution. As well as on documenting the impacts and risks related to ecosystems such as coral reefs, forests, and deserts (cross chapters from the second working group, the (c) image in _Part of IPCC publications for each working groups_).
 
 ![Part of IPCC publications for five countries](./images/teds_ipcc_5countries_interfaces.png)
 _Part of IPCC publications for five countries._
 
-These findings align with the results from the French Court of Audit, which also highlights a strong focus on physical sciences, with less emphasis on adaptation and mitigation strategies.
+These findings also match those from the French Court of Audit, which shows a strong focus on physical sciences, with less attention to adaptation and mitigation strategies, compared to other leading countries. Also, France, Germany, and the UK have 14% of their publications cited in several working groups, which is lower than the US or China.
 
 ### Top Institutions, Laboratories, and Researchers in France
 
@@ -233,26 +234,29 @@ In France, the **CNRS (National Centre for Scientific Research)** is a leader in
 
 ![French institutions in IPCC publications](./images/teds_ipcc_institutions.png)
 _French institutions contributing to IPCC publications._
+
 ![French institutions in IPBES publications](./images/teds_ipbes_institutions.png)
 _French institutions contributing to IPBES publications._
 
-We can see that a certain number of national organizations are present in both report, we can detect a certain territorial disparity already at the institutional level. The institutions most active in the publications cited by the IPCC are located mainly in Île-de-France, Toulouse and Grenoble. And those of the IPBES are located in Île-de-France, Grenoble, Chambery and Montpellier.
+We can see that several national organizations appear in both reports, however there is a clear territorial difference at the institutional level. The institutions most active in the IPCC publications are mainly located in Île-de-France, Toulouse, and Grenoble, while those in the IPBES publications are mostly in Île-de-France, Grenoble, Chambéry, and Montpellier.
 
 The **Climate Science Laboratory** is another key player in climate research, leading the way in IPCC and IPBES publications.
 
 ![French laboratories in IPCC publications](./images/teds_ipcc_lab.png)
 _French laboratories contributing to IPCC publications._
+
 ![French laboratories in IPBES publications](./images/teds_ipbes_labs.png)
 _French laboratories contributing to IPBES publications._
 
-The laboratories most active in the publications cited by the IPCC are located mainly in Île-de-France, Toulouse, Grenoble, Bretagne and Bordeaux. And those of the IPBES are located in Île-de-France, Montpellier, Grenoble, Toulouse, Chizé, Dijon and Marseille.
-
-French researchers are also highly involved, with some contributing to both IPCC and IPBES reports.
+The laboratories most active in the publications cited by the IPCC are located mainly in Île-de-France, Toulouse, Grenoble, Bretagne and Bordeaux. Those of the IPBES are located in Île-de-France, Montpellier, Grenoble, Toulouse, Chizé, Dijon and Marseille.
 
 ![French authors in IPCC publications](./images/teds_ipcc_authors.png)
 _French authors contributing to IPCC publications._
+
 ![French authors in IPBES publications](./images/teds_ipbes_authors.png)
 _French authors contributing to IPBES publications._
+
+French researchers are also highly involved, with some contributing to both IPCC and IPBES reports. Philippe Ciais is particularly active and cited in both reports.
 
 ## 3.2 Models performances
 
@@ -275,6 +279,20 @@ For each working group, there are 9,644 publications in the test set. The model 
 However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized as belonging to these groups. This overestimation indicates that the model might be more likely to label publications as "Adaptation" or "Mitigation" than is strictly accurate, leading to a higher rate of false positives in these categories.
 
 ## 3.3 The models on ScanR publications
+
+### Figures
+
+1.9% of the publications in scanR seem to focus on topics related to the IPCC's work. Of these, 0.4% are related to science, 1.2% to adaptation, and 0.3% to mitigation. But the proportion of publications addressing topics similar to those covered by the IPCC seems to be increasing the last years.
+
+![IPCC model on scanR publications by year](./images/teds_model_scanR1.png)
+_IPCC model on scanR publications by year._
+
+The second model seems to detect more publications related to adaptation.
+
+![WG model on scanR publications by year for each working group](./images/teds_model_scanR_wg.png)
+_Working group model on scanR publications by year._
+
+### Community network
 
 ## 3.4 On OpenAlex
 
