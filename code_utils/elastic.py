@@ -8,7 +8,7 @@ from urllib import parse
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def get_from_es(body, nature='teds-bibliography'):
+def get_from_es(body, nature='teds-bibliography', scroll=0):
     if nature=='teds-bibliography':
         passw = f"{os.getenv('ES_LOGIN_TEDS_BACK')}:{os.getenv('ES_PASSWORD_TEDS_BACK')}"
         base64_bytes = passw.encode('ascii')
@@ -20,8 +20,27 @@ def get_from_es(body, nature='teds-bibliography'):
         base64_bytes = passw.encode('ascii')
         message_bytes = base64.b64encode(base64_bytes)
         token = message_bytes.decode('ascii')
-        url = os.getenv('ES_URL')+'scanr-publications/_search'  
+        url = os.getenv('ES_URL')+'scanr-publications/_search' 
+    if scroll>0:
+        url += f"?scroll={scroll}m" 
     return requests.post(url, json=body, headers={f'Authorization': f'Basic {token}'}).json()
+
+def scroll_from_es(scroll_id, scroll='1m'):
+    url = os.getenv('ES_URL') + '_search/scroll'  
+    
+    body = {
+        "scroll": scroll, 
+        "scroll_id": scroll_id 
+    }
+    
+    passw = f"{os.getenv('ES_LOGIN_scanR')}:{os.getenv('ES_PASSWORD_scanR')}"
+    base64_bytes = passw.encode('ascii')
+    message_bytes = base64.b64encode(base64_bytes)
+    token = message_bytes.decode('ascii')
+    
+    response = requests.post(url, json=body, headers={f'Authorization': f'Basic {token}'})
+    return response.json()
+
 
 def get_data_from_elastic(my_filters,nature, size=20):
     body = {
