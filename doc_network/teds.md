@@ -256,7 +256,7 @@ _French authors contributing to IPCC publications._
 ![French authors in IPBES publications](./images/teds_ipbes_authors.png)
 _French authors contributing to IPBES publications._
 
-French researchers are also highly involved, with some contributing to both IPCC and IPBES reports. Philippe Ciais is particularly active and cited in both reports.
+French researchers are also highly involved, with some contributing to both IPCC and IPBES reports. For example, Philippe Ciais is particularly active and cited in both reports.
 
 ## 3.2 Models performances
 
@@ -265,7 +265,7 @@ Out of the 19,288 publications in the **IPCC** test set, 18,788 publications are
 ![IPCC first model results - Confusion Matrix](./images/teds_ipcc_model.png)
 _Confusion matrix showing the performance of the first IPCC model._
 
-When a publication is identified as "IPCC-like," a second model is applied to classify it into the appropriate working group. The second model predicts which working group the publication is most likely associated with.
+When a publication is identified as "IPCC-like", a second model is applied to classify it into the appropriate working group. The second model predicts which working group the publication is most likely associated with.
 
 ![IPCC second model results - Confusion Matrix](./images/teds_ipcc_model_wg.png)
 _Confusion matrix illustrating the performance of the second IPCC model, which categorizes publications by working group._
@@ -276,13 +276,15 @@ For each working group, there are 9,644 publications in the test set. The model 
 - For **Adaptation**, 8,137 publications are correctly predicted, representing **84%** of the publications in this category.
 - For **Mitigation**, 8,768 publications are correctly predicted, representing **91%** of the publications in this category.
 
-However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized as belonging to these groups. This overestimation indicates that the model might be more likely to label publications as "Adaptation" or "Mitigation" than is strictly accurate, leading to a higher rate of false positives in these categories.
+However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized in these groups. This overestimation indicates that the model might label more publications as "Adaptation" or "Mitigation" than is strictly accurate, leading to a higher rate of false positives in these categories.
 
 ## 3.3 The models on ScanR publications
 
 ### Figures
 
-1.9% of the publications in scanR seem to focus on topics related to the IPCC's work. Of these, 0.4% are related to science, 1.2% to adaptation, and 0.3% to mitigation. But the proportion of publications addressing topics similar to those covered by the IPCC seems to be increasing the last years.
+`invistiguer les publis ipcc qui ont disparues: 70k => 52k`
+We focus on references with a DOI in scanR, as my analysis depends on these type of work, excluding other type such as theses, which follow a different structure. This ensure consistency in our resonnement.
+The proportion of publications addressing topics similar to those of the IPCC seems to be increasing in recent years. The graph "IPCC model on scanR publications by year" illustrates this trend, showing a growing number of "IPCC-like" publications in scanR over time.
 
 ![IPCC model on scanR publications by year](./images/teds_model_scanR1.png)
 _IPCC model on scanR publications by year._
@@ -294,10 +296,37 @@ _Working group model on scanR publications by year._
 
 ### Community network
 
+On scanR, we can visualize community network, based on themes or on authors.
+
+A community network is a way to group things together based on how closely they are connected. In this case, a "node" is either an author or a theme, and a "link" is a co-publication between them. It’s like finding clusters of authors or themes that are more connected to each other through co-publications than to others outside the group. These groups, called communities, help us understand how the system is organized and how different parts work together. Looking at these groups can help us find patterns and learn more about the connections between authors or themes[@hal-04892262].
+
+The topics cited by the IPCC cover a broad range of topics, and the IPCC's publication network is denser than that predicted by the model. This indicates that the topics are often cited together across multiple publications.
+The graph _Comparaison between two topics networks._ shows two topic networks: one showing the denser network from IPCC reports (a) and the other representing the less interconnected predicted network from the first model (b). From this, we can conclude that the topics in the IPCC reports are more tightly interconnected.
+![Topics network](./images/teds_network_topics2.png)
+_Comparaison between two topics networks._
+
+It’s interesting to see that 'soil moisture' is linked to 'evapotranspiration' in both graphs, but the predicted graph (d) introduces more technical terms. In this graph, 'soil moisture' is connected to 'SMOS' and 'L-band.' SMOS is a satellite from the European Space Agency (ESA) that measures soil moisture using radiation in the L-band (1.4 GHz). This shows that the predicted graph can focuses on more technical details.
+![Topics network - example](./images/teds_network_topics2_sensors.png)
+_Comparaison on one topic._
+
+We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). we can see a principal block composed by Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"  
+![Authors network](./images/teds_network_authors2.png)
+_Comparaison between two authors networks._
+
 ## 3.4 On OpenAlex
+
+![Part of publications in OpenAlex for 10 countries](./images/teds_OA_part10.png)
+_Part of publications in OpenAlex for 10 countries._
+
+![Rank for 10 countries in OpenAlex publications](./images/teds_OA_rank10.png)
+_Rank for 10 countries in OpenAlex publications._
 
 # 4. Code availibility
 
 The code developed is open source and available online on GitHub [https://github.com/dataesr/teds](https://github.com/dataesr/teds)
 
 # References
+
+```
+
+```

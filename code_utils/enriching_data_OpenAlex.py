@@ -137,5 +137,5 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None,None,None,None,False,None,None,None,None,None,None
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names,locations_names,locations_id
+        return [None],None,None,None,None,None,False,None,None,None,None,None,None,None,None
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names,locations_names,locations_id,data.get('type'),data.get('type_crossref')

@@ -19,3 +19,4 @@ venv.bak/
 node_modules/*
 *.docx
 IPCC_bibliography/*
+*.csv

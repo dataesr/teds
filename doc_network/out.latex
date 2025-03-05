@@ -596,8 +596,8 @@ contributing to IPCC publications.}
 contributing to IPBES publications.}
 
 French researchers are also highly involved, with some contributing to
-both IPCC and IPBES reports. Philippe Ciais is particularly active and
-cited in both reports.
+both IPCC and IPBES reports. For example, Philippe Ciais is particularly
+active and cited in both reports.
 
 \hypertarget{models-performances}{%
 \subsection{3.2 Models performances}\label{models-performances}}
@@ -609,7 +609,7 @@ total publications.
 \includegraphics{./images/teds_ipcc_model.png} \emph{Confusion matrix
 showing the performance of the first IPCC model.}
 
-When a publication is identified as ``IPCC-like,'' a second model is
+When a publication is identified as ``IPCC-like'', a second model is
 applied to classify it into the appropriate working group. The second
 model predicts which working group the publication is most likely
 associated with.
@@ -638,10 +638,10 @@ The model performance for each group is as follows:
 However, for the \textbf{Adaptation} and \textbf{Mitigation} categories,
 the model shows a significant number of false positives. This suggests
 that the model tends to overestimate the number of publications
-categorized as belonging to these groups. This overestimation indicates
-that the model might be more likely to label publications as
-``Adaptation'' or ``Mitigation'' than is strictly accurate, leading to a
-higher rate of false positives in these categories.
+categorized in these groups. This overestimation indicates that the
+model might label more publications as ``Adaptation'' or ``Mitigation''
+than is strictly accurate, leading to a higher rate of false positives
+in these categories.
 
 \hypertarget{the-models-on-scanr-publications}{%
 \subsection{3.3 The models on ScanR
@@ -650,11 +650,14 @@ publications}\label{the-models-on-scanr-publications}}
 \hypertarget{figures}{%
 \subsubsection{Figures}\label{figures}}
 
-1.9\% of the publications in scanR seem to focus on topics related to
-the IPCC's work. Of these, 0.4\% are related to science, 1.2\% to
-adaptation, and 0.3\% to mitigation. But the proportion of publications
-addressing topics similar to those covered by the IPCC seems to be
-increasing the last years.
+\texttt{invistiguer\ les\ publis\ ipcc\ qui\ ont\ disparues:\ 70k\ =\textgreater{}\ 52k}
+We focus on references with a DOI in scanR, as my analysis depends on
+these type of work, excluding other type such as theses, which follow a
+different structure. This ensure consistency in our resonnement. The
+proportion of publications addressing topics similar to those of the
+IPCC seems to be increasing in recent years. The graph ``IPCC model on
+scanR publications by year'' illustrates this trend, showing a growing
+number of ``IPCC-like'' publications in scanR over time.
 
 \includegraphics{./images/teds_model_scanR1.png} \emph{IPCC model on
 scanR publications by year.}
@@ -668,8 +671,54 @@ model on scanR publications by year.}
 \hypertarget{community-network}{%
 \subsubsection{Community network}\label{community-network}}
 
+On scanR, we can visualize community network, based on themes or on
+authors.
+
+A community network is a way to group things together based on how
+closely they are connected. In this case, a ``node'' is either an author
+or a theme, and a ``link'' is a co-publication between them. It's like
+finding clusters of authors or themes that are more connected to each
+other through co-publications than to others outside the group. These
+groups, called communities, help us understand how the system is
+organized and how different parts work together. Looking at these groups
+can help us find patterns and learn more about the connections between
+authors or themes(Barbier 2025).
+
+The topics cited by the IPCC cover a broad range of topics, and the
+IPCC's publication network is denser than that predicted by the model.
+This indicates that the topics are often cited together across multiple
+publications. The graph \emph{Comparaison between two topics networks.}
+shows two topic networks: one showing the denser network from IPCC
+reports (a) and the other representing the less interconnected predicted
+network from the first model (b). From this, we can conclude that the
+topics in the IPCC reports are more tightly interconnected.
+\includegraphics{./images/teds_network_topics2.png} \emph{Comparaison
+between two topics networks.}
+
+It's interesting to see that `soil moisture' is linked to
+`evapotranspiration' in both graphs, but the predicted graph (d)
+introduces more technical terms. In this graph, `soil moisture' is
+connected to `SMOS' and `L-band.' SMOS is a satellite from the European
+Space Agency (ESA) that measures soil moisture using radiation in the
+L-band (1.4 GHz). This shows that the predicted graph can focuses on
+more technical details.
+\includegraphics{./images/teds_network_topics2_sensors.png}
+\emph{Comparaison on one topic.}
+
+We can see a similar dynamic for authors, a denser network for authors
+from IPCC reports (e). we can see a principal block composed by Philippe
+Ciais and Laurent Bopp that represent an ``IPCC cluster''\\
+\includegraphics{./images/teds_network_authors2.png} \emph{Comparaison
+between two authors networks.}
+
 \hypertarget{on-openalex}{%
 \subsection{3.4 On OpenAlex}\label{on-openalex}}
+
+\includegraphics{./images/teds_OA_part10.png} \emph{Part of publications
+in OpenAlex for 10 countries.}
+
+\includegraphics{./images/teds_OA_rank10.png} \emph{Rank for 10
+countries in OpenAlex publications.}
 
 \hypertarget{code-availibility}{%
 \section{4. Code availibility}\label{code-availibility}}
@@ -678,11 +727,17 @@ The code developed is open source and available online on GitHub
 \url{https://github.com/dataesr/teds}
 
 \hypertarget{references}{%
-\section*{References}\label{references}}
-\addcontentsline{toc}{section}{References}
+\section{References}\label{references}}
+
+\begin{verbatim}
+\end{verbatim}
 
 \hypertarget{refs}{}
 \begin{cslreferences}
+\leavevmode\hypertarget{ref-hal-04892262}{}%
+Barbier, Jeangirard. 2025. ``Mapping Scientific Communities at Scale,''
+no. 1 (January). \url{https://hal.science/hal-04892262v1}.
+
 \leavevmode\hypertarget{ref-10.1162ux2fqss_a_00179}{}%
 Chaignon, Lauranne, and Daniel Egret. 2022. ``Identifying Scientific
 Publications Countrywide and Measuring Their Open Access: The Case of
