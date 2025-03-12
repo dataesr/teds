@@ -30,22 +30,21 @@ geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 
 ## 1.1 Presentation of IPCC and IPBES: Working Groups and dates
 
-**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. It has three working groups sees as three main topics :
+**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers.
+Between 2021 and 2022, they released the Sixth Assessment Report (AR6) in stages. It has three working groups that represent three main topics :
 
 - Working Group 1 (WG1) focuses on the **physical science** of climate change.
 - Working Group 2 (WG2) examines climate change impacts, **adaptation**, and vulnerabilities.
 - Working Group 2 - cross chapters (WG2 cross) addresses the interactions between physical science and impacts, adaptation, and vulnerabilities.
 - Working Group 3 (WG3) addresses climate change **mitigation** strategies.
 
-The Sixth Assessment Report (AR6) was released in stages between 2021 and 2022.
-
 **The IPBES (Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services)**, established in 2012, assesses biodiversity and ecosystem services. It produces thematic and regional assessments, with the **Global Assessment Report (2019)** highlighting biodiversity loss and the need for urgent action.
 
-Both platforms provide crucial scientific assessments that inform global climate and biodiversity policies.
+Both agencies provide crucial scientific assessments that inform global climate and biodiversity policies.
 
 ## 1.2 Limits of the French Court of Audit study
 
-In 2023, the French Court of Audit conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the sixth IPCC report. The study found that French publications are the most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
+In 2023, the French Court of Audit conducted a study on France's scientific output related to environmental transition. After hearings with the Directorate General for Research and Innovation (DGRI) and research operators, the Court analyzed the bibliography cited in the Sixth IPCC report. The study found that French publications are the most cited in the physical sciences of climate change, highlighting the global impact of French research in this field.
 
 However, this evaluation has important limitations. The IPCC bibliography is based on high-impact publications often from top journals, making it quite selective. This selection prioritizes more visible and well-known works, leaving out other important research that may not be as visible but still in the same topics as IPCC report. While this reflects France's scientific excellence, it does not fully represent the diversity of French scientific contributions to ecological transition.
 
@@ -54,7 +53,7 @@ However, this evaluation has important limitations. The IPCC bibliography is bas
 To fill this gap, we propose using a larger dataset, such as scanR. **ScanR has a significantly higher coverage** of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications [@10.1162/qss_a_00179].
 Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, showing a larger view of research. This could allow us to capture a more diverse range of topics related to climate change physical science, adaptation and mitigation.
 
-Initially, we will replicate the Court of Audit analysis of the IPCC bibliography to identify the main topics and their proportion of French contributions. Then, we will expand our study to know the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
+Initially, we will replicate the Court of Audit analysis of the IPCC bibliography to identify the main topics and the proportion of French contributions. Then, we will expand our study to highlight the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
 At the same time, we will conduct a similar analysis for the IPBES bibliography, following the same approach to identify the French contributions, and exploring less visible but valuable research related to biodiversity and ecosystem services.
 
 # 2. IPCC and IPBES Bibliography Analysis and Model
@@ -81,7 +80,7 @@ Next, we use the Biblioglutton Python library to fill in missing DOIs based on t
 
 ## 2.3 Data storage and visualization
 
-Once the data is enriched with openAlex features, we edit the data and push them on a cluster elastic-search. As an exemple, for one publication (for a better visibility the data is troncated).
+Once the data is enriched with openAlex features, we edit the data and push it on a cluster elastic-search. As an exemple, for one publication (for a better visibility the data is troncated).
 Some publications are used by both reports, with the following keys:
 
 ```json
@@ -134,7 +133,7 @@ Some publications are used by both reports, with the following keys:
 }
 ```
 
-After that we used Highcharts, a graphic tool to visualize the graphs. At the same time, we plot the graphs also with python by making elastic-search requests.
+After that, we used Highcharts, a graphic tool to visualize the graphs. At the same time, we plot the graphs also with python by making elastic-search requests.
 
 ## 2.4 Create a database
 
@@ -166,13 +165,13 @@ _Topics distribution of French IPCC publications._
 ![Journals distribution of French IPCC publications](./images/locations_distribution_IPCC_model.png)
 _Journals distribution of French IPCC publications._
 
-We conclued that the publications from the reports are recents, less than 10 years old for 90% of them. Some keywords seems to appear frequently, like "Climate Change" and IPCC publications are mainly released by scientific journals.
+We conclued that the publications from the reports are recent, less than 10 years old for 90% of them. Some keywords that seems to appear frequently, like "Climate Change" and IPCC publications are mainly released by scientific journals.
 
-Using the OpenAlex API, we found 48,219 publications that meet the following criteria:
+Using the OpenAlex API, we found 48,219 publications that meet the following criterias:
 
-1. Publications that are **not cited by the IPCC**.
-2. Publications that **do not contain specific terms** according to the top topics, such as "climate change" or "environmental impact" in their topics, ensuring that our model remains unbiased.
-3. Publications that have a **global temporal distribution equivalent** to the IPCC's cited publications. For example, in 2018, there were 6,755 publications cited by the IPCC, so we retrieve 6,755 publications from OpenAlex that exclude certain topics. This process is repeated for each year in the temporal distribution of IPCC publications.
+1. The publication is **not cited by the IPCC**.
+2. The publication **does not contain specific terms** according to the top topics, such as "climate change" or "environmental impact" in their topics, ensuring that our model remains unbiased.
+3. The publication has a **global temporal distribution equivalent** to the IPCC's cited publications. For example, in 2018, there were 6,755 publications cited by the IPCC, so we retrieve 6,755 publications from OpenAlex that exclude certain topics. This process is repeated for each year in the temporal distribution of IPCC publications.
 
 We conduct the exact same method for the IPBES report.
 
@@ -187,7 +186,7 @@ To train the model, we use fasttext. FastText is a library developed by Facebook
 
 Fasttext enable to vectorize and apply a linear regression on the data. We try 2 kind of model:
 
-- a model that determine if a publication is align with the same topics as the IPCC or IPBES report.
+- a model that determine if a publication is aligned with the same topics as the IPCC or IPBES report.
 - a model to be applied only to "IPCC-like" publications, to determine the most relevant working group and identify whether the publication focuses on physical science, adaptation, or mitigation.
 
 ## 2.6 Comparative analysis of country contributions to IPCC Reports
@@ -204,12 +203,12 @@ We begin by analyzing French publications tagged as "IPCC-like" in ScanR by usin
 
 ### French publications cited by the IPCC and IPBES
 
-A total of 3,925 French publications are cited in the IPCC reports out of a total of 53,258 publications. This represents 7.4% of the total publications cited. France holds the 7th position in the ranking, just behind Canada and China.
+A total of 3,925 French publications are cited in the IPCC reports out of a total of 53,258 publications. This represents 7.4% of the total cited publications. France holds the 7th position in the ranking, just behind Canada and China.
 
 ![Part of IPCC publications for all working groups](./images/teds_ipcc_country_wg122cross3_part.png)
 _Part of IPCC publications by country for all working groups._
 
-In the IPBES reports, 458 French publications are cited out of a total of 6106. This represents 7.5% of the total publications cited. France holds the 7th position as well in the ranking, just behind Germany and Netherlands.
+In the IPBES reports, 458 French publications are cited out of a total of 6106. This represents 7.5% of the total cited publications. France holds the 7th position as well in the ranking, just behind Germany and Netherlands.
 
 ![Part of IPBES publications for all working groups](./images/teds_ipbes_country_wg122cross3_part.png)
 _Part of IPBES publications by country._
@@ -221,7 +220,7 @@ France leads in publications related to physical sciences but is less frequently
 ![ Part of IPCC publications for each working groups](./images/teds_ipcc_wg_ens_part.png)
 _Part of IPCC publications for each working groups._
 
-French publications are more concentrated than those from other countries on theoretical sciences (a): nearly 13% of the publications in WG1 have a French contribution. As well as on documenting the impacts and risks related to ecosystems such as coral reefs, forests, and deserts (cross chapters from the second working group, the (c) image in _Part of IPCC publications for each working groups_).
+French publications are more focused on theoretical sciences (a) than those from other countries: nearly 13% of the publications in WG1 have a French contribution. We can see the same trend for the publications that relate the impacts and risks related to ecosystems such as coral reefs, forests, and deserts (cross chapters from the second working group, the (c) image in _Part of IPCC publications for each working groups_).
 
 ![Part of IPCC publications for five countries](./images/teds_ipcc_5countries_interfaces.png)
 _Part of IPCC publications for five countries._
@@ -276,14 +275,14 @@ For each working group, there are 9,644 publications in the test set. The model 
 - For **Adaptation**, 8,137 publications are correctly predicted, representing **84%** of the publications in this category.
 - For **Mitigation**, 8,768 publications are correctly predicted, representing **91%** of the publications in this category.
 
-However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized in these groups. This overestimation indicates that the model might label more publications as "Adaptation" or "Mitigation" than is strictly accurate, leading to a higher rate of false positives in these categories.
+However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized in these groups. This overestimation indicates that the model might label more publications as "Adaptation" or "Mitigation" than it should, leading to a higher rate of false positives in these categories.
 
 ## 3.3 The models on ScanR publications
 
 ### Figures
 
-`invistiguer les publis ipcc qui ont disparues: 70k => 52k`
-We focus on references with a DOI in scanR, as my analysis depends on these type of work, excluding other type such as theses, which follow a different structure. This ensure consistency in our resonnement.
+`investiguer les publis ipcc qui ont disparues: 70k => 52k`
+We filter the references that have a DOI in scanR, as my analysis depends only on these types of references, excluding other types that follow different structures. This ensure consistency in our approach.
 The proportion of publications addressing topics similar to those of the IPCC seems to be increasing in recent years. The graph "IPCC model on scanR publications by year" illustrates this trend, showing a growing number of "IPCC-like" publications in scanR over time.
 
 ![IPCC model on scanR publications by year](./images/teds_model_scanR1.png)
@@ -296,12 +295,12 @@ _Working group model on scanR publications by year._
 
 ### Community network
 
-On scanR, we can visualize community network, based on themes or on authors.
+On scanR, we can visualize community networks, based on themes or on authors.
 
-A community network is a way to group things together based on how closely they are connected. In this case, a "node" is either an author or a theme, and a "link" is a co-publication between them. It’s like finding clusters of authors or themes that are more connected to each other through co-publications than to others outside the group. These groups, called communities, help us understand how the system is organized and how different parts work together. Looking at these groups can help us find patterns and learn more about the connections between authors or themes[@hal-04892262].
+A community network is a way to group things together based on how closely they are connected. In this case, a "node" is either an author or a theme, and a "link" is a co-publication between them. It allows to find clusters of authors or themes that are more connected to each other through co-publications. These groups, called communities, help us understand how the system is organized and how different parts work together. Looking at these groups can help us find patterns and learn more about the connections between authors or themes[@hal-04892262].
 
 The topics cited by the IPCC cover a broad range of topics, and the IPCC's publication network is denser than that predicted by the model. This indicates that the topics are often cited together across multiple publications.
-The graph _Comparaison between two topics networks._ shows two topic networks: one showing the denser network from IPCC reports (a) and the other representing the less interconnected predicted network from the first model (b). From this, we can conclude that the topics in the IPCC reports are more tightly interconnected.
+The graph _Comparaison between two topics networks._ shows two topic networks: one showing the denser network from IPCC reports (a) and the predicted network from our first model (b). From this, we can conclude that the topics in the IPCC reports are more tightly interconnected.
 ![Topics network](./images/teds_network_topics2.png)
 _Comparaison between two topics networks._
 
@@ -309,7 +308,7 @@ It’s interesting to see that 'soil moisture' is linked to 'evapotranspiration'
 ![Topics network - example](./images/teds_network_topics2_sensors.png)
 _Comparaison on one topic._
 
-We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). we can see a principal block composed by Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"  
+We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). For instance, a principal block composed by Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"  
 ![Authors network](./images/teds_network_authors2.png)
 _Comparaison between two authors networks._
 
