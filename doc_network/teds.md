@@ -26,6 +26,8 @@ geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 
 # Abstract
 
+This paper looks at the role of French scientific publications on environmental transition, sustainability, and climate, focusing on reports by the IPCC and IPBES. By analyzing the bibliographies of these reports, we explore the amount and diversity of French research on climate change and biodiversity. While France leads in physical sciences, the study reveals a lack of contributions on adaptation and mitigation strategies, which are important to address climate challenges. Using ScanR, we show that French research is actually more focused on adaptation than what the IPCC reports suggest. This analysis challenges the idea that French research mainly concentrates on physical sciences and highlights the importance of recognizing all French contributions to climate action. We use machine learning models and open data, such as OpenAlex, to enrich this analysis and better understand the distribution, themes, and institutions involved in this research. This study highlights the strengths and weaknesses of current bibliographic analysis systems and argues for more inclusive tools to assess the true scope of scientific contributions to environmental transition.
+
 # 1. Motivation
 
 ## 1.1 Presentation of IPCC and IPBES: Working Groups and dates
