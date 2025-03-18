@@ -36,7 +36,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Mapping scientific communities at scale},
+  pdftitle={Environmental transition, durability and sustainability},
   pdfkeywords={French publications, IPCC, IPBES, Machine
 learning, NLP, open data, open source, scanR, OpenAlex},
   hidelinks,
@@ -127,7 +127,7 @@ learning, NLP, open data, open source, scanR, OpenAlex},
   \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
   {\par}
 
-\title{Mapping scientific communities at scale}
+\title{Environmental transition, durability and sustainability}
 \usepackage{authblk}
 \author[%
   1%
@@ -172,7 +172,9 @@ dates}\label{presentation-of-ipcc-and-ipbes-working-groups-and-dates}}
 
 \textbf{The IPCC (Intergovernmental Panel on Climate Change)} assesses
 scientific information on climate change, providing reports to guide
-policymakers. It has three working groups sees as three main topics :
+policymakers. Between 2021 and 2022, they released the Sixth Assessment
+Report (AR6) in stages. It has three working groups that represent three
+main topics :
 
 \begin{itemize}
 \tightlist
@@ -191,16 +193,13 @@ policymakers. It has three working groups sees as three main topics :
   strategies.
 \end{itemize}
 
-The Sixth Assessment Report (AR6) was released in stages between 2021
-and 2022.
-
 \textbf{The IPBES (Intergovernmental Science-Policy Platform on
 Biodiversity and Ecosystem Services)}, established in 2012, assesses
 biodiversity and ecosystem services. It produces thematic and regional
 assessments, with the \textbf{Global Assessment Report (2019)}
 highlighting biodiversity loss and the need for urgent action.
 
-Both platforms provide crucial scientific assessments that inform global
+Both agencies provide crucial scientific assessments that inform global
 climate and biodiversity policies.
 
 \hypertarget{limits-of-the-french-court-of-audit-study}{%
@@ -211,7 +210,7 @@ In 2023, the French Court of Audit conducted a study on France's
 scientific output related to environmental transition. After hearings
 with the Directorate General for Research and Innovation (DGRI) and
 research operators, the Court analyzed the bibliography cited in the
-sixth IPCC report. The study found that French publications are the most
+Sixth IPCC report. The study found that French publications are the most
 cited in the physical sciences of climate change, highlighting the
 global impact of French research in this field.
 
@@ -243,8 +242,8 @@ range of topics related to climate change physical science, adaptation
 and mitigation.
 
 Initially, we will replicate the Court of Audit analysis of the IPCC
-bibliography to identify the main topics and their proportion of French
-contributions. Then, we will expand our study to know the top
+bibliography to identify the main topics and the proportion of French
+contributions. Then, we will expand our study to highlight the top
 institutions, labs, regions, and researchers that provide solutions to
 the challenges of environemental transition in France, based on IPCC
 bibliography. In a second time, we will create a model that can
@@ -306,9 +305,9 @@ retrieved from OpenAlex matches the year in the original dataset.
 visualization}\label{data-storage-and-visualization}}
 
 Once the data is enriched with openAlex features, we edit the data and
-push them on a cluster elastic-search. As an exemple, for one
-publication (for a better visibility the data is troncated). Some
-publications are used by both reports, with the following keys:
+push it on a cluster elastic-search. As an exemple, for one publication
+(for a better visibility the data is troncated). Some publications are
+used by both reports, with the following keys:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -362,7 +361,7 @@ publications are used by both reports, with the following keys:
 \end{Highlighting}
 \end{Shaded}
 
-After that we used Highcharts, a graphic tool to visualize the graphs.
+After that, we used Highcharts, a graphic tool to visualize the graphs.
 At the same time, we plot the graphs also with python by making
 elastic-search requests.
 
@@ -419,27 +418,27 @@ Initially, we explore the data from the reports and analize:
 \includegraphics{./images/locations_distribution_IPCC_model.png}
 \emph{Journals distribution of French IPCC publications.}
 
-We conclued that the publications from the reports are recents, less
-than 10 years old for 90\% of them. Some keywords seems to appear
+We conclued that the publications from the reports are recent, less than
+10 years old for 90\% of them. Some keywords that seems to appear
 frequently, like ``Climate Change'' and IPCC publications are mainly
 released by scientific journals.
 
 Using the OpenAlex API, we found 48,219 publications that meet the
-following criteria:
+following criterias:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Publications that are \textbf{not cited by the IPCC}.
+  The publication is \textbf{not cited by the IPCC}.
 \item
-  Publications that \textbf{do not contain specific terms} according to
+  The publication \textbf{does not contain specific terms} according to
   the top topics, such as ``climate change'' or ``environmental impact''
   in their topics, ensuring that our model remains unbiased.
 \item
-  Publications that have a \textbf{global temporal distribution
-  equivalent} to the IPCC's cited publications. For example, in 2018,
-  there were 6,755 publications cited by the IPCC, so we retrieve 6,755
+  The publication has a \textbf{global temporal distribution equivalent}
+  to the IPCC's cited publications. For example, in 2018, there were
+  6,755 publications cited by the IPCC, so we retrieve 6,755
   publications from OpenAlex that exclude certain topics. This process
   is repeated for each year in the temporal distribution of IPCC
   publications.
@@ -474,8 +473,8 @@ We try 2 kind of model:
 \begin{itemize}
 \tightlist
 \item
-  a model that determine if a publication is align with the same topics
-  as the IPCC or IPBES report.
+  a model that determine if a publication is aligned with the same
+  topics as the IPCC or IPBES report.
 \item
   a model to be applied only to ``IPCC-like'' publications, to determine
   the most relevant working group and identify whether the publication
@@ -513,14 +512,14 @@ IPBES}\label{french-publications-cited-by-the-ipcc-and-ipbes}}
 
 A total of 3,925 French publications are cited in the IPCC reports out
 of a total of 53,258 publications. This represents 7.4\% of the total
-publications cited. France holds the 7th position in the ranking, just
+cited publications. France holds the 7th position in the ranking, just
 behind Canada and China.
 
 \includegraphics{./images/teds_ipcc_country_wg122cross3_part.png}
 \emph{Part of IPCC publications by country for all working groups.}
 
 In the IPBES reports, 458 French publications are cited out of a total
-of 6106. This represents 7.5\% of the total publications cited. France
+of 6106. This represents 7.5\% of the total cited publications. France
 holds the 7th position as well in the ranking, just behind Germany and
 Netherlands.
 
@@ -537,12 +536,13 @@ frequently cited in areas concerning adaptation and mitigation.
 \includegraphics{./images/teds_ipcc_wg_ens_part.png} \emph{Part of IPCC
 publications for each working groups.}
 
-French publications are more concentrated than those from other
-countries on theoretical sciences (a): nearly 13\% of the publications
-in WG1 have a French contribution. As well as on documenting the impacts
-and risks related to ecosystems such as coral reefs, forests, and
-deserts (cross chapters from the second working group, the (c) image in
-\emph{Part of IPCC publications for each working groups}).
+French publications are more focused on theoretical sciences (a) than
+those from other countries: nearly 13\% of the publications in WG1 have
+a French contribution. We can see the same trend for the publications
+that relate the impacts and risks related to ecosystems such as coral
+reefs, forests, and deserts (cross chapters from the second working
+group, the (c) image in \emph{Part of IPCC publications for each working
+groups}).
 
 \includegraphics{./images/teds_ipcc_5countries_interfaces.png}
 \emph{Part of IPCC publications for five countries.}
@@ -640,8 +640,15 @@ the model shows a significant number of false positives. This suggests
 that the model tends to overestimate the number of publications
 categorized in these groups. This overestimation indicates that the
 model might label more publications as ``Adaptation'' or ``Mitigation''
-than is strictly accurate, leading to a higher rate of false positives
-in these categories.
+than it should, leading to a higher rate of false positives in these
+categories.
+
+In the \textbf{IPBES} test set, there are 2213 publications and 2101
+publications are correctly predicted, representing \textbf{95\%} of the
+total publications.
+
+\includegraphics{./images/teds_ipbes_model.png} \emph{Confusion matrix
+showing the performance of the IPBES model.}
 
 \hypertarget{the-models-on-scanr-publications}{%
 \subsection{3.3 The models on ScanR
@@ -650,11 +657,10 @@ publications}\label{the-models-on-scanr-publications}}
 \hypertarget{figures}{%
 \subsubsection{Figures}\label{figures}}
 
-\texttt{invistiguer\ les\ publis\ ipcc\ qui\ ont\ disparues:\ 70k\ =\textgreater{}\ 52k}
-We focus on references with a DOI in scanR, as my analysis depends on
-these type of work, excluding other type such as theses, which follow a
-different structure. This ensure consistency in our resonnement. The
-proportion of publications addressing topics similar to those of the
+We filter the references that have a DOI in scanR, as my analysis
+depends only on these types of references, excluding other types that
+follow different structures. This ensure consistency in our approach.
+The proportion of publications addressing topics similar to those of the
 IPCC seems to be increasing in recent years. The graph ``IPCC model on
 scanR publications by year'' illustrates this trend, showing a growing
 number of ``IPCC-like'' publications in scanR over time.
@@ -668,30 +674,33 @@ adaptation.
 \includegraphics{./images/teds_model_scanR_wg.png} \emph{Working group
 model on scanR publications by year.}
 
+The IPBES model \ldots{}
+\includegraphics{./images/teds_model_scanR1.png} \emph{IPBES model on
+scanR publications by year (à faire).}
+
 \hypertarget{community-network}{%
 \subsubsection{Community network}\label{community-network}}
 
-On scanR, we can visualize community network, based on themes or on
+On scanR, we can visualize community networks, based on themes or on
 authors.
 
 A community network is a way to group things together based on how
 closely they are connected. In this case, a ``node'' is either an author
-or a theme, and a ``link'' is a co-publication between them. It's like
-finding clusters of authors or themes that are more connected to each
-other through co-publications than to others outside the group. These
-groups, called communities, help us understand how the system is
-organized and how different parts work together. Looking at these groups
-can help us find patterns and learn more about the connections between
-authors or themes(Barbier 2025).
+or a theme, and a ``link'' is a co-publication between them. It allows
+to find clusters of authors or themes that are more connected to each
+other through co-publications. These groups, called communities, help us
+understand how the system is organized and how different parts work
+together. Looking at these groups can help us find patterns and learn
+more about the connections between authors or themes(Barbier 2025).
 
 The topics cited by the IPCC cover a broad range of topics, and the
 IPCC's publication network is denser than that predicted by the model.
 This indicates that the topics are often cited together across multiple
 publications. The graph \emph{Comparaison between two topics networks.}
 shows two topic networks: one showing the denser network from IPCC
-reports (a) and the other representing the less interconnected predicted
-network from the first model (b). From this, we can conclude that the
-topics in the IPCC reports are more tightly interconnected.
+reports (a) and the predicted network from our first model (b). From
+this, we can conclude that the topics in the IPCC reports are more
+tightly interconnected.
 \includegraphics{./images/teds_network_topics2.png} \emph{Comparaison
 between two topics networks.}
 
@@ -706,19 +715,38 @@ more technical details.
 \emph{Comparaison on one topic.}
 
 We can see a similar dynamic for authors, a denser network for authors
-from IPCC reports (e). we can see a principal block composed by Philippe
-Ciais and Laurent Bopp that represent an ``IPCC cluster''\\
+from IPCC reports (e). For instance, a principal block composed by
+Philippe Ciais and Laurent Bopp that represent an ``IPCC cluster''\\
 \includegraphics{./images/teds_network_authors2.png} \emph{Comparaison
 between two authors networks.}
 
-\hypertarget{on-openalex}{%
-\subsection{3.4 On OpenAlex}\label{on-openalex}}
+\hypertarget{the-second-model-on-openalex}{%
+\subsection{3.4 The second model on
+OpenAlex}\label{the-second-model-on-openalex}}
 
-\includegraphics{./images/teds_OA_part10.png} \emph{Part of publications
-in OpenAlex for 10 countries.}
+On OpenAlex, we apply the filters identified through the scanR analysis.
+After that, we plot the \emph{Part of publications in OpenAlex for 7
+countries}. In this graph, China and India appear to be increasingly
+publishing on IPCC-related topics, and France seems to remain stable.
 
-\includegraphics{./images/teds_OA_rank10.png} \emph{Rank for 10
-countries in OpenAlex publications.}
+\includegraphics{./images/teds_OA_part7.png} \emph{Part of publications
+in OpenAlex for 7 countries.}
+
+When comparing the rankings, India's progress stands out as the most
+impressive on an inter-country scale. However, France is dropping from
+7th to 9th place.
+
+\includegraphics{./images/teds_OA_rank7.png} \emph{Rank for 7 countries
+in OpenAlex publications.}
+
+Given the large volume of publications in OpenAlex related to IPCC
+subjects, we analyze the \emph{Distribution of OpenAlex publication
+types for five countries} only for the year 2022 due to the data volume.
+In this graph, France appears to focus more on adaptation than the other
+four countries.
+
+\includegraphics{./images/teds_OpenAlex_publications_for_5_countries.png}
+\emph{Distribution of OpenAlex publication types for five countries.}
 
 \hypertarget{code-availibility}{%
 \section{4. Code availibility}\label{code-availibility}}

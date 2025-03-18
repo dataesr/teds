@@ -1,5 +1,5 @@
 ---
-title: "TEDS - faut que je trouve un titre"
+title: "Environmental transition, durability and sustainability"
 author:
   - Hafsa Aallat:
       institute: mesr
@@ -277,11 +277,15 @@ For each working group, there are 9,644 publications in the test set. The model 
 
 However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized in these groups. This overestimation indicates that the model might label more publications as "Adaptation" or "Mitigation" than it should, leading to a higher rate of false positives in these categories.
 
+In the **IPBES** test set, there are 2213 publications and 2101 publications are correctly predicted, representing **95%** of the total publications.
+
+![IPBES first model results - Confusion Matrix](./images/teds_ipbes_model.png)
+_Confusion matrix showing the performance of the IPBES model._
+
 ## 3.3 The models on ScanR publications
 
 ### Figures
 
-`investiguer les publis ipcc qui ont disparues: 70k => 52k`
 We filter the references that have a DOI in scanR, as my analysis depends only on these types of references, excluding other types that follow different structures. This ensure consistency in our approach.
 The proportion of publications addressing topics similar to those of the IPCC seems to be increasing in recent years. The graph "IPCC model on scanR publications by year" illustrates this trend, showing a growing number of "IPCC-like" publications in scanR over time.
 
@@ -292,6 +296,10 @@ The second model seems to detect more publications related to adaptation.
 
 ![WG model on scanR publications by year for each working group](./images/teds_model_scanR_wg.png)
 _Working group model on scanR publications by year._
+
+The IPBES model ...
+![IPBES model on scanR publications by year](./images/teds_model_scanR1.png)
+_IPBES model on scanR publications by year (à faire)._
 
 ### Community network
 
@@ -312,13 +320,22 @@ We can see a similar dynamic for authors, a denser network for authors from IPCC
 ![Authors network](./images/teds_network_authors2.png)
 _Comparaison between two authors networks._
 
-## 3.4 On OpenAlex
+## 3.4 The second model on OpenAlex
 
-![Part of publications in OpenAlex for 10 countries](./images/teds_OA_part10.png)
-_Part of publications in OpenAlex for 10 countries._
+On OpenAlex, we apply the filters identified through the scanR analysis. After that, we plot the _Part of publications in OpenAlex for 7 countries_. In this graph, China and India appear to be increasingly publishing on IPCC-related topics, and France seems to remain stable.
 
-![Rank for 10 countries in OpenAlex publications](./images/teds_OA_rank10.png)
-_Rank for 10 countries in OpenAlex publications._
+![Part of publications in OpenAlex for 7 countries](./images/teds_OA_part7.png)
+_Part of publications in OpenAlex for 7 countries._
+
+When comparing the rankings, India's progress stands out as the most impressive on an inter-country scale. However, France is dropping from 7th to 9th place.
+
+![Rank for 7 countries in OpenAlex publications](./images/teds_OA_rank7.png)
+_Rank for 7 countries in OpenAlex publications._
+
+Given the large volume of publications in OpenAlex related to IPCC subjects, we analyze the _Distribution of OpenAlex publication types for five countries_ only for the year 2022 due to the data volume. In this graph, France appears to focus more on adaptation than the other four countries.
+
+![Part of IPCC-related publications for five countries in OpenAlex](./images/teds_OpenAlex_publications_for_5_countries.png)
+_Distribution of OpenAlex publication types for five countries._
 
 # 4. Code availibility
 
