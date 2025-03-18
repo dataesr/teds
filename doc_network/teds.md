@@ -298,6 +298,7 @@ The second model seems to detect more publications related to adaptation.
 _Working group model on scanR publications by year._
 
 The IPBES model ...
+
 ![IPBES model on scanR publications by year](./images/teds_model_scanR1.png)
 _IPBES model on scanR publications by year (à faire)._
 
