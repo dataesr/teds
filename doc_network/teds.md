@@ -310,14 +310,17 @@ A community network is a way to group things together based on how closely they 
 
 The topics cited by the IPCC cover a broad range of topics, and the IPCC's publication network is denser than that predicted by the model. This indicates that the topics are often cited together across multiple publications.
 The graph _Comparaison between two topics networks._ shows two topic networks: one showing the denser network from IPCC reports (a) and the predicted network from our first model (b). From this, we can conclude that the topics in the IPCC reports are more tightly interconnected.
+
 ![Topics network](./images/teds_network_topics2.png)
 _Comparaison between two topics networks._
 
 It’s interesting to see that 'soil moisture' is linked to 'evapotranspiration' in both graphs, but the predicted graph (d) introduces more technical terms. In this graph, 'soil moisture' is connected to 'SMOS' and 'L-band.' SMOS is a satellite from the European Space Agency (ESA) that measures soil moisture using radiation in the L-band (1.4 GHz). This shows that the predicted graph can focuses on more technical details.
+
 ![Topics network - example](./images/teds_network_topics2_sensors.png)
 _Comparaison on one topic._
 
-We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). For instance, a principal block composed by Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"  
+We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). For instance, a principal block composed by Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"
+
 ![Authors network](./images/teds_network_authors2.png)
 _Comparaison between two authors networks._
 
