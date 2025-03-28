@@ -26,14 +26,13 @@ geometry: "left=3cm, right=3cm, top=3cm, bottom=3cm"
 
 # Abstract
 
-This paper looks at the role of French scientific publications on environmental transition, sustainability, and climate, focusing on reports by the IPCC and IPBES. By analyzing the bibliographies of these reports, we explore the amount and diversity of French research on climate change and biodiversity. While France leads in physical sciences, the study reveals a lack of contributions on adaptation and mitigation strategies, which are important to address climate challenges. Using ScanR, we show that French research is actually more focused on adaptation than what the IPCC reports suggest. This analysis challenges the idea that French research mainly concentrates on physical sciences and highlights the importance of recognizing all French contributions to climate action. We use machine learning models and open data, such as OpenAlex, to enrich this analysis and better understand the distribution, themes, and institutions involved in this research. This study highlights the strengths and weaknesses of current bibliographic analysis systems and argues for more inclusive tools to assess the true scope of scientific contributions to environmental transition.
+This paper is about the role of French scientific publications on environmental transition, sustainability, and climate, focusing on reports by the IPCC and IPBES. By analyzing the bibliographies of these reports, we explore the amount and diversity of French research on climate change and biodiversity. While France leads in physical sciences, the study reveals a lack of contributions on adaptation and mitigation strategies, which are important to address climate challenges. Using ScanR, we show that French research is actually more focused on adaptation than what the IPCC reports suggest. This analysis challenges the idea that French research mainly concentrates on physical sciences and highlights the importance of recognizing all French contributions to climate action. We use machine learning models and open data, such as OpenAlex, to enrich this analysis and better understand the distribution, themes, and institutions involved in this research. This study highlights the strengths and weaknesses of current bibliographic analysis systems and argues for more inclusive tools to assess the true scope of scientific contributions to environmental transition.
 
 # 1. Motivation
 
 ## 1.1 Presentation of IPCC and IPBES: Working Groups and dates
 
-**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers.
-Between 2021 and 2022, they released the Sixth Assessment Report (AR6) in stages. It has three working groups that represent three main topics :
+**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. Between 2021 and 2022, they released the Sixth Assessment Report (AR6) in stages. It has three working groups that represent three main topics :
 
 - Working Group 1 (WG1) focuses on the **physical science** of climate change.
 - Working Group 2 (WG2) examines climate change impacts, **adaptation**, and vulnerabilities.
@@ -53,9 +52,9 @@ However, this evaluation has important limitations. The IPCC bibliography is bas
 ## 1.3 How can we explore and recognize french publications related to the same topics as IPCC and IPBES report from a larger point of view ?
 
 To fill this gap, we propose using a larger dataset, such as scanR. **ScanR has a significantly higher coverage** of publications with at least one French affiliation compared to other sources, contributing 92% to the overall aggregated corpus. This is much higher than databases like Scopus (67%), WoS (58%), or PubMed (29%), making ScanR a more comprehensive tool for capturing French scientific publications [@10.1162/qss_a_00179].
-Unlike the IPCC's restricted approach, ScanR includes publications with at least one French affiliation, showing a larger view of research. This could allow us to capture a more diverse range of topics related to climate change physical science, adaptation and mitigation.
+Unlike IPCC approach, ScanR includes publications with at least one French affiliation, showing a larger view of research. This could allow us to capture a more diverse range of topics related to climate change physical science, adaptation and mitigation.
 
-Initially, we will replicate the Court of Audit analysis of the IPCC bibliography to identify the main topics and the proportion of French contributions. Then, we will expand our study to highlight the top institutions, labs, regions, and researchers that provide solutions to the challenges of environemental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
+Initially, we will replicate the Court of Audit analysis of the IPCC bibliography to identify the main topics and the proportion of French contributions. Then, we will expand our study to highlight the top institutions, labs, regions, and researchers that provide solutions to the challenges of environmental transition in France, based on IPCC bibliography. In a second time, we will create a model that can recognize a publication about IPCC similar topics, and apply the model to scanR publications.
 At the same time, we will conduct a similar analysis for the IPBES bibliography, following the same approach to identify the French contributions, and exploring less visible but valuable research related to biodiversity and ecosystem services.
 
 # 2. IPCC and IPBES Bibliography Analysis and Model
@@ -73,16 +72,16 @@ Once the data is collected, we clean the DOI (Digital Object Identifier) of each
 
 ## 2.2 Data Enrichment
 
-After cleaning, the data contains features such as DOI, title, and main author. However, we still lack information such as institutions, researchers, countries, and topics associated with each publication.
+After cleaning, the data contain features such as DOI, title, and main author. However, we still lack information such as institutions, researchers, countries, and topics associated with each publication.
 To fill in the gap, we enrich the data by importing additional features from OpenAlex for each publication with a valid DOI. These features include: countries, year, topics, title, author names, institutions, RORs (Research Organization Registry) and journals.
 
-OpenAlex is an international open-access database that provides metadata on research papers, authors, journals, and institutions. It aims to make academic information more accessible and supports data analysis and knowledge discovery in various fields. OpenAlex is a valuable tool for researchers and educators. We use the Api to import the features.
+OpenAlex is an international open-access database that provides metadata on research papers, authors, journals, and institutions. It aims to make academic information more accessible and supports data analysis and knowledge discovery in various fields. OpenAlex is a valuable tool for researchers and educators. We use there API to import the features[@OpenAlexAPI].
 
 Next, we use the Biblioglutton Python library to fill in missing DOIs based on the title and main author. We also verify that the year retrieved from OpenAlex matches the year in the original dataset.
 
 ## 2.3 Data storage and visualization
 
-Once the data is enriched with openAlex features, we edit the data and push it on a cluster elastic-search. As an exemple, for one publication (for a better visibility the data is troncated).
+Once the data is enriched with openAlex features, we edit the data and push it on a cluster elastic-search. As an exemple, for one publication (for a better visibility the data is truncated).
 Some publications are used by both reports, with the following keys:
 
 ```json
@@ -149,7 +148,7 @@ In the enriched database from the IPCC and IPBES publications, each publication 
 
 Out of the 53,258 IPCC publications available on OpenAlex, only 48,219 have non-empty titles, topics, and journal names.
 
-The goal is to identify these 48,219 publications that are not cited by the IPCC to form our training dataset.
+The goal is to identify 48,219 other publications that are not cited by the IPCC to form our training dataset.
 After the analysis phase, we were wondering how to make a database with data from IPCC bibliography and data from other subjects than IPCC topics.
 
 Initially, we explore the data from the reports and analize:
@@ -167,7 +166,7 @@ _Topics distribution of French IPCC publications._
 ![Journals distribution of French IPCC publications](./images/locations_distribution_IPCC_model.png)
 _Journals distribution of French IPCC publications._
 
-We conclued that the publications from the reports are recent, less than 10 years old for 90% of them. Some keywords that seems to appear frequently, like "Climate Change" and IPCC publications are mainly released by scientific journals.
+We conclude that the publications from the reports are recent, less than 10 years old for 90% of them. Some keywords seem to appear frequently, like "Climate Change" and IPCC publications are mainly released by scientific journals.
 
 Using the OpenAlex API, we found 48,219 publications that meet the following criterias:
 
@@ -184,9 +183,9 @@ Once the dataset is complete, we split it in two:
 - 80% of data will be used to train the model
 - 20% will be used as a test base
 
-To train the model, we use fasttext. FastText is a library developed by Facebook AI Research for learning word representations and text classification. Unlike Word2Vec, FastText breaks words into subwords, improving its ability to handle rare or out-of-vocabulary words. It's fast, efficient, and supports multilingual models, making it ideal for various natural language processing tasks like sentiment analysis and text classification.
+To train the model, we use FastText. FastText is a library developed by Facebook AI Research to learn word representations and text classification. Unlike Word2Vec, FastText breaks words into subwords, improving its ability to handle rare or out-of-vocabulary words. It's fast, efficient, and supports multilingual models, making it ideal for various natural language processing tasks like sentiment analysis and text classification.
 
-Fasttext enable to vectorize and apply a linear regression on the data. We try 2 kind of model:
+Fasttext enables vectorization and fits a linear regression on the data. We try 2 kind of model:
 
 - a model that determine if a publication is aligned with the same topics as the IPCC or IPBES report.
 - a model to be applied only to "IPCC-like" publications, to determine the most relevant working group and identify whether the publication focuses on physical science, adaptation, or mitigation.
@@ -288,7 +287,7 @@ _Confusion matrix showing the performance of the IPBES model._
 
 ### Figures
 
-We filter the references that have a DOI in scanR, as my analysis depends only on these types of references, excluding other types that follow different structures. This ensure consistency in our approach.
+We filter the references that have a DOI in scanR, as our analysis depends only on these types of references, excluding other types that follow different structures. This ensure consistency in our approach.
 The proportion of publications addressing topics similar to those of the IPCC seems to be increasing in recent years. The graph "IPCC model on scanR publications by year" illustrates this trend, showing a growing number of "IPCC-like" publications in scanR over time.
 
 ![IPCC model on scanR publications by year](./images/teds_model_scanR1.png)
@@ -311,20 +310,20 @@ On scanR, we can visualize community networks, based on themes or on authors.
 A community network is a way to group things together based on how closely they are connected. In this case, a "node" is either an author or a theme, and a "link" is a co-publication between them. It allows to find clusters of authors or themes that are more connected to each other through co-publications. These groups, called communities, help us understand how the system is organized and how different parts work together. Looking at these groups can help us find patterns and learn more about the connections between authors or themes[@hal-04892262].
 
 The topics cited by the IPCC cover a broad range of topics, and the IPCC's publication network is denser than that predicted by the model. This indicates that the topics are often cited together across multiple publications.
-The graph _Comparaison between two topics networks._ shows two topic networks: one showing the denser network from IPCC reports (a) and the predicted network from our first model (b). From this, we can conclude that the topics in the IPCC reports are more tightly interconnected.
+The graph _Comparison between two topics networks._ shows two topic networks: one showing the denser network from IPCC reports (a) and the predicted network from our first model (b). From this, we can conclude that the topics in the IPCC reports are more tightly interconnected.
 
 ![Topics network](./images/teds_network_topics2.png)
-_Comparaison between two topics networks._
+_Comparison between two topics networks._
 
 It’s interesting to see that 'soil moisture' is linked to 'evapotranspiration' in both graphs, but the predicted graph (d) introduces more technical terms. In this graph, 'soil moisture' is connected to 'SMOS' and 'L-band.' SMOS is a satellite from the European Space Agency (ESA) that measures soil moisture using radiation in the L-band (1.4 GHz). This shows that the predicted graph can focuses on more technical details.
 
 ![Topics network - example](./images/teds_network_topics2_sensors.png)
-_Comparaison on one topic._
+_Comparison on one topic._
 
-We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). For instance, a principal block composed by Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"
+We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). For instance, a main block composed of Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"
 
 ![Authors network](./images/teds_network_authors2.png)
-_Comparaison between two authors networks._
+_Comparison between two authors networks._
 
 ## 3.4 The second model on OpenAlex
 
