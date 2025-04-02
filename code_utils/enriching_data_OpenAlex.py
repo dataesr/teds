@@ -48,7 +48,7 @@ def get_open_alex_data_not_in_references(dois,cached_openalex_data_not_ipcc,year
                             if 'source' in list(x.keys()):
                                 if isinstance(x.get('source'),dict):
                                     if (('display_name' in list(x.get('source')))&('issn_l' in list(x.get('source')))&('type' in list(x.get('source')))):
-                                        if ((pd.isna(x.get('source').get('display_name'))==False)&(x.get('source').get('type')=='journal')&(pd.isna(x.get('source').get('issn_l'))==False)):
+                                        if ((pd.isna(x.get('source').get('display_name'))==False)&(x.get('source').get('type')=='journal')&(pd.isna(x.get('source').get('issn_l'))==False))&(pd.isna(x.get('source').get('display_name'))==False):
                                             year_counts_not_ipcc[year]+=1
                                             cached_openalex_data_not_ipcc[year].append(data)
                                             dois.append(data.get('doi'))
