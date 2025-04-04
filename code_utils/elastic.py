@@ -20,7 +20,7 @@ def get_from_es(body, nature='teds-bibliography', scroll=0):
         base64_bytes = passw.encode('ascii')
         message_bytes = base64.b64encode(base64_bytes)
         token = message_bytes.decode('ascii')
-        url = os.getenv('ES_URL')+'scanr-publications-20241119/_search' 
+        url = os.getenv('ES_URL')+'scanr-publications-20250402/_search' 
     else:
         passw = f"{os.getenv('ES_LOGIN_scanR')}:{os.getenv('ES_PASSWORD_scanR')}"
         base64_bytes = passw.encode('ascii')
