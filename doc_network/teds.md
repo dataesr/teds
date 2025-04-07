@@ -300,8 +300,8 @@ _Working group model on scanR publications by year._
 
 The IPBES model ...
 
-![IPBES model on scanR publications by year](./images/teds_model_scanR1.png)
-_IPBES model on scanR publications by year (à faire)._
+![IPBES model on scanR publications by year](./images/teds_model_scanR2.png)
+_IPBES model on scanR publications by year._
 
 ### Community network
 
@@ -320,7 +320,7 @@ It’s interesting to see that 'soil moisture' is linked to 'evapotranspiration'
 ![Topics network - example](./images/teds_network_topics2_sensors.png)
 _Comparison on one topic._
 
-We can see a similar dynamic for authors, a denser network for authors from IPCC reports (e). For instance, a main block composed of Philippe Ciais and Laurent Bopp that represent an "IPCC cluster"
+We observe a similar pattern among authors, with a denser network for those associated with IPCC reports (a). Moreover, we notice that Olivier Boucher, who was part of the same cluster as Philippe Ciais in the first network (a), is no longer grouped with him in the second network (b). This change highlights how the clustering algorithm creates a larger cluster in the (b) graph due to the lack of co-publication with the other clusters.
 
 ![Authors network](./images/teds_network_authors2.png)
 _Comparison between two authors networks._

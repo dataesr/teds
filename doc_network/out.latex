@@ -697,8 +697,8 @@ model on scanR publications by year.}
 
 The IPBES model \ldots{}
 
-\includegraphics{./images/teds_model_scanR1.png} \emph{IPBES model on
-scanR publications by year (à faire).}
+\includegraphics{./images/teds_model_scanR2.png} \emph{IPBES model on
+scanR publications by year.}
 
 \hypertarget{community-network}{%
 \subsubsection{Community network}\label{community-network}}
@@ -738,9 +738,13 @@ more technical details.
 \includegraphics{./images/teds_network_topics2_sensors.png}
 \emph{Comparison on one topic.}
 
-We can see a similar dynamic for authors, a denser network for authors
-from IPCC reports (e). For instance, a main block composed of Philippe
-Ciais and Laurent Bopp that represent an ``IPCC cluster''
+We observe a similar pattern among authors, with a denser network for
+those associated with IPCC reports (a). Moreover, we notice that Olivier
+Boucher, who was part of the same cluster as Philippe Ciais in the first
+network (a), is no longer grouped with him in the second network (b).
+This change highlights how the clustering algorithm creates a larger
+cluster in the (b) graph due to the lack of co-publication with the
+other clusters.
 
 \includegraphics{./images/teds_network_authors2.png} \emph{Comparison
 between two authors networks.}
