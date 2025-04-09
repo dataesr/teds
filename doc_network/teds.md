@@ -1,5 +1,5 @@
 ---
-title: "Environmental transition, durability and sustainability"
+title: "French contributions to environmental transition and sustainability: A bibliometric analysis and modélisation of IPCC and IPBES reports"
 author:
   - Hafsa Aallat:
       institute: mesr
@@ -146,9 +146,9 @@ In the enriched database from the IPCC and IPBES publications, each publication 
 - The main **topics** covered by the publication: publications in OpenAlex are tagged with Topics using an automated system that takes into account the available information about the work, including title, abstract, source (journal) name, and citations
 - The names of the **journals** in which the publication was published
 
-Out of the 53,258 IPCC publications available on OpenAlex, only 48,219 have non-empty titles, topics, and journal names.
+Out of the 53,258 IPCC publications available on OpenAlex, only 48,101 have non-empty titles, topics, and journal names.
 
-The goal is to identify 48,219 other publications that are not cited by the IPCC to form our training dataset.
+The goal is to identify 48,101 other publications that are not cited by the IPCC to form our training dataset.
 After the analysis phase, we were wondering how to make a database with data from IPCC bibliography and data from other subjects than IPCC topics.
 
 Initially, we explore the data from the reports and analize:
@@ -260,7 +260,7 @@ French researchers are also highly involved, with some contributing to both IPCC
 
 ## 3.2 Models performances
 
-Out of the 19,288 publications in the **IPCC** test set, 18,788 publications are correctly predicted, representing **97%** of the total publications.
+Out of the 19,241 publications in the **IPCC** test set, 18,501 publications are correctly predicted, representing **96%** of the total publications.
 
 ![IPCC first model results - Confusion Matrix](./images/teds_ipcc_model.png)
 _Confusion matrix showing the performance of the first IPCC model._
@@ -270,15 +270,15 @@ When a publication is identified as "IPCC-like", a second model is applied to cl
 ![IPCC second model results - Confusion Matrix](./images/teds_ipcc_model_wg.png)
 _Confusion matrix illustrating the performance of the second IPCC model, which categorizes publications by working group._
 
-For each working group, there are 9,644 publications in the test set. The model performance for each group is as follows:
+For each working group, there are 9,621 publications in the test set. The model performance for each group is as follows:
 
-- For **Physical Science**, 8,875 publications are correctly predicted, representing **92%** of the publications in this category.
-- For **Adaptation**, 8,137 publications are correctly predicted, representing **84%** of the publications in this category.
-- For **Mitigation**, 8,768 publications are correctly predicted, representing **91%** of the publications in this category.
+- For **Physical Science**, 8,827 publications are correctly predicted, representing **92%** of the publications in this category.
+- For **Adaptation**, 8,141 publications are correctly predicted, representing **85%** of the publications in this category.
+- For **Mitigation**, 8,786 publications are correctly predicted, representing **91%** of the publications in this category.
 
 However, for the **Adaptation** and **Mitigation** categories, the model shows a significant number of false positives. This suggests that the model tends to overestimate the number of publications categorized in these groups. This overestimation indicates that the model might label more publications as "Adaptation" or "Mitigation" than it should, leading to a higher rate of false positives in these categories.
 
-In the **IPBES** test set, there are 2213 publications and 2101 publications are correctly predicted, representing **95%** of the total publications.
+In the **IPBES** test set, there are 2213 publications and 2102 publications are correctly predicted, representing **95%** of the total publications.
 
 ![IPBES first model results - Confusion Matrix](./images/teds_ipbes_model.png)
 _Confusion matrix showing the performance of the IPBES model._
@@ -298,7 +298,7 @@ The second model seems to detect more publications related to adaptation.
 ![WG model on scanR publications by year for each working group](./images/teds_model_scanR_wg.png)
 _Working group model on scanR publications by year._
 
-The IPBES model ...
+The IPBES model is also applied on scanR publications that have a DOI. As the IPCC model, the proportion of publications addressing topics similar to those of the IPBES also seems to be increasing in recent years.
 
 ![IPBES model on scanR publications by year](./images/teds_model_scanR2.png)
 _IPBES model on scanR publications by year._
@@ -320,7 +320,7 @@ It’s interesting to see that 'soil moisture' is linked to 'evapotranspiration'
 ![Topics network - example](./images/teds_network_topics2_sensors.png)
 _Comparison on one topic._
 
-We observe a similar pattern among authors, with a denser network for those associated with IPCC reports (a). Moreover, we notice that Olivier Boucher, who was part of the same cluster as Philippe Ciais in the first network (a), is no longer grouped with him in the second network (b). This change highlights how the clustering algorithm creates a larger cluster in the (b) graph due to the lack of co-publication with the other clusters.
+We observe a similar pattern among authors, with a denser network for those associated with IPCC reports (a) in _Comparison between two authors networks_. Moreover, we notice that Olivier Boucher, who was part of the same cluster as Philippe Ciais in the first network (a), is no longer grouped with him in the second network (b). This change highlights how the clustering algorithm creates a larger cluster in the (b) graph due to the lack of co-publication with the other clusters.
 
 ![Authors network](./images/teds_network_authors2.png)
 _Comparison between two authors networks._

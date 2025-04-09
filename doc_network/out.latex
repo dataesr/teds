@@ -36,7 +36,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Environmental transition, durability and sustainability},
+  pdftitle={French contributions to environmental transition and sustainability: A bibliometric analysis and modélisation of IPCC and IPBES reports},
   pdfkeywords={French publications, IPCC, IPBES, Machine
 learning, NLP, open data, open source, scanR, OpenAlex},
   hidelinks,
@@ -127,7 +127,9 @@ learning, NLP, open data, open source, scanR, OpenAlex},
   \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
   {\par}
 
-\title{Environmental transition, durability and sustainability}
+\title{French contributions to environmental transition and
+sustainability: A bibliometric analysis and modélisation of IPCC and
+IPBES reports}
 \usepackage{authblk}
 \author[%
   1%
@@ -410,10 +412,10 @@ publication is associated with the following attributes:
   published
 \end{itemize}
 
-Out of the 53,258 IPCC publications available on OpenAlex, only 48,219
+Out of the 53,258 IPCC publications available on OpenAlex, only 48,101
 have non-empty titles, topics, and journal names.
 
-The goal is to identify 48,219 other publications that are not cited by
+The goal is to identify 48,101 other publications that are not cited by
 the IPCC to form our training dataset. After the analysis phase, we were
 wondering how to make a database with data from IPCC bibliography and
 data from other subjects than IPCC topics.
@@ -623,8 +625,8 @@ active and cited in both reports.
 \hypertarget{models-performances}{%
 \subsection{3.2 Models performances}\label{models-performances}}
 
-Out of the 19,288 publications in the \textbf{IPCC} test set, 18,788
-publications are correctly predicted, representing \textbf{97\%} of the
+Out of the 19,241 publications in the \textbf{IPCC} test set, 18,501
+publications are correctly predicted, representing \textbf{96\%} of the
 total publications.
 
 \includegraphics{./images/teds_ipcc_model.png} \emph{Confusion matrix
@@ -639,20 +641,20 @@ associated with.
 illustrating the performance of the second IPCC model, which categorizes
 publications by working group.}
 
-For each working group, there are 9,644 publications in the test set.
+For each working group, there are 9,621 publications in the test set.
 The model performance for each group is as follows:
 
 \begin{itemize}
 \tightlist
 \item
-  For \textbf{Physical Science}, 8,875 publications are correctly
+  For \textbf{Physical Science}, 8,827 publications are correctly
   predicted, representing \textbf{92\%} of the publications in this
   category.
 \item
-  For \textbf{Adaptation}, 8,137 publications are correctly predicted,
-  representing \textbf{84\%} of the publications in this category.
+  For \textbf{Adaptation}, 8,141 publications are correctly predicted,
+  representing \textbf{85\%} of the publications in this category.
 \item
-  For \textbf{Mitigation}, 8,768 publications are correctly predicted,
+  For \textbf{Mitigation}, 8,786 publications are correctly predicted,
   representing \textbf{91\%} of the publications in this category.
 \end{itemize}
 
@@ -664,7 +666,7 @@ model might label more publications as ``Adaptation'' or ``Mitigation''
 than it should, leading to a higher rate of false positives in these
 categories.
 
-In the \textbf{IPBES} test set, there are 2213 publications and 2101
+In the \textbf{IPBES} test set, there are 2213 publications and 2102
 publications are correctly predicted, representing \textbf{95\%} of the
 total publications.
 
@@ -695,7 +697,10 @@ adaptation.
 \includegraphics{./images/teds_model_scanR_wg.png} \emph{Working group
 model on scanR publications by year.}
 
-The IPBES model \ldots{}
+The IPBES model is also applied on scanR publications that have a DOI.
+As the IPCC model, the proportion of publications addressing topics
+similar to those of the IPBES also seems to be increasing in recent
+years.
 
 \includegraphics{./images/teds_model_scanR2.png} \emph{IPBES model on
 scanR publications by year.}
@@ -739,12 +744,12 @@ more technical details.
 \emph{Comparison on one topic.}
 
 We observe a similar pattern among authors, with a denser network for
-those associated with IPCC reports (a). Moreover, we notice that Olivier
-Boucher, who was part of the same cluster as Philippe Ciais in the first
-network (a), is no longer grouped with him in the second network (b).
-This change highlights how the clustering algorithm creates a larger
-cluster in the (b) graph due to the lack of co-publication with the
-other clusters.
+those associated with IPCC reports (a) in \emph{Comparison between two
+authors networks}. Moreover, we notice that Olivier Boucher, who was
+part of the same cluster as Philippe Ciais in the first network (a), is
+no longer grouped with him in the second network (b). This change
+highlights how the clustering algorithm creates a larger cluster in the
+(b) graph due to the lack of co-publication with the other clusters.
 
 \includegraphics{./images/teds_network_authors2.png} \emph{Comparison
 between two authors networks.}
