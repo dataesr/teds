@@ -32,7 +32,7 @@ This paper is about the role of French scientific publications on environmental 
 
 ## 1.1 Presentation of IPCC and IPBES: Working Groups and dates
 
-**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. Between 2021 and 2022, they released the Sixth Assessment Report (AR6) in stages. It has three working groups that represent three main topics :
+**The IPCC (Intergovernmental Panel on Climate Change)** assesses scientific information on climate change, providing reports to guide policymakers. Between 2021 and 2022, they released the Sixth Assessment Report (AR6). It has three working groups that represent three main topics :
 
 - Working Group 1 (WG1) focuses on the **physical science** of climate change.
 - Working Group 2 (WG2) examines climate change impacts, **adaptation**, and vulnerabilities.
@@ -81,8 +81,7 @@ Next, we use the Biblioglutton Python library to fill in missing DOIs based on t
 
 ## 2.3 Data storage and visualization
 
-Once the data is enriched with openAlex features, we edit the data and push it on a cluster elastic-search. As an exemple, for one publication (for a better visibility the data is truncated).
-Some publications are used by both reports, with the following keys:
+Once the data is enriched with features from OpenAlex, we refine it and upload it to an Elasticsearch cluster. For better clarity, the data is truncated in the example. Some publications are cited in both reports, identified by the following keys:
 
 ```json
 {
@@ -134,7 +133,7 @@ Some publications are used by both reports, with the following keys:
 }
 ```
 
-After that, we used Highcharts, a graphic tool to visualize the graphs. At the same time, we plot the graphs also with python by making elastic-search requests.
+After that, we used Highcharts, a graphic tool to visualize the graphs. At the same time, we also plot the graphs with python by making elastic-search requests.
 
 ## 2.4 Create a database
 
@@ -143,7 +142,7 @@ In the enriched database from the IPCC and IPBES publications, each publication 
 - A unique identifier (**DOI**)
 - The publication **year**
 - A **title** that best summarizes the publication
-- The main **topics** covered by the publication: publications in OpenAlex are tagged with Topics using an automated system that takes into account the available information about the work, including title, abstract, source (journal) name, and citations
+- The main **topics** covered by the publication: publications in OpenAlex are tagged with topics using an automated system that takes into account the available information about the work, including title, abstract, source (journal) name, and citations
 - The names of the **journals** in which the publication was published
 
 Out of the 53,258 IPCC publications available on OpenAlex, only 48,101 have non-empty titles, topics, and journal names.
