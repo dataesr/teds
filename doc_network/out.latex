@@ -744,15 +744,36 @@ more technical details.
 \emph{Comparison on one topic.}
 
 We observe a similar pattern among authors, with a denser network for
-those associated with IPCC reports (a) in \emph{Comparison between two
+those associated with IPCC reports (e) in \emph{Comparison between two
 authors networks}. Moreover, we notice that Olivier Boucher, who was
-part of the same cluster as Philippe Ciais in the first network (a), is
-no longer grouped with him in the second network (b). This change
+part of the same cluster as Philippe Ciais in the first network (e), is
+no longer grouped with him in the second network (f). This change
 highlights how the clustering algorithm creates a larger cluster in the
-(b) graph due to the lack of co-publication with the other clusters.
+(f) graph due to the lack of co-publication with the other clusters.
 
 \includegraphics{./images/teds_network_authors2.png} \emph{Comparison
 between two authors networks.}
+
+We observe similar patterns when analyzing the IPBES reports. The
+resulting networks \emph{Comparison between two topics networks for
+IPBES.} show a high degree of interconnection in the actual publications
+(a), as with the IPCC, topics are frequently cited together. In
+contrast, the predicted network (b) appears less interconnected.
+
+\includegraphics{./images/teds_network_topics2_ipbes.png}
+\emph{Comparison between two topics networks for IPBES.}
+
+The IPBES author network also reveals dense clusters of co-authorship
+(c), suggesting strong collaboration among contributors. However, the
+predicted network (d) displays more isolated clusters, that shows that
+the authors are very independant of each other.
+
+\includegraphics{./images/teds_network_authors2_ipbes.png}
+\emph{Comparison between two authors networks for IPBES.}
+
+These similarities further confirm the value of network analysis for
+understanding the structure and organization of large-scale scientific
+assessments like those from IPBES.
 
 \hypertarget{the-second-model-on-openalex}{%
 \subsection{3.4 The second model on

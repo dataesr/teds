@@ -319,10 +319,22 @@ It’s interesting to see that 'soil moisture' is linked to 'evapotranspiration'
 ![Topics network - example](./images/teds_network_topics2_sensors.png)
 _Comparison on one topic._
 
-We observe a similar pattern among authors, with a denser network for those associated with IPCC reports (a) in _Comparison between two authors networks_. Moreover, we notice that Olivier Boucher, who was part of the same cluster as Philippe Ciais in the first network (a), is no longer grouped with him in the second network (b). This change highlights how the clustering algorithm creates a larger cluster in the (b) graph due to the lack of co-publication with the other clusters.
+We observe a similar pattern among authors, with a denser network for those associated with IPCC reports (e) in _Comparison between two authors networks_. Moreover, we notice that Olivier Boucher, who was part of the same cluster as Philippe Ciais in the first network (e), is no longer grouped with him in the second network (f). This change highlights how the clustering algorithm creates a larger cluster in the (f) graph due to the lack of co-publication with the other clusters.
 
 ![Authors network](./images/teds_network_authors2.png)
 _Comparison between two authors networks._
+
+We observe similar patterns when analyzing the IPBES reports. The resulting networks _Comparison between two topics networks for IPBES._ show a high degree of interconnection in the actual publications (a), as with the IPCC, topics are frequently cited together. In contrast, the predicted network (b) appears less interconnected.
+
+![Topics network](./images/teds_network_topics2_ipbes.png)
+_Comparison between two topics networks for IPBES._
+
+The IPBES author network also reveals dense clusters of co-authorship (c), suggesting strong collaboration among contributors. However, the predicted network (d) displays more isolated clusters, that shows that the authors are very independant of each other.
+
+![Authors network](./images/teds_network_authors2_ipbes.png)
+_Comparison between two authors networks for IPBES._
+
+These similarities further confirm the value of network analysis for understanding the structure and organization of large-scale scientific assessments like those from IPBES.
 
 ## 3.4 The second model on OpenAlex
 
