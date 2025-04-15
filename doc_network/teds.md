@@ -1,5 +1,5 @@
 ---
-title: "French contributions to environmental transition and sustainability: A bibliometric analysis and modélisation of IPCC and IPBES reports"
+title: "French contributions to environmental transition and sustainability: A bibliometric analysis and modelisation of IPCC and IPBES reports"
 author:
   - Hafsa Aallat:
       institute: mesr
