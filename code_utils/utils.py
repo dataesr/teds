@@ -153,6 +153,37 @@ def check_doi_glutton(row):
     else:
         return False
 
+def get_headers(base, use_csv=False):
+    import requests, os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
+    key = os.getenv("key_insee")
+    secret = os.getenv("secret_insee")
+
+    print(f"KEY: {key}, SECRET: {secret}")
+
+    def get_new_token(key, secret):
+        """Get a fresh SIRENE API token."""
+        r = requests.post(
+            url='https://api.insee.fr/token',
+            data="grant_type=client_credentials",
+            auth=(key, secret)
+        )
+        if r.status_code == 200:
+            return r.json()['access_token']
+        else:
+            raise Exception(f"Failed to obtain token: {r.status_code} - {r.text}")
+
+    token = get_new_token(key, secret)
+
+    api_call_headers = {'Authorization': f'Bearer {token}'}
+
+    if use_csv:
+        api_call_headers['Accept'] = "text/csv"
+
+    return api_call_headers
 
 
 
