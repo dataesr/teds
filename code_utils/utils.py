@@ -161,9 +161,7 @@ def get_headers(base, use_csv=False):
 
     key = os.getenv("key_insee")
     secret = os.getenv("secret_insee")
-
-    print(f"KEY: {key}, SECRET: {secret}")
-
+    
     def get_new_token(key, secret):
         """Get a fresh SIRENE API token."""
         r = requests.post(
