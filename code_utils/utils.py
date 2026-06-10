@@ -144,7 +144,7 @@ def normalize(x, min_length = 0):
     # keep if digit alone
     return " ".join([e[0] for e in pre_tokenizer.pre_tokenize_str(normalized) if (len(e[0]) > min_length) or (e[0] in string.digits)])
 
-def check_doi_glutton(row):
+def check_doi(row):
     if (row.year!='XXXX') & (row.year!='') & (row.year_OA!='') & (pd.isna(row.year)==False) & (pd.isna(row.year_OA)==False):
         if int(row.year) in [int(row.year_OA)-1,int(row.year_OA),int(row.year_OA)+1]:
             return True

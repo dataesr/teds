@@ -131,6 +131,12 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
             topics_names=[topic.get('display_name') for topic in topics]
         else:
             topics_names=None
+        
+        keywords=data.get('keywords')
+        if keywords!=[]:
+            keywords_names=[keyword.get('display_name') for keyword in keywords]
+        else:
+            keywords_names=None
 
         sdgs=data.get('sustainable_development_goals')
         if sdgs!=[]:
@@ -138,5 +144,5 @@ def get_countries_concepts_sdg(cached_openalex_data,row=True,ipcc=True,i=0):
         else:
             sdgs_ids_names=None
     else:
-        return [None],None,None,None,None,None,False,None,None,None,None,None,None,None,None
-    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names,locations_names,locations_id,data.get('type'),data.get('type_crossref')
+        return [None],None,None,None,None,None,False,None,None,None,None,None,None,None,None,None
+    return countries,concepts_names,sdgs_ids_names,data.get('publication_year'),topics_names,doi,True,data.get('title'),name,rors,institutions_names,locations_names,locations_id,data.get('type'),data.get('type_crossref'),keywords_names
